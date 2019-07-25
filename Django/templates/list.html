@@ -1,0 +1,12 @@
+{% include 'material/includes/material_css.html' %}
+{% include 'material/includes/material_js.html' %}
+
+<a href="{% url 'home'%}">Home</a>
+
+<p><font size="5"> Game list in progress </font></p>
+
+{% for game in gamelists %}
+<div><p><button onclick="window.location.href = '/game/{{game.id}}';">{{ game.session_name }}</button></p></div>
+{% endfor %}
+
+<p>{{ error }}</p>

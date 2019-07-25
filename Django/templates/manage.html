@@ -1,0 +1,46 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Client</title>
+    <base href="/">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+  </head>
+  <body>
+{% block sidebar %}
+<ul class="sidebar-nav-wrapper">
+   {% if user.is_authenticated %}
+     <li>{{ user.get_username }}<a href="{% url 'logout'%}">  Logout</a></li>
+   {% else %}
+     <script type="text/javascript">
+         (function() {
+        alert('please login.');
+        window.location.replace("{% url 'login'%}");
+    })();       
+     </script>
+   {% endif %}
+  </ul>
+{% endblock %}
+    <p>(Admin) Create Game Session<br/></p>
+    <button onclick="window.open('/createSession', '_blank', 'width=730, height=750, toolbar=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no' )">+</button>
+    <h2> 내가 관리하는 세션 - 관리하기 </h2>
+
+    {% for game in mygamelists %}
+    <div><p><button onclick="window.location.href = '/manageSession/{{game.id}}';">{{ game.session_name }}</button></p></div>
+    {% endfor %} 
+
+    <h2> 전체 세션 - 지켜보기 </h2>
+    {% for game2 in allgamelists %}
+    <div><p><button onclick="window.location.href = '/game/{{game2.id}}';">{{ game2.session_name }}</button></p></div>
+    {% endfor %}
+    <p>{{ error }}</p>
+    <app-root></app-root>
+    <script type="text/javascript" src="{% static 'runtime.js' %}"></script>
+    <script type="text/javascript" src="{% static 'polyfills.js' %}"></script>
+    <script type="text/javascript" src="{% static 'styles.js' %}"></script>
+    <script type="text/javascript" src="{% static 'vendor.js' %}"></script>
+    <script type="text/javascript" src="{% static 'main.js' %}"></script>
+  </body>
+</html>

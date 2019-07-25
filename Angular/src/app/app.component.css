@@ -1,0 +1,82 @@
+#main
+{
+	margin: 0 auto;
+	height: 600px;
+        position: relative;
+        width: 600px;
+        background: gold;
+}
+
+#board
+{
+        margin: 30px;
+        background-image: repeating-linear-gradient(0deg,transparent,transparent 29px, black 29px, black 30px), repeating-linear-gradient(-90deg,transparent,transparent 29px, black 29px, black 30px);
+        background-size: 30px 30px;
+        height: 541;
+        position: absolute;
+        width: 541;
+}
+
+.smallcircle
+{
+        border-radius: 50%;
+        width: 4;
+        height: 4;
+        background: black;
+        border: solid black;
+        position: absolute;
+}
+
+#smallcircle1
+{
+	top: 117px;
+        left: 117px;
+}
+
+#smallcircle2
+{
+        top: 117px;
+        left: 297px;
+}
+
+#smallcircle3
+{
+        top: 117px;
+        left: 477px;
+}
+
+#smallcircle4
+{
+	top: 297px;
+        left: 117px;
+}
+
+#smallcircle5
+{
+	top: 297px;
+        left: 297px;
+}
+
+#smallcircle6
+{
+	top: 297px;
+        left: 477px;
+}
+
+#smallcircle7
+{
+	top: 477px;
+        left: 117px;
+}
+
+#smallcircle8
+{
+	top: 477px;
+        left: 297px;
+}
+
+#smallcircle9
+{
+	top: 477px;
+        left: 477px;
+}
