@@ -1,0 +1,35 @@
+{% include 'material/includes/material_css.html' %}
+{% include 'material/includes/material_js.html' %}
+
+{% load i18n static %}
+{% load material_form %}
+<link href="https://fonts.googleapis.com/css?family=Gugi&display=swap" rel="stylesheet">
+
+<style>
+  .c{font-family: 'Gugi', cursive; font-size: 70px}
+  #tab {
+    margin:50;
+  }
+  #title {
+    position: relative;
+  }
+  #right {
+    margin: 10px;
+    position: relative;
+  }
+</style>
+
+<ul id="right">
+<p><li><a href="{% url 'login'%}">관리자 페이지</a></li></p></ul>
+
+<div id="title">
+   <p><center><h2 class="c">{% block page_title %}육목의 달인{% endblock %}</h2></center></p>
+</div>
+
+<div id="tab">
+  </form>
+    <p><center><button type="submit" class="btn" onclick="location.href='{% url 'index' %}'"/>연습하기</center></p>
+    <p><center><button type="submit" class="btn" onclick="location.href='{% url 'watch' %}'"/>관전하기</center></p>
+  </form>
+</div>
+~              

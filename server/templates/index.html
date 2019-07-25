@@ -1,0 +1,32 @@
+{% load static %}<!doctype html>
+<h1> Which Color : {{ color }} </h1>
+<h1> Which Session : {{ session_key }} </h1>
+<h2> APIs : GET /home/sessions/{{session_key}}/stones </h2>
+<h2> POST /home/sessions/{{session_key}}/stones { "room": your session, "color": your color, "x1": A-S, "y1":1-19, "x2":A-S, "y2":1-19 } </h2>
+<html 
+lang="en">
+  <head>
+    <meta 
+charset="utf-8">
+    <title>Client</title>
+    <base 
+href="/">
+    <meta 
+name="viewport" content="width=device-width, initial-scale=1">
+    <link 
+rel="icon" type="image/x-icon" href="favicon.ico">
+  </head>
+  <body>
+    <app-root></app-root>
+    <script type="text/javascript" src="
+{% static 'runtime.js' %}"></script>
+    <script type="text/javascript" src="
+{% static 'polyfills.js' %}"></script>
+    <script type="text/javascript" src="
+{% static 'styles.js' %}"></script>
+    <script type="text/javascript" src="
+{% static 'vendor.js' %}"></script>
+    <script type="text/javascript" src="
+{% static 'main.js' %}"></script>
+  </body>
+</html>

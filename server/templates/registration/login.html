@@ -1,0 +1,47 @@
+{% include 'material/includes/material_css.html' %}
+{% include 'material/includes/material_js.html' %}
+
+{% load i18n static %}
+{% load material_form %}
+
+{% block sidebar %}
+  <li><a href="{% url 'home' %}"> Home</a></li>
+{% endblock %}
+
+{% block content %}
+
+{% if form.errors %}
+  <p>Your username and password didn't match. Please try again.</p>
+{% endif %}
+
+{% block main %}
+<div class="registration">
+    <div class="sidebar">
+        <h4>{% block page_title %}Manager Login{% endblock %}</h4>
+    </div>
+</div>
+{% endblock %}
+
+{% if next %}
+  {% if user.is_authenticated %}
+    <p>Your account doesn't have access to this page. To proceed,
+    please login with an account that has access.</p>
+  {% else %}
+    <p>Please login to see this page.</p>
+  {% endif %}
+{% endif %}
+
+<form method="post" action="{% url 'login' %}">
+{% csrf_token %}
+{% form %}
+  {% part form.username prefix %}<i class="material-icons prefix">account_box</i>{% endpart %}
+  {% part form.password prefix %}<i class="material-icons prefix">lock</i>{% endpart %}
+{% endform %}
+
+<div>
+  <button type="submit" class="btn">submit</button>
+  <input type="hidden" name="next" value="{{ next }}" />
+</div>
+</form>
+
+{% endblock %}
