@@ -44,10 +44,9 @@ def managePage(request):
         if request.user.is_authenticated:
                 uid = request.user.id
                 user = User.objects.get(id=uid)
-                mygamelists = Session.objects.filter(manager_id=user)
                 allgamelists = Session.objects.filter(color=None)
 
-                return render(request, 'manage.html', {'user':user, 'mygamelists':mygamelists, 'allgamelists':allgamelists})
+                return render(request, 'manage.html', {'user':user, 'allgamelists':allgamelists})
 
         else:
                 return redirect('home')
@@ -60,7 +59,7 @@ class JSONResponse(HttpResponse):
 
 def makeRandomString():
     randomStream = ""
-    for i in range(0,5):
+    for i in range(0,6):
         randomStream += str(random.choice(string.ascii_letters))
     return randomStream
 
@@ -71,9 +70,7 @@ def room(request, room_name):
 
         else:
             nid = makeRandomString()
-            uid = request.user.id
-            user = User.objects.get(id=uid)
-            s = Session(newid = nid, session_name = str(room_name), manager_id=str(user), status=True)
+            s = Session(newid = nid, session_name = str(room_name), status=True)
             s.save()
 
 
@@ -134,6 +131,15 @@ class SessionViewSet(NestedViewSetMixin, ModelViewSet):
 class StoneViewSet(NestedViewSetMixin, ModelViewSet):
     serializer_class = StoneSerializer
     queryset = Stone.objects.all()
+
+class BlackViewSet(NestedViewSetMixin, ModelViewSet):
+    serializer_class = BlackSerializer
+    queryset = Black.objects.all()
+
+class WhiteViewSet(NestedViewSetMixin, ModelViewSet):
+    serializer_class = WhiteSerializer
+    queryset = White.objects.all()
+
 
 def getSession2(request, room_name):
     s = Session.objects.get(session_name=room_name)
