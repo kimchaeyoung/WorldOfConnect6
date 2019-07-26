@@ -13,7 +13,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 
-import random, requests, time
+import random, requests, time, string
 from django.conf import settings
 from string import ascii_uppercase
 from django.urls import reverse
@@ -58,26 +58,34 @@ class JSONResponse(HttpResponse):
         kwargs['content_type'] = 'application/json'
         super(JSONResponse, self).__init__(content, **kwargs)
 
+def makeRandomString():
+    randomStream = ""
+    for i in range(0,5):
+        randomStream += str(random.choice(string.ascii_letters))
+    return randomStream
+
 def room(request, room_name):
     if request.user.is_authenticated:
         if Session.objects.filter(session_name=room_name).exists():
             s = Session.objects.get(session_name=room_name)
 
         else:
+            nid = makeRandomString()
             uid = request.user.id
             user = User.objects.get(id=uid)
-            s = Session(session_name = str(room_name), manager_id=str(user), status=True)
+            s = Session(newid = nid, session_name = str(room_name), manager_id=str(user), status=True)
             s.save()
 
 
-        return HttpResponseRedirect(reverse(game, kwargs={'session_key':s.id}))
+        return HttpResponseRedirect(reverse(game, kwargs={'session_key':s.session_name}))
     
     else:
         return redirect('home')
 
 def game(request, session_key):
-    if Session.objects.filter(id=session_key).exists():
-        return render(request, 'room.html', {'session_key':session_key})    
+    if Session.objects.filter(session_name=session_key).exists():
+        s = Session.objects.get(session_name=session_key)
+        return render(request, 'room.html', {'session_name':s.newid, 'session_id':s.newid})    
     else:
         return redirect('home')
 
@@ -93,29 +101,30 @@ def index(request):
     
     if session_key is None:
         request.session.set_test_cookie()
-        return render(request, 'index.html', {'session_key':"No Session ID, refresh page!"})
+        return render(request, 'index.html', {'color':"No Session ID, refresh page!"})
 
     elif Session.objects.filter(session_name=session_key).exists():
         s = Session.objects.get(session_name=session_key)
-        return render(request, 'index.html', {'session_key':s.id, "color":color})
+        return render(request, 'index.html', {'session_name':s.newid, 'session_id':s.newid, "color":color})
     
     else: 
-        s = Session(session_name = str(session_key), color=color, status=True)
+        nid = makeRandomString()
+        s = Session(newid=nid, session_name = str(session_key), color=color, status=True)
         s.save()
 
         if s.color == "white":
             x = random.choice('ABCDEFGHIJKLMNOPQRS')
             y = random.randrange(1,20)
             data = {'room': s.id, 'color': "black" , 'x1': x, 'y1': y, 'x2': '', 'y2': 0}
-            requests.post('http://turnincode.cafe24.com:8880/api/sessions/'+str(s.id)+'/stones/', data=data)
+            requests.post('http://turnincode.cafe24.com:9999/api/sessions/'+str(s.newid)+'/stones/', data=data)
 
-    return render(request, 'index.html', {'session_key':s.id, "color":s.color})
+    return render(request, 'index.html', {'session_name':s.newid, 'session_id':s.newid, "color":s.color})
 
 
 def getSession(request):
     session_key = request.COOKIES.get(settings.SESSION_COOKIE_NAME)
     s = Session.objects.get(session_name=session_key)
-    return JsonResponse(str(s.id), safe=False)
+    return JsonResponse(str(s.newid), safe=False)
 
 
 class SessionViewSet(NestedViewSetMixin, ModelViewSet):
@@ -126,6 +135,10 @@ class StoneViewSet(NestedViewSetMixin, ModelViewSet):
     serializer_class = StoneSerializer
     queryset = Stone.objects.all()
 
+def getSession2(request, room_name):
+    s = Session.objects.get(session_name=room_name)
+    return JsonResponse(str(s.newid), safe=False)
+    
 
 def ResultData(request, sessionid):
     
@@ -138,8 +151,8 @@ def ResultData(request, sessionid):
 
     s=None
 
-    if Session.objects.filter(id=sessionid).exists():
-        s = Session.objects.get(id=sessionid)
+    if Session.objects.filter(newid=sessionid).exists():
+        s = Session.objects.get(newid=sessionid)
 
     row = list(ascii_uppercase)
 

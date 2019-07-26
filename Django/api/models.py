@@ -2,6 +2,7 @@ from __future__ import unicode_literals
 from django.db import models
 
 class Session(models.Model):
+	newid = models.CharField(primary_key=True, max_length=10, unique=True)
 	session_name = models.CharField(max_length=200, unique=True)
 	color = models.CharField(max_length = 10, null=True, blank=True)
 	manager_id = models.CharField(max_length=50, null=True, blank=True)
@@ -22,7 +23,7 @@ class Stone(models.Model):
 		return self.color
 
 class ResultOmok(models.Model):
-	room = models.IntegerField()
+	room = models.CharField(max_length=10)
 	color = models.CharField(max_length=10)
 	x = models.CharField(max_length = 10, null=True)
 	y = models.IntegerField(null=True)
