@@ -17,6 +17,7 @@ export class OmokComponent implements OnInit {
    source = timer(1000,1000);
    turn = 0;
    old_turn = 0;
+   turn_color = '';
    products: any = [];
    private sub : Subscription;
    c1 : Result = new Result()
@@ -24,7 +25,8 @@ export class OmokComponent implements OnInit {
 
    constructor(private http:HttpClient) {
      this.turn = 0;
-     this.c1.result = "playing...";
+     this.turn_color = '';
+     this.c1.result = '';
      this.http.get("./getsession/").subscribe(c=> this.c2.session = c.toString());
    }
 
@@ -68,9 +70,8 @@ export class OmokComponent implements OnInit {
           this.currentTime = 0;
           clearTimeout(this.intervalId);
         }
-        if(this.c1.result!="playing...")
+        if(this.c1.result != '')
         {
-          alert(this.c1.result)
           this.sub.unsubscribe();
           clearTimeout(this.intervalId);
         }
@@ -99,6 +100,7 @@ export class OmokComponent implements OnInit {
         var line_color = "black";
         if (this.turn == count)
           line_color = "red";
+          this.turn_color = color
 
         ctx.beginPath();
         ctx.arc(x1, y1, 19, 0, 2 * Math.PI, false);
@@ -107,12 +109,23 @@ export class OmokComponent implements OnInit {
         ctx.lineWidth = 2;
         ctx.strokeStyle = line_color;
         ctx.stroke();
-
+        
         ctx.beginPath();
         ctx.arc(x2, y2, 19, 0, 2 * Math.PI, false);
         ctx.fill();
         ctx.lineWidth = 2;
         ctx.stroke();
+       
+        if (color == "black") 
+            ctx.fillStyle = "white";
+        else
+            ctx.fillStyle = "black";
+ 
+        ctx.font = "17px Comic Sans MS";
+        ctx.fillText(count , x1-5.8, y1+6);
+        ctx.fillText(count, x2-5.8, y2+6);
+
+
 
       }
     }
