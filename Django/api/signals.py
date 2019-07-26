@@ -17,11 +17,11 @@ def stone_pre_save(sender, instance, **kwargs):
     if Stone.objects.filter(room=instance.room, x2=instance.x2, y2=instance.y2).exists():
         raise Exception('Duplication!')
 
-
 @receiver(post_save, sender = Stone)
 def stone_post_save(sender, **kwargs):
             tmp = Stone.objects.last()
-            resultRoom = Session.objects.get(session_name=tmp.room).id
+            resultRoom = Session.objects.get(session_name=tmp.room).newid
+            resultName = Session.objects.get(session_name=tmp.room).session_name
             resultColor = str(tmp.color)
             resultX1 = str(tmp.x1)
             resultY1 = tmp.y1
@@ -34,8 +34,8 @@ def stone_post_save(sender, **kwargs):
             resultOmok = ResultOmok(room=resultRoom, color = resultColor, x = resultX2 , y = resultY2)
             resultOmok.save()
 
-            status = Session.objects.get(id=resultRoom).status
-            clientColor = Session.objects.get(id=resultRoom).color
+            status = Session.objects.get(newid=resultRoom).status
+            clientColor = Session.objects.get(newid=resultRoom).color
             if(status is not False):
            
                 if(clientColor is not None):            
@@ -53,6 +53,6 @@ def stone_post_save(sender, **kwargs):
                     y2 = random.randrange(1,20)
 
                     data = {'room':resultRoom, 'color': mColor , 'x1': x1, 'y1': y1, 'x2': x2, 'y2' : y2}
-                    requests.post('http://turnincode.cafe24.com:8880/api/sessions/'+str(resultRoom)+'/stones/', data=data)
+                    requests.post('http://turnincode.cafe24.com:9998/api/sessions/'+str(resultRoom)+'/stones/', data=data)
             else:
                 print("session finish.")
