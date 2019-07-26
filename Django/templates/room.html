@@ -1,7 +1,8 @@
 {% load static %}<!doctype html>
-<h1> Which Session : {{ session_key }} </h1>
-<h2> APIs : GET /home/sessions/{{session_key}}/stones </h2>
-<h2> POST /home/sessions/{{session_key}}/stones { "room": your session, "color": your color, "x1": A-S, "y1":1-19, "x2":A-S, "y2":1-19 } </h2>
+
+<a href="/guide/{{room_name}}/">이전으로</a>
+<p><a href="{% url 'home' %}">홈으로</a></p>
+
 <html 
 lang="en">
   <head>
@@ -29,3 +30,4 @@ rel="icon" type="image/x-icon" href="favicon.ico">
 {% static 'main.js' %}"></script>
   </body>
 </html>
+

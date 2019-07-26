@@ -28,7 +28,7 @@ export class BattleComponent implements OnInit {
      this.turn = 0;
      this.turn_color = '';
      this.c1.result = '';
-     this.c2.session = route.snapshot.params['id']; 
+     this.http.get("./getsession2/"+route.snapshot.params['id']).subscribe(c=>this.c2.session=c.toString());
    }
 
    ngOnInit() {

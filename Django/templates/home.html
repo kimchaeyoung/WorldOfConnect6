@@ -19,17 +19,14 @@
   }
 </style>
 
-<ul id="right">
-<p><li><a href="{% url 'login'%}">관리자 페이지</a></li></p></ul>
-
 <div id="title">
    <p><center><h2 class="c">{% block page_title %}육목의 달인{% endblock %}</h2></center></p>
 </div>
 
 <div id="tab">
   </form>
-    <p><center><button type="submit" class="btn" onclick="location.href='{% url 'index' %}'"/>연습하기</center></p>
+    <p><center><button type="submit" class="btn" onclick="location.href='{% url 'index' %}'"/>혼자 하기</center></p>
+    <p><center><button type="submit" class="btn" onclick="location.href='{% url 'form' %}'"/>둘이서 하기</center></p>
     <p><center><button type="submit" class="btn" onclick="location.href='{% url 'watch' %}'"/>관전하기</center></p>
   </form>
 </div>
-~              

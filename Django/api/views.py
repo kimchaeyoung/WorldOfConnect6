@@ -13,7 +13,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 
-import random, requests, time
+import random, requests, time, string
 from django.conf import settings
 from string import ascii_uppercase
 from django.urls import reverse
@@ -27,6 +27,7 @@ import sys, os
 sys.path.append(os.path.abspath("../player_example/"))
 import monkey
 
+from .forms import *
 
 def manageSession(request, room_name):
     return render(request, 'manageSession.html', {'room_name':room_name})
@@ -44,14 +45,43 @@ def watch(request):
 def home(request):
         return render(request, 'home.html')
 
+
+def form(request):
+    if request.method == 'POST':
+        form = player_form(request.POST)
+        if form.is_valid():
+            room = form.cleaned_data['room_name']
+            return HttpResponseRedirect(reverse(guide, kwargs={'room_name':room}))
+    else:
+        form = player_form()
+    return render(request, 'createSession.html', {'form': form})
+
+def guide(request,room_name):
+    colorNum = random.randrange(1,3)
+    colorNum = 2
+    if colorNum == 1:
+        color = "white"
+    else :
+        color = "black"
+
+    if Session.objects.filter(session_name=room_name).exists():
+        s = Session.objects.get(session_name=room_name)
+    else:
+        nid = makeRandomString()
+        s = Session(newid=nid, session_name = str(room_name), color=color, status=True)
+        s.save()
+    if request.method == 'POST':
+        return HttpResponseRedirect(reverse(game, kwargs={'session_name':s.session_name}))
+    else:
+        return render(request, 'guide.html', {'room_name':room_name, 'session_key': s.newid, 'color': s.color})
+
 def managePage(request):
         if request.user.is_authenticated:
                 uid = request.user.id
                 user = User.objects.get(id=uid)
-                mygamelists = Session.objects.filter(manager_id=user)
                 allgamelists = Session.objects.filter(color=None)
 
-                return render(request, 'manage.html', {'user':user, 'mygamelists':mygamelists, 'allgamelists':allgamelists})
+                return render(request, 'manage.html', {'user':user, 'allgamelists':allgamelists})
 
         else:
                 return redirect('home')
@@ -62,26 +92,16 @@ class JSONResponse(HttpResponse):
         kwargs['content_type'] = 'application/json'
         super(JSONResponse, self).__init__(content, **kwargs)
 
-def room(request, room_name):
-    if request.user.is_authenticated:
-        if Session.objects.filter(session_name=room_name).exists():
-            s = Session.objects.get(session_name=room_name)
+def makeRandomString():
+    randomStream = ""
+    for i in range(0,6):
+        randomStream += str(random.choice(string.ascii_letters))
+    return randomStream
 
-        else:
-            uid = request.user.id
-            user = User.objects.get(id=uid)
-            s = Session(session_name = str(room_name), manager_id=str(user), status=True)
-            s.save()
-
-
-        return HttpResponseRedirect(reverse(game, kwargs={'session_key':s.id}))
-    
-    else:
-        return redirect('home')
-
-def game(request, session_key):
-    if Session.objects.filter(id=session_key).exists():
-        return render(request, 'room.html', {'session_key':session_key})    
+def game(request, session_name):
+    if Session.objects.filter(session_name=session_name).exists():
+        s = Session.objects.get(session_name=session_name)   
+        return render(request, 'room.html', {'room_name': s.session_name})
     else:
         return redirect('home')
 
@@ -97,27 +117,28 @@ def index(request):
     
     if session_key is None:
         request.session.set_test_cookie()
-        return render(request, 'index.html', {'session_key':"No Session ID, refresh page!"})
+        return render(request, 'index.html', {'color':"No Session ID, refresh page!"})
 
     elif Session.objects.filter(session_name=session_key).exists():
         s = Session.objects.get(session_name=session_key)
-        return render(request, 'index.html', {'session_key':s.id, "color":color})
+        return render(request, 'index.html', {'session_name':s.newid, 'session_id':s.newid, "color":color})
     
     else: 
-        s = Session(session_name = str(session_key), color=color, status=True)
+        nid = makeRandomString()
+        s = Session(newid=nid, session_name = str(session_key), color=color, status=True)
         s.save()
 
         if s.color == "white":
             time.sleep(1)
-            monkey.first_stone(request, str(s.id))
+            monkey.first_stone(request, str(s.newid))
             
-    return render(request, 'index.html', {'session_key':str(s.id), "color":s.color})
+    return render(request, 'index.html', {'session_name':s.newid, 'session_id':s.newid, "color":s.color})
 
 
 def getSession(request):
     session_key = request.COOKIES.get(settings.SESSION_COOKIE_NAME)
     s = Session.objects.get(session_name=session_key)
-    return JsonResponse(str(s.id), safe=False)
+    return JsonResponse(str(s.newid), safe=False)
 
 
 class SessionViewSet(NestedViewSetMixin, ModelViewSet):
@@ -135,7 +156,8 @@ class StoneViewSet(NestedViewSetMixin, ModelViewSet):
         headers = self.get_success_headers(serializer.data)
 
         tmp = Stone.objects.last()
-        resultRoom = Session.objects.get(session_name = tmp.room).id
+        resultRoom = Session.objects.get(session_name = tmp.room).newid
+        resultName = Session.objects.get(session_name = tmp.room).session_name
         resultColor = str(tmp.color)
         resultX1 = str(tmp.x1)
         resultY1 = tmp.y1
@@ -148,8 +170,8 @@ class StoneViewSet(NestedViewSetMixin, ModelViewSet):
         resultOmok = ResultOmok(room = resultRoom, color = resultColor, x = resultX2, y = resultY2)
         resultOmok.save()
          
-        program_status = Session.objects.get(id=resultRoom).status
-        clientColor = Session.objects.get(id=resultRoom).color
+        program_status = Session.objects.get(newid=resultRoom).status
+        clientColor = Session.objects.get(newid=resultRoom).color
         if(program_status is not False):
             if(clientColor is not None):
                 if(str(Stone.objects.last().color) == clientColor):
@@ -174,7 +196,19 @@ class StoneViewSet(NestedViewSetMixin, ModelViewSet):
         s = Session.objects.get(session_name=session_key)
         return Stone.objects.filter(room=s.id)
 
+class BlackViewSet(NestedViewSetMixin, ModelViewSet):
+    serializer_class = BlackSerializer
+    queryset = Black.objects.all()
 
+class WhiteViewSet(NestedViewSetMixin, ModelViewSet):
+    serializer_class = WhiteSerializer
+    queryset = White.objects.all()
+
+
+def getSession2(request, room_name):
+    s = Session.objects.get(session_name=room_name)
+    return JsonResponse(str(s.newid), safe=False)
+    
 def ResultData(request, sessionid):
     tmp = ResultOmok.objects.filter(room=sessionid)
     black = tmp.filter(color="black")
@@ -185,8 +219,8 @@ def ResultData(request, sessionid):
 
     s=None
 
-    if Session.objects.filter(id=sessionid).exists():
-        s = Session.objects.get(id=sessionid)
+    if Session.objects.filter(newid=sessionid).exists():
+        s = Session.objects.get(newid=sessionid)
 
     row = list(ascii_uppercase)
 

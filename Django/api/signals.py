@@ -17,4 +17,3 @@ def stone_pre_save(sender, instance, **kwargs):
     if Stone.objects.filter(room=instance.room, x2=instance.x2, y2=instance.y2).exists():
         raise Exception('Duplication!')
 
-
