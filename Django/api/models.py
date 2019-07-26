@@ -22,6 +22,22 @@ class Stone(models.Model):
 	def __str__(self):
 		return self.color
 
+class Black(models.Model):
+	room = models.ForeignKey(Session, related_name='black_room', on_delete=models.CASCADE, null=True, blank=True)
+	x1 = models.CharField(max_length = 10)
+	y1 = models.IntegerField()
+	x2 = models.CharField(max_length = 10, blank=True, null=True)
+	y2 = models.IntegerField(blank=True, null=True)
+
+
+class White(models.Model):
+	room = models.ForeignKey(Session, related_name='white_room', on_delete=models.CASCADE, null=True, blank=True)
+	x1 = models.CharField(max_length = 10)
+	y1 = models.IntegerField()
+	x2 = models.CharField(max_length = 10, blank=True, null=True)
+	y2 = models.IntegerField(blank=True, null=True)
+
+
 class ResultOmok(models.Model):
 	room = models.CharField(max_length=10)
 	color = models.CharField(max_length=10)
