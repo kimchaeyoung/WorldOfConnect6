@@ -190,11 +190,10 @@ class StoneViewSet(NestedViewSetMixin, ModelViewSet):
     def perform_create(self, serializer):
         serializer.save()
 
-    def get_queryset(self):
-        print("here")
-        session_key = self.request.COOKIES.get(settings.SESSION_COOKIE_NAME)
-        s = Session.objects.get(session_name=session_key)
-        return Stone.objects.filter(room=s.id)
+#    def get_queryset(self):
+#        session_key = self.request.COOKIES.get(settings.SESSION_COOKIE_NAME)
+#        s = Session.objects.get(session_name=session_key)
+#        return Stone.objects.filter(room=s.id)
 
 class BlackViewSet(NestedViewSetMixin, ModelViewSet):
     serializer_class = BlackSerializer

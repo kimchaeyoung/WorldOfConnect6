@@ -1,5 +1,5 @@
 from rest_framework.routers import DefaultRouter
-from api.views import SessionViewSet, StoneViewSet
+from api.views import *
 from rest_framework_extensions.routers import NestedRouterMixin
 
 class NestedDefaultRouter(NestedRouterMixin, DefaultRouter):
