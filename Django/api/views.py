@@ -168,6 +168,13 @@ class StoneViewSet(NestedViewSetMixin, ModelViewSet):
     def perform_create(self, serializer):
         serializer.save()
 
+    def get_queryset(self):
+        print("here")
+        session_key = self.request.COOKIES.get(settings.SESSION_COOKIE_NAME)
+        s = Session.objects.get(session_name=session_key)
+        return Stone.objects.filter(room=s.id)
+
+
 def ResultData(request, sessionid):
     tmp = ResultOmok.objects.filter(room=sessionid)
     black = tmp.filter(color="black")
