@@ -24,6 +24,8 @@ from rest_framework_extensions.mixins import NestedViewSetMixin
 from django.shortcuts import redirect
 from django.contrib.auth.models import User
 
+from .forms import *
+
 def manageSession(request, room_name):
     return render(request, 'manageSession.html', {'room_name':room_name})
 
@@ -39,6 +41,36 @@ def watch(request):
 
 def home(request):
         return render(request, 'home.html')
+
+
+def form(request):
+    if request.method == 'POST':
+        form = player_form(request.POST)
+        if form.is_valid():
+            room = form.cleaned_data['room_name']
+            return HttpResponseRedirect(reverse(guide, kwargs={'room_name':room}))
+    else:
+        form = player_form()
+    return render(request, 'createSession.html', {'form': form})
+
+def guide(request,room_name):
+    colorNum = random.randrange(1,3)
+    colorNum = 2
+    if colorNum == 1:
+        color = "white"
+    else :
+        color = "black"
+
+    if Session.objects.filter(session_name=room_name).exists():
+        s = Session.objects.get(session_name=room_name)
+    else:
+        nid = makeRandomString()
+        s = Session(newid=nid, session_name = str(room_name), color=color, status=True)
+        s.save()
+    if request.method == 'POST':
+        return HttpResponseRedirect(reverse(game, kwargs={'session_name':s.session_name}))
+    else:
+        return render(request, 'guide.html', {'room_name':room_name, 'session_key': s.newid, 'color': s.color})
 
 def managePage(request):
         if request.user.is_authenticated:
@@ -63,26 +95,10 @@ def makeRandomString():
         randomStream += str(random.choice(string.ascii_letters))
     return randomStream
 
-def room(request, room_name):
-    if request.user.is_authenticated:
-        if Session.objects.filter(session_name=room_name).exists():
-            s = Session.objects.get(session_name=room_name)
-
-        else:
-            nid = makeRandomString()
-            s = Session(newid = nid, session_name = str(room_name), status=True)
-            s.save()
-
-
-        return HttpResponseRedirect(reverse(game, kwargs={'session_key':s.session_name}))
-    
-    else:
-        return redirect('home')
-
-def game(request, session_key):
-    if Session.objects.filter(session_name=session_key).exists():
-        s = Session.objects.get(session_name=session_key)
-        return render(request, 'room.html', {'session_name':s.newid, 'session_id':s.newid})    
+def game(request, session_name):
+    if Session.objects.filter(session_name=session_name).exists():
+        s = Session.objects.get(session_name=session_name)   
+        return render(request, 'room.html', {'room_name': s.session_name})
     else:
         return redirect('home')
 
