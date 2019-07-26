@@ -128,5 +128,5 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 
 STATICFILES_DIRS = [
-    os.path.join(ANGULAR_DIR, 'dist/client'),
+    os.path.join(CLIENT_DIR, 'dist/client'),
 ]
