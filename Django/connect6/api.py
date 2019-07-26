@@ -14,4 +14,13 @@ sessions_router.register(
     basename='session-stones',
     parents_query_lookups=['room'])
 
+sessions_router.register(
+    'blacks', BlackViewSet,
+    basename='session-blacks',
+    parents_query_lookups=['room'])
+
+sessions_router.register(
+    'whites', WhiteViewSet,
+    basename='session=whites',
+    parents_query_lookups=['room'])
  
