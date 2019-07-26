@@ -27,7 +27,7 @@ export class BattleComponent implements OnInit {
    constructor(private http:HttpClient, route: ActivatedRoute) {
      this.turn = 0;
      this.c1.result = "playing...";
-     this.c2.session = route.snapshot.params['id'];
+     this.http.get("./getsession2/"+route.snapshot.params['id']).subscribe(c=>this.c2.session=c.toString());
    }
 
    ngOnInit() {
