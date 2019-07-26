@@ -1,0 +1,11 @@
+<h2><center>Guide</center></h2>
+<p><h3>room <b>{{room_name}}</b></h3></p>
+
+<h5> Following is your API url. You can get or post stone data using it. </h5>
+<p>GET /api/sessions/{{session_key}}/stones
+<p>POST /api/sessions/{{session_key}}/stones { 'room': {{session_key}}, 'color': {{color}}, 'x1': A-S, 'y1':1-19, 'x2':A-S, 'y2':1-19 }</p>
+
+<form action="/guide/{{room_name}}/", method="post">
+{% csrf_token %}
+<p><input type="submit" value="I Checked this."></p>
+</form>

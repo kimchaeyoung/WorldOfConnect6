@@ -53,6 +53,6 @@ def stone_post_save(sender, **kwargs):
                     y2 = random.randrange(1,20)
 
                     data = {'room':resultRoom, 'color': mColor , 'x1': x1, 'y1': y1, 'x2': x2, 'y2' : y2}
-                    requests.post('http://turnincode.cafe24.com:9998/api/sessions/'+str(resultRoom)+'/stones/', data=data)
+                    requests.post('http://turnincode.cafe24.com:8880/api/sessions/'+str(resultRoom)+'/stones/', data=data)
             else:
                 print("session finish.")
