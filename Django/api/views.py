@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.renderers import JSONRenderer
@@ -21,8 +21,12 @@ from rest_framework.viewsets import ModelViewSet
 
 from rest_framework_extensions.mixins import NestedViewSetMixin
 
-from django.shortcuts import redirect
 from django.contrib.auth.models import User
+
+import sys, os
+sys.path.append(os.path.abspath("../player_example/"))
+import monkey
+
 
 def manageSession(request, room_name):
     return render(request, 'manageSession.html', {'room_name':room_name})
@@ -83,7 +87,7 @@ def game(request, session_key):
 
 def index(request):
     colorNum = random.randrange(1,3)
-    colorNum = 2
+    colorNum = 1
     if colorNum == 1:
         color = "white"
     else :
@@ -104,12 +108,10 @@ def index(request):
         s.save()
 
         if s.color == "white":
-            x = random.choice('ABCDEFGHIJKLMNOPQRS')
-            y = random.randrange(1,20)
-            data = {'room': s.id, 'color': "black" , 'x1': x, 'y1': y, 'x2': '', 'y2': 0}
-            requests.post('http://turnincode.cafe24.com:8880/api/sessions/'+str(s.id)+'/stones/', data=data)
-
-    return render(request, 'index.html', {'session_key':s.id, "color":s.color})
+            time.sleep(1)
+            monkey.first_stone(request, str(s.id))
+            
+    return render(request, 'index.html', {'session_key':str(s.id), "color":s.color})
 
 
 def getSession(request):
@@ -126,9 +128,47 @@ class StoneViewSet(NestedViewSetMixin, ModelViewSet):
     serializer_class = StoneSerializer
     queryset = Stone.objects.all()
 
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        headers = self.get_success_headers(serializer.data)
+
+        tmp = Stone.objects.last()
+        resultRoom = Session.objects.get(session_name = tmp.room).id
+        resultColor = str(tmp.color)
+        resultX1 = str(tmp.x1)
+        resultY1 = tmp.y1
+        resultX2 = str(tmp.x2)
+        resultY2 = tmp.y2
+
+        resultOmok = ResultOmok(room = resultRoom, color = resultColor, x = resultX1, y = resultY1)
+        resultOmok.save()
+        
+        resultOmok = ResultOmok(room = resultRoom, color = resultColor, x = resultX2, y = resultY2)
+        resultOmok.save()
+         
+        program_status = Session.objects.get(id=resultRoom).status
+        clientColor = Session.objects.get(id=resultRoom).color
+        if(program_status is not False):
+            if(clientColor is not None):
+                if(str(Stone.objects.last().color) == clientColor):
+                    if(clientColor == "white"):
+                        mColor = "black"
+                    else:
+                        mColor = "white"
+
+                    time.sleep(2)
+                    monkey.second_stone(request, resultRoom, mColor)
+        else:
+            print("session finish")
+
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+
+    def perform_create(self, serializer):
+        serializer.save()
 
 def ResultData(request, sessionid):
-    
     tmp = ResultOmok.objects.filter(room=sessionid)
     black = tmp.filter(color="black")
     white = tmp.filter(color="white")
@@ -182,6 +222,7 @@ def ResultData(request, sessionid):
                         cnt +=1
                 if cnt == 6:
                     result = str('Black WIN !!!! ')
+                    print(result)
                     if s is not None:
                         s.status=False
                         s.save()
@@ -195,6 +236,7 @@ def ResultData(request, sessionid):
                         cnt +=1
                 if cnt == 6:
                     result = str('White WIN !!!! ')
+                    print(result)
                     if s is not None:
                         s.status=False
                         s.save()
