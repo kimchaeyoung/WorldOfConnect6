@@ -10,10 +10,12 @@
   </head>
 <body>
 <h3>Player information</h3>
-<form action="/form/" method="post">
+{{alert}}
+<form action="/single/" method="post">
     {% csrf_token %}
     {{form}}
     <input id="submit" type="submit" value="Enter">
 </form>
 </body>
 </html>
+

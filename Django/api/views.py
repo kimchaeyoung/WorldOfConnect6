@@ -29,68 +29,10 @@ import monkey
 
 from .forms import *
 
-def manageSession(request, room_name):
-    return render(request, 'manageSession.html', {'room_name':room_name})
-
-def createSession(request):
-    return render(request, 'createSession.html')
-
-def watch(request):
-    gamelists = Session.objects.filter(color=None)
-    try:
-        return render(request, 'list.html', {'gamelists': gamelists})
-    except:
-        return render(request, 'list.html', {'error': 'There is nothing in progress.'})
 
 def home(request):
         return render(request, 'home.html')
 
-
-def form(request):
-    if request.method == 'POST':
-        form = player_form(request.POST)
-        if form.is_valid():
-            room = form.cleaned_data['room_name']
-            return HttpResponseRedirect(reverse(guide, kwargs={'room_name':room}))
-    else:
-        form = player_form()
-    return render(request, 'createSession.html', {'form': form})
-
-def guide(request,room_name):
-    colorNum = random.randrange(1,3)
-    colorNum = 2
-    if colorNum == 1:
-        color = "white"
-    else :
-        color = "black"
-
-    if Session.objects.filter(session_name=room_name).exists():
-        s = Session.objects.get(session_name=room_name)
-    else:
-        nid = makeRandomString()
-        s = Session(newid=nid, session_name = str(room_name), color=color, status=True)
-        s.save()
-    if request.method == 'POST':
-        return HttpResponseRedirect(reverse(game, kwargs={'session_name':s.session_name}))
-    else:
-        return render(request, 'guide.html', {'room_name':room_name, 'session_key': s.newid, 'color': s.color})
-
-def managePage(request):
-        if request.user.is_authenticated:
-                uid = request.user.id
-                user = User.objects.get(id=uid)
-                allgamelists = Session.objects.filter(color=None)
-
-                return render(request, 'manage.html', {'user':user, 'allgamelists':allgamelists})
-
-        else:
-                return redirect('home')
-
-class JSONResponse(HttpResponse):
-    def __init__(self, data, **kwargs):
-        content = JSONRenderer().render(data)
-        kwargs['content_type'] = 'application/json'
-        super(JSONResponse, self).__init__(content, **kwargs)
 
 def makeRandomString():
     randomStream = ""
@@ -98,41 +40,123 @@ def makeRandomString():
         randomStream += str(random.choice(string.ascii_letters))
     return randomStream
 
-def game(request, session_name):
-    if Session.objects.filter(session_name=session_name).exists():
-        s = Session.objects.get(session_name=session_name)   
-        return render(request, 'room.html', {'room_name': s.session_name})
+
+def single(request):
+    if request.method == 'POST':
+        form = single_form(request.POST)
+
+        if form.is_valid():
+            player = form.cleaned_data['player_name']
+            colorNum = random.randrange(1,3)
+
+            if colorNum == 1:
+                color = "white"
+            else :
+                color = "black"
+
+        session_key = request.COOKIES.get(settings.SESSION_COOKIE_NAME)
+
+        if session_key is None:
+            request.session.set_test_cookie()
+            return render(request, 'single_form.html', {'alert':"No Session ID, refresh page!"})
+
+        elif Session.objects.filter(session_name=session_key).exists():
+            s = Session.objects.get(session_name=session_key)
+
+        else:
+            nid = makeRandomString()
+            s = Session(newid=nid, session_name = str(session_key), status=True)
+            s.save()
+
+        player = Player(player_session=s, player1_name=player, player2_name=None,  player1_color=color, player2_color=None)
+        player.save()
+
+        return HttpResponseRedirect(reverse(guide, kwargs={'room_name':s.session_name}))
+    else:
+        form = single_form()
+    return render(request, 'single_form.html', {'form': form})
+
+
+def double(request):
+    if request.method == 'POST':
+        form = double_form(request.POST)
+        if form.is_valid():
+            room = form.cleaned_data['room_name']
+            player1 = form.cleaned_data['player1_name']
+            player2 = form.cleaned_data['player2_name']
+
+            colorNum = random.randrange(1,3)
+
+            if colorNum == 1:
+                p1_color = "white"
+                p2_color = "black"
+            else :
+                p1_color = "black"
+                p2_color = "white"
+
+            if Session.objects.filter(session_name=room).exists():
+                s = Session.objects.get(session_name=room)
+            else:
+                nid = makeRandomString()
+                s = Session(newid=nid, session_name = str(room), status=True)
+                s.save()
+
+            player = Player(player_session=s, player1_name=player1, player2_name=player2, player1_color=p1_color, player2_color=p2_color)
+            player.save()
+
+            return HttpResponseRedirect(reverse(guide, kwargs={'room_name':room}))
+    else:
+        form = double_form()
+    return render(request, 'double_form.html', {'form': form})
+
+
+def guide(request,room_name):
+    if Session.objects.filter(session_name=room_name).exists():
+        s = Session.objects.get(session_name=room_name)
+        p = Player.objects.get(player_session=s.newid)
+    else:
+        return redirect('home')
+    if request.method == 'POST':
+        if p.player2_name is None:
+            return HttpResponseRedirect(reverse(single_game, kwargs={'session_key':s.newid}))
+        else:
+            return HttpResponseRedirect(reverse(double_game, kwargs={'session_key':s.newid}))
+    else:
+        return render(request, 'guide.html', {'room_name':room_name, 'session_key': s.newid,
+'P1': p.player1_name, 'P2': p.player2_name, 'P1_color': p.player1_color, 'P2_color': p.player2_color})
+
+
+def single_game(request, session_key):
+    s = Session.objects.get(newid=session_key)
+    p = Player.objects.get(player_session=s.newid)
+
+    if p.player1_color == "white":
+        x = random.choice('ABCDEFGHIJKLMNOPQRS')
+        y = random.randrange(1,20)
+        data = {'room': s.newid, 'color': "black" , 'x1': x, 'y1': y, 'x2': '', 'y2': 0}
+        requests.post('http://turnincode.cafe24.com:8880/api/sessions/'+str(s.newid)+'/stones/', data=data)
+
+    return render(request, 'single_room.html', {'room_name': s.session_name, 'P1': p.player1_name, 'P1_color': p.player1_color})
+
+
+def double_game(request, session_key):
+    if Session.objects.filter(newid=session_key).exists():
+        s = Session.objects.get(newid=session_key)
+        p = Player.objects.get(player_session=s.newid)
+        return render(request, 'double_room.html', {'room_name': s.session_name, 'P1': p.player1_name, 'P2': p.player2_name, 'P1_color': p.player1_color, 'P2_color': p.player2_color})
     else:
         return redirect('home')
 
-def index(request):
-    colorNum = random.randrange(1,3)
-    colorNum = 1
-    if colorNum == 1:
-        color = "white"
-    else :
-        color = "black"
-    
-    session_key = request.COOKIES.get(settings.SESSION_COOKIE_NAME)
-    
-    if session_key is None:
-        request.session.set_test_cookie()
-        return render(request, 'index.html', {'color':"No Session ID, refresh page!"})
 
-    elif Session.objects.filter(session_name=session_key).exists():
-        s = Session.objects.get(session_name=session_key)
-        return render(request, 'index.html', {'session_name':s.newid, 'session_id':s.newid, "color":color})
-    
-    else: 
-        nid = makeRandomString()
-        s = Session(newid=nid, session_name = str(session_key), color=color, status=True)
-        s.save()
+def watch(request):
+    return render(request, 'list.html')
 
-        if s.color == "white":
-            time.sleep(1)
-            monkey.first_stone(request, str(s.newid))
-            
-    return render(request, 'index.html', {'session_name':s.newid, 'session_id':s.newid, "color":s.color})
+
+class JSONResponse(HttpResponse):
+    def __init__(self, data, **kwargs):
+        content = JSONRenderer().render(data)
+        kwargs['content_type'] = 'application/json'
+        super(JSONResponse, self).__init__(content, **kwargs)
 
 
 def getSession(request):
@@ -141,9 +165,15 @@ def getSession(request):
     return JsonResponse(str(s.newid), safe=False)
 
 
+def getSession2(request, room_name):
+    s = Session.objects.get(newid=room_name)
+    return JsonResponse(str(s.newid), safe=False)
+
+
 class SessionViewSet(NestedViewSetMixin, ModelViewSet):
     serializer_class = SessionSerializer
     queryset = Session.objects.all()
+
  
 class StoneViewSet(NestedViewSetMixin, ModelViewSet):
     serializer_class = StoneSerializer
@@ -171,11 +201,11 @@ class StoneViewSet(NestedViewSetMixin, ModelViewSet):
         resultOmok.save()
          
         program_status = Session.objects.get(newid=resultRoom).status
-        clientColor = Session.objects.get(newid=resultRoom).color
+        player = Player.objects.get(player_session=resultRoom)
         if(program_status is not False):
-            if(clientColor is not None):
-                if(str(Stone.objects.last().color) == clientColor):
-                    if(clientColor == "white"):
+            if(player.player2_name is None):
+                if(str(Stone.objects.last().color) == player.player1_color):
+                    if(player.player1_color == "white"):
                         mColor = "black"
                     else:
                         mColor = "white"
@@ -195,19 +225,17 @@ class StoneViewSet(NestedViewSetMixin, ModelViewSet):
 #        s = Session.objects.get(session_name=session_key)
 #        return Stone.objects.filter(room=s.id)
 
+
 class BlackViewSet(NestedViewSetMixin, ModelViewSet):
     serializer_class = BlackSerializer
     queryset = Black.objects.all()
+
 
 class WhiteViewSet(NestedViewSetMixin, ModelViewSet):
     serializer_class = WhiteSerializer
     queryset = White.objects.all()
 
 
-def getSession2(request, room_name):
-    s = Session.objects.get(session_name=room_name)
-    return JsonResponse(str(s.newid), safe=False)
-    
 def ResultData(request, sessionid):
     tmp = ResultOmok.objects.filter(room=sessionid)
     black = tmp.filter(color="black")
@@ -323,6 +351,9 @@ def ResultData(request, sessionid):
                         cnt+=1
                 if cnt == 6:
                     result = str('Black WIN !!! ')
+                    if s is not None:
+                        s.status=False
+                        s.save()
                     return JsonResponse(result, safe=False)
                 else:
                     cnt = 0
@@ -333,6 +364,9 @@ def ResultData(request, sessionid):
                         cnt+=1
                 if cnt == 6:
                     result = str('White WIN !!! ')
+                    if s is not None:
+                        s.status=False
+                        s.save()
                     return JsonResponse(result, safe=False)
                 else:
                     cnt = 0  
