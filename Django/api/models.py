@@ -4,12 +4,17 @@ from django.db import models
 class Session(models.Model):
 	newid = models.CharField(primary_key=True, max_length=10, unique=True)
 	session_name = models.CharField(max_length=200, unique=True)
-	color = models.CharField(max_length = 10, null=True, blank=True)
-	manager_id = models.CharField(max_length=50, null=True, blank=True)
 	status = models.BooleanField(default=False)
 
 	def __str__(self):
 		return self.session_name
+
+class Player(models.Model):
+        player_session = models.ForeignKey(Session, related_name='player_session', on_delete=models.CASCADE, null=True, blank=True)
+        player1_name = models.CharField(max_length = 50)
+        player2_name = models.CharField(max_length = 50, null=True, blank=True)
+        player1_color = models.CharField(max_length = 10, default="")
+        player2_color = models.CharField(max_length = 10, null=True, blank=True)
 
 class Stone(models.Model):
 	room = models.ForeignKey(Session, related_name='stone_session', on_delete=models.CASCADE, null=True, blank=True)

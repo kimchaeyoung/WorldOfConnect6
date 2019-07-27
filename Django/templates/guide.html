@@ -1,11 +1,141 @@
-<h2><center>Guide</center></h2>
-<p><h3>room <b>{{room_name}}</b></h3></p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>CSS Website Layout</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
-<h5> Following is your API url. You can get or post stone data using it. </h5>
-<p>GET /api/sessions/{{session_key}}/stones
-<p>POST /api/sessions/{{session_key}}/stones { 'room': {{session_key}}, 'color': {{color}}, 'x1': A-S, 'y1':1-19, 'x2':A-S, 'y2':1-19 }</p>
+<style>
+.basic {
+  background-color: white;
+  border-style: solid;
+  border-radius: 25px;
+  border-width: 2px;
+  border-color: black;
+  color: black;
+  float: left;
+  width: 49%;
+}
+.left-half {
+  background-color: {{P1_color}};
+  border-style: solid;
+  border-radius: 25px;
+  border-width: 2px;
+  border-color: black;
+  color: {{P2_color}};
+  float: left;
+  width: 49%;
+}
+.right-half {
+  background-color: {{P2_color}};
+  border-style: solid;
+  border-radius: 25px;
+  border-width: 2px;
+  border-color: black;
+  color: {{P1_color}};
+  float: right;
+  width: 49%;
+}
+.row:after {
+  content: "";
+  padding: 10px;
+  display: table;
+  clear: both;
+}
+.samplecode {
+  background-color: #D8D8D8;
+  width: 100%
+}
+.footer {
+  padding: 10px;
+  text-align: center;
+}
 
-<form action="/guide/{{room_name}}/", method="post">
-{% csrf_token %}
-<p><input type="submit" value="I Checked this."></p>
-</form>
+</style>
+
+<p><a href="{% url 'home' %}">홈으로</a></p>
+
+<h1><center>Player Guide</center></h1>
+<p><h2>Game room is '{{room_name}}'.</b></h2></p>
+
+<h4> Following is your API url. You can get or post stone data using it. </h4>
+</head>
+
+<body>
+{% if P2 is None %}
+<div class ="row">
+<div class="basic">
+  <p> Player 1 <br/>
+  <br/><h5> id: {{P1}}
+  <h5> color: {{P1_color}}
+  <h5>GET /api/sessions/{{session_key}}/stones
+  <h5>POST /api/sessions/{{session_key}}/stones { 'room': {{session_key}}, 'color': {{P1_color}}, 'x1': A-S, 'y1':1-19, 'x2':A-S, 'y2':1-19 }</p><br/>
+</div>
+</div>
+
+{% else %}
+<div class="left-half">
+  <p> Player 1 <br/> 
+  <br/><h5> id: {{P1}}
+  <h5> color: {{P1_color}}
+  <h5>GET /api/sessions/{{session_key}}/stones
+  <h5>POST /api/sessions/{{session_key}}/stones { 'room': {{session_key}}, 'color': {{P1_color}}, 'x1': A-S, 'y1':1-19, 'x2':A-S, 'y2':1-19 }</p><br/>
+</div>
+
+<div class="row">
+  <div class="right-half">
+    <p> Player 2 <br/>
+    <br/><h5> id: {{P2}} 
+    <h5> color: {{P2_color}} 
+    <h5>GET /api/sessions/{{session_key}}/stones
+    <h5>POST /api/sessions/{{session_key}}/stones { 'room': {{session_key}}, 'color': {{P2_color}}, 'x1': A-S, 'y1':1-19, 'x2':A-S, 'y2':1-19 }</p><br/>
+  </div>
+</div>
+{% endif %}
+
+<link rel="stylesheet" href="http://codemirror.net/lib/codemirror.css">
+<script src="http://codemirror.net/lib/codemirror.js"></script>
+<script src="http://codemirror.net/addon/edit/matchbrackets.js"></script>
+<script src="http://codemirror.net/addon/edit/continuecomment.js"></script>
+<script src="http://codemirror.net/mode/python/python.js"></script>
+
+<div>
+ <h4> Sample code [python] </h4>
+  <textarea rows="4" cols="50" id="codesnippet_readonly">
+    #GET
+    def get(text, session):
+      url = 'http://turnincode.cafe24.com:8880/api/sessions/{{session_key}}/stones/'
+      res = requests.get(url)
+      if res.status_code == 404:
+        time.sleep(1)
+        getUrl(session)
+      if (text == len(res.text)):
+        time.sleep(1)
+        getUrl(session)
+      else:
+        text_len = len(res.text)
+    
+    #POST
+    def post():
+      data = {'room': {{session_key}}, 'color': {{P1_color}}, 'x1' : 'A', 'y1' : 1, 'x2' : 'B', 'y2' : 1}
+      requests.post('http://turnincode.cafe24.com:8880/api/sessions/{{session_key}}/stones/', data=data) 
+  </textarea>
+</div>
+
+<div class="footer">
+  <form action="/guide/{{room_name}}/", method="post">
+    {% csrf_token %}
+    <p><input type="submit" value="I Checked this."></p>
+  </form>
+</div>
+
+<script type = "text/javascript"/>
+    var readOnlyCodeMirror = CodeMirror.fromTextArea(document.getElementById('codesnippet_readonly'), {
+    mode: "python",
+    theme: "default",
+    lineNumbers: true,
+    readOnly: true // This make the textarea readonly
+    });
+</script>
+</body>
+

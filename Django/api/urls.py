@@ -7,17 +7,15 @@ from . import views
 urlpatterns = [
     url(r'^home/', views.home, name='home'),
     url('', include('django.contrib.auth.urls')),
-    url(r'^index/', views.index, name='index'),
+    url(r'^single/', views.single, name='single'),
+    url(r'^double/', views.double, name='double'),
+    url(r'^guide/(?P<room_name>[^/]+)/', views.guide, name='guide'),
+    url(r'^single_game/(?P<session_key>[^/]+)/$', views.single_game, name='single_game'),
+    url(r'^double_game/(?P<session_key>[^/]+)/$', views.double_game, name='double_game'),
     url(r'^resultdata/(?P<sessionid>[^/]+)/$', views.ResultData),
     url(r'^getsession/$', views.getSession),
     url(r'^getsession2/(?P<room_name>[^/]+)/', views.getSession2),
-    url(r'^manager/', views.managePage, name='managePage'),
-    url(r'^guide/(?P<room_name>[^/]+)/', views.guide, name='guide'),
-    url(r'^form/', views.form, name='form'),
-    url(r'^game/(?P<session_name>[^/]+)/$', views.game, name='game'),
     url(r'^watch/', views.watch, name='watch'),
-    url(r'^createSession/', views.createSession, name='createSession'),
-    url(r'^manageSession/(?P<room_name>[^/]+)/', views.manageSession, name='manageSession'),
 ]
 
 #urlpatterns = format_suffix_patterns(urlpatterns)
