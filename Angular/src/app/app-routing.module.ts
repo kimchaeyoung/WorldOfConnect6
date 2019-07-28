@@ -5,8 +5,8 @@ import { ManagerComponent } from './manager/manager.component';
 import { BattleComponent } from './battle/battle.component';
 
 const routes: Routes = [
-  { path: 'index', component: OmokComponent },
-  { path: 'game/:id', component: BattleComponent },
+  { path: 'single_game/:id', component: OmokComponent },
+  { path: 'double_game/:id', component: BattleComponent },
   { path: 'manager', component: ManagerComponent },
 ];
 
