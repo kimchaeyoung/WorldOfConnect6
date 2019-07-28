@@ -181,7 +181,7 @@ def getSession(request):
 
 
 def getSession2(request, room_name):
-    s = Session.objects.get(newid=room_name)
+    s = Session.objects.get(session_name=room_name)
     return JsonResponse(str(s.newid), safe=False)
 
 
