@@ -13,6 +13,8 @@ urlpatterns = [
     url(r'^single_game/(?P<session_key>[^/]+)/$', views.single_game, name='single_game'),
     url(r'^double_game/(?P<session_key>[^/]+)/$', views.double_game, name='double_game'),
     url(r'^resultdata/(?P<sessionid>[^/]+)/$', views.ResultData),
+    url(r'^api-auth/', include('rest_framework.urls',
+                               namespace='rest_framework')),
     url(r'^getsession/$', views.getSession),
     url(r'^getsession2/(?P<room_name>[^/]+)/', views.getSession2),
     url(r'^watch/', views.watch, name='watch'),
