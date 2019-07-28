@@ -135,7 +135,7 @@ def guide(request,room_name):
         if p.player2_name is None:
             return HttpResponseRedirect(reverse(single_game, kwargs={'session_key':s.newid}))
         else:
-            return HttpResponseRedirect(reverse(double_game, kwargs={'session_key':s.newid}))
+            return HttpResponseRedirect(reverse(double_game, kwargs={'session_key':room_name}))
     else:
         return render(request, 'guide.html', {'room_name':room_name, 'session_key': s.newid,
 'P1': p.player1_name, 'P2': p.player2_name, 'P1_color': p.player1_color, 'P2_color': p.player2_color})
@@ -155,8 +155,8 @@ def single_game(request, session_key):
 
 
 def double_game(request, session_key):
-    if Session.objects.filter(newid=session_key).exists():
-        s = Session.objects.get(newid=session_key)
+    if Session.objects.filter(session_name=session_key).exists():
+        s = Session.objects.get(session_name=session_key)
         p = Player.objects.get(player_session=s.newid)
         return render(request, 'double_room.html', {'room_name': s.session_name, 'P1': p.player1_name, 'P2': p.player2_name, 'P1_color': p.player1_color, 'P2_color': p.player2_color})
     else:
