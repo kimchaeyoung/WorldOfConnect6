@@ -16,8 +16,8 @@ def second_stone(request, room_id, color):
     y1 = random.randrange(1,20)
     y2 = random.randrange(1,20)
 
-    data = { 'room': room_id, 'color': color, 'x1': x1, 'y1': y1, 'x2': x2, 'y2': y2 }
-    url = request.build_absolute_uri('/')[:-1]+"/api/sessions/"+str(room_id)+"/stones/"
+    data = { 'room': room_id, 'x1': x1, 'y1': y1, 'x2': x2, 'y2': y2 }
+    url = request.build_absolute_uri('/')[:-1]+"/api/sessions/"+str(room_id)+"/" + str(color)+"s/"
     requests.post(url, data=data)
 
   

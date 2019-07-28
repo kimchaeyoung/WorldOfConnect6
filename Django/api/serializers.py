@@ -13,11 +13,17 @@ class UserSerializer(serializers.ModelSerializer):
                 model = User
                 fields = ('id', 'username', 'stones')
 
+'''
 class StoneSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = Stone
 		fields = ('id', 'room', 'color', 'x1', 'y1', 'x2', 'y2')
+'''
 
+class StoneSerializer(serializers.ModelSerializer):
+	class Meta:
+		model = ResultOmok
+		fields = ('id', 'room', 'color', 'x', 'y')
 
 class BlackSerializer(serializers.ModelSerializer):
 	class Meta:

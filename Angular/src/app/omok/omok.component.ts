@@ -85,17 +85,12 @@ export class OmokComponent implements OnInit {
       {
         count++;
         var color = entry.color;
-        var coor_X1 = entry.x1;
-        var coor_Y1 = entry.y1;
-        var coor_X2 = entry.x2;
-        var coor_Y2 = entry.y2;
+        var coor_X1 = entry.x;
+        var coor_Y1 = entry.y;
         var ctx = canvas.getContext('2d');
 
         var x1 = this.convX(coor_X1);
-        var x2 = this.convX(coor_X2);
-
         var y1 = this.convY(coor_Y1);
-        var y2 = this.convY(coor_Y2);
 
         var line_color = "black";
         if (this.turn == count)
@@ -110,11 +105,6 @@ export class OmokComponent implements OnInit {
         ctx.strokeStyle = line_color;
         ctx.stroke();
         
-        ctx.beginPath();
-        ctx.arc(x2, y2, 19, 0, 2 * Math.PI, false);
-        ctx.fill();
-        ctx.lineWidth = 2;
-        ctx.stroke();
        
         if (color == "black") 
             ctx.fillStyle = "white";
@@ -123,7 +113,6 @@ export class OmokComponent implements OnInit {
  
         ctx.font = "17px Comic Sans MS";
         ctx.fillText(count , x1-5.8, y1+6);
-        ctx.fillText(count, x2-5.8, y2+6);
 
 
 
