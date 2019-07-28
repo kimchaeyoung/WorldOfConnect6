@@ -7,11 +7,7 @@
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-<<<<<<< HEAD
-module.exports = [[module.i, "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiIuLi9zcmMvc3R5bGVzLmNzcyJ9 */", '', '']]
-=======
 module.exports = [[module.i, "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiIuLi9zdHlsZXMuY3NzIn0= */", '', '']]
->>>>>>> origin/api_hyejin
 
 /***/ }),
 
@@ -561,11 +557,7 @@ if(false) {}
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-<<<<<<< HEAD
-module.exports = __webpack_require__(/*! /home/cykim/WorldOfConnect6/Angular/src/styles.css */"./src/styles.css");
-=======
-module.exports = __webpack_require__(/*! /home/bodago/WorldOfConnect6/Angular/src/styles.css */"./src/styles.css");
->>>>>>> origin/api_hyejin
+module.exports = __webpack_require__(/*! /home/bodago/new/WorldOfConnect6/Angular/src/styles.css */"./src/styles.css");
 
 
 /***/ })
