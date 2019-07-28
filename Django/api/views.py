@@ -12,6 +12,7 @@ from django.http import Http404, HttpResponseRedirect, JsonResponse
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework import permissions
 
 import random, requests, time, string
 from django.conf import settings
@@ -35,9 +36,9 @@ def home(request):
 
 
 def makeRandomString():
-    randomStream = ""
-    for i in range(0,6):
-        randomStream += str(random.choice(string.ascii_letters))
+    randomStream=""
+    for i in range(0,8):
+        randomStream += str(random.choice(string.ascii_letters+string.digits))
     return randomStream
 
 
@@ -68,8 +69,13 @@ def single(request):
             s = Session(newid=nid, session_name = str(session_key), status=True)
             s.save()
 
-        player = Player(player_session=s, player1_name=player, player2_name=None,  player1_color=color, player2_color=None)
-        player.save()
+            p = Player(player_session=s, player1_name=player, player2_name=None,  player1_color=color, player2_color=None)
+            p.save()
+            
+            user = User(username=str(player), is_staff=True)
+            user.save()
+            user.set_password(str(s.newid))
+            user.save()
 
         return HttpResponseRedirect(reverse(guide, kwargs={'room_name':s.session_name}))
     else:
@@ -101,8 +107,17 @@ def double(request):
                 s = Session(newid=nid, session_name = str(room), status=True)
                 s.save()
 
-            player = Player(player_session=s, player1_name=player1, player2_name=player2, player1_color=p1_color, player2_color=p2_color)
-            player.save()
+                player = Player(player_session=s, player1_name=player1, player2_name=player2, player1_color=p1_color, player2_color=p2_color)
+                player.save()
+                
+                user1 = User.objects.create(username=str(player1), is_staff=True)
+                user1.save()
+                user1.set_password(str(s.newid))
+                user1.save()
+                user2 = User.objects.create(username=str(player2), is_staff=True)
+                user2.save()
+                user2.set_password(str(s.newid))
+                user2.save()
 
             return HttpResponseRedirect(reverse(guide, kwargs={'room_name':room}))
     else:
@@ -173,6 +188,12 @@ def getSession2(request, room_name):
 class SessionViewSet(NestedViewSetMixin, ModelViewSet):
     serializer_class = SessionSerializer
     queryset = Session.objects.all()
+
+
+class UserViewSet(NestedViewSetMixin, ModelViewSet):
+    serializer_clss = UserSerializer
+    queryset = User.objects.all()
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
 
  
 class StoneViewSet(NestedViewSetMixin, ModelViewSet):
