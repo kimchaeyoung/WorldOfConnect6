@@ -259,27 +259,30 @@ class BlackViewSet(NestedViewSetMixin, ModelViewSet):
 
         tmp = Black.objects.last()
         resultRoom = Session.objects.get(session_name=tmp.room).newid
-        resultName = Session.objects.get(session_name=tmp.room).session_name
-        resultColor = "black"
-        resultX1 = str(tmp.x1)
-        resultY1 = tmp.y1
-        resultX2 = str(tmp.x2)
-        resultY2 = tmp.y2
-        resultOmok = ResultOmok(room=resultRoom, color = resultColor, x = resultX1 , y = resultY1)
-        resultOmok.save()
-        resultOmok = ResultOmok(room=resultRoom, color = resultColor, x = resultX2 , y = resultY2)
-        resultOmok.save()
-
         program_status = Session.objects.get(newid=resultRoom).status
-        player = Player.objects.get(player_session=resultRoom)
-        if(program_status is not False):
+        if(program_status is False):
+            print("False")
+            raise Exception('Status False')
+        else:
+            resultName = Session.objects.get(session_name=tmp.room).session_name
+            resultColor = "black"
+            resultX1 = str(tmp.x1)
+            resultY1 = tmp.y1
+            resultX2 = str(tmp.x2)
+            resultY2 = tmp.y2
+            resultOmok = ResultOmok(room=resultRoom, color = resultColor, x = resultX1 , y = resultY1)
+            resultOmok.save()
+            resultOmok = ResultOmok(room=resultRoom, color = resultColor, x = resultX2 , y = resultY2)
+            resultOmok.save()
+
+            player = Player.objects.get(player_session=resultRoom)
             if(player.player2_name is None):
                 if(player.player1_color == "black"):
                     mColor = "white"
                     time.sleep(2)
                     monkey.second_stone(request, resultRoom, mColor)
 
-        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+            return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
     def perform_create(self, serializer):
         serializer.save()
@@ -297,27 +300,30 @@ class WhiteViewSet(NestedViewSetMixin, ModelViewSet):
 
         tmp = White.objects.last()
         resultRoom = Session.objects.get(session_name=tmp.room).newid
-        resultName = Session.objects.get(session_name=tmp.room).session_name
-        resultColor = "white"
-        resultX1 = str(tmp.x1)
-        resultY1 = tmp.y1
-        resultX2 = str(tmp.x2)
-        resultY2 = tmp.y2
-        resultOmok = ResultOmok(room=resultRoom, color = resultColor, x = resultX1 , y = resultY1)
-        resultOmok.save()
-        resultOmok = ResultOmok(room=resultRoom, color = resultColor, x = resultX2 , y = resultY2)
-        resultOmok.save()
-
         program_status = Session.objects.get(newid=resultRoom).status
-        player = Player.objects.get(player_session=resultRoom)
-        if(program_status is not False):
+        if(program_status is False):
+            print("False")
+            raise Exception('Status False')
+        else:
+            resultName = Session.objects.get(session_name=tmp.room).session_name
+            resultColor = "white"
+            resultX1 = str(tmp.x1)
+            resultY1 = tmp.y1
+            resultX2 = str(tmp.x2)
+            resultY2 = tmp.y2
+            resultOmok = ResultOmok(room=resultRoom, color = resultColor, x = resultX1 , y = resultY1)
+            resultOmok.save()
+            resultOmok = ResultOmok(room=resultRoom, color = resultColor, x = resultX2 , y = resultY2)
+            resultOmok.save()
+
+            player = Player.objects.get(player_session=resultRoom)
             if(player.player2_name is None):
                 if(player.player1_color == "white"):
                     mColor = "black"
                     time.sleep(2)
                     monkey.second_stone(request, resultRoom, mColor)
 
-        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+            return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
     def perform_create(self, serializer):
         serializer.save()
