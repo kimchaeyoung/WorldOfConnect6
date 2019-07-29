@@ -15,6 +15,8 @@ class Player(models.Model):
         player2_name = models.CharField(max_length = 50, null=True, blank=True)
         player1_color = models.CharField(max_length = 10, default="")
         player2_color = models.CharField(max_length = 10, null=True, blank=True)
+        player1_status = models.BooleanField(default=False)
+        player2_status = models.BooleanField(default=False)
 
 class Stone(models.Model):
 	room = models.ForeignKey(Session, related_name='stone_session', on_delete=models.CASCADE, null=True, blank=True)

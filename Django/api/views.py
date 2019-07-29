@@ -144,13 +144,9 @@ def guide(request,room_name):
 def single_game(request, session_key):
     s = Session.objects.get(newid=session_key)
     p = Player.objects.get(player_session=s.newid)
-
     if p.player1_color == "white":
-        x = random.choice('ABCDEFGHIJKLMNOPQRS')
-        y = random.randrange(1,20)
-        data = {'room': s.newid, 'x1': x, 'y1': y, 'x2': '', 'y2': 0}
-        requests.post('http://turnincode.cafe24.com:8880/api/sessions/'+str(s.newid)+'/blacks/', data=data)
-
+        monkey.first_stone(request, s.newid)
+    
     return render(request, 'single_room.html', {'room_name': s.session_name, 'P1': p.player1_name, 'P1_color': p.player1_color})
 
 
@@ -161,6 +157,43 @@ def double_game(request, session_key):
         return render(request, 'double_room.html', {'room_name': s.session_name, 'P1': p.player1_name, 'P2': p.player2_name, 'P1_color': p.player1_color, 'P2_color': p.player2_color})
     else:
         return redirect('home')
+
+def single_enter(player):
+    if player.player1_status is False:
+        player.player1_status = True
+        player.save()
+
+def double_enter(player, num):
+    if num == 1:
+        if player.player1_status is False:
+            player.player1_status = True
+    else:
+        if player.player2_status is False:
+            player.player2_status = True
+    player.save()
+
+def single_status(request, session_key):
+    if Session.objects.filter(newid=session_key).exists():
+        s = Session.objects.get(newid=session_key)
+        p = Player.objects.get(player_session=s.newid)
+        if p.player1_status is True:
+            return JsonResponse("입장하였습니다", safe=False)
+    return HttpResponse()          
+
+def double_status(request, session_key):
+    if Session.objects.filter(newid=session_key).exists():
+        s = Session.objects.get(newid=session_key)
+        p = Player.objects.get(player_session=s.newid)
+        player1_status = "대기중입니다"
+        player2_status = "대기중입니다"
+        if p.player1_status is True:
+            player1_status = "입장하였습니다"
+        if p.player2_status is True:
+            player2_status = "입장하였습니다"
+        
+        status = {'player1_status' : player1_status , 'player2_status' : player2_status}
+        return JsonResponse(status, safe=False)
+    return HttpResponse()          
 
 
 def watch(request):
@@ -191,62 +224,16 @@ class SessionViewSet(NestedViewSetMixin, ModelViewSet):
 
 
 class UserViewSet(NestedViewSetMixin, ModelViewSet):
-    serializer_clss = UserSerializer
+    serializer_class = UserSerializer
     queryset = User.objects.all()
-    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+#    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
 
  
 class StoneViewSet(NestedViewSetMixin, ModelViewSet):
     serializer_class = StoneSerializer
     queryset = ResultOmok.objects.all()
-'''
-    def create(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
-        headers = self.get_success_headers(serializer.data)
+#    permission_classes = (permissions.IsAuthenticated,)
 
-        tmp = Stone.objects.last()
-        resultRoom = Session.objects.get(session_name = tmp.room).newid
-        resultName = Session.objects.get(session_name = tmp.room).session_name
-        resultColor = str(tmp.color)
-        resultX1 = str(tmp.x1)
-        resultY1 = tmp.y1
-        resultX2 = str(tmp.x2)
-        resultY2 = tmp.y2
-
-        resultOmok = ResultOmok(room = resultRoom, color = resultColor, x = resultX1, y = resultY1)
-        resultOmok.save()
-        
-        resultOmok = ResultOmok(room = resultRoom, color = resultColor, x = resultX2, y = resultY2)
-        resultOmok.save()
-         
-        program_status = Session.objects.get(newid=resultRoom).status
-        player = Player.objects.get(player_session=resultRoom)
-        if(program_status is not False):
-            if(player.player2_name is None):
-                if(str(Stone.objects.last().color) == player.player1_color):
-                    if(player.player1_color == "white"):
-                        mColor = "black"
-                    else:
-                        mColor = "white"
-
-                    time.sleep(2)
-                    monkey.second_stone(request, resultRoom, mColor)
-        else:
-            print("session finish")
-
-        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
-
-    def perform_create(self, serializer):
-        serializer.save()
-
-#    def get_queryset(self):
-#        session_key = self.request.COOKIES.get(settings.SESSION_COOKIE_NAME)
-#        s = Session.objects.get(session_name=session_key)
-#        return Stone.objects.filter(room=s.id)
-
-'''
 class BlackViewSet(NestedViewSetMixin, ModelViewSet):
     serializer_class = BlackSerializer
     queryset = Black.objects.all()
@@ -284,6 +271,17 @@ class BlackViewSet(NestedViewSetMixin, ModelViewSet):
     def perform_create(self, serializer):
         serializer.save()
 
+    def get_queryset(self):
+        s = Session.objects.get(newid=self.kwargs['parent_lookup_room'])
+        player = Player.objects.get(player_session=s.newid)
+        if player.player2_name is None:
+            single_enter(player)
+        else:
+            if player.player1_color == "white":
+                double_enter(player,1)
+            else:
+                double_enter(player,2)
+        return Black.objects.filter(room=s.newid)
 
 class WhiteViewSet(NestedViewSetMixin, ModelViewSet):
     serializer_class = WhiteSerializer
@@ -321,7 +319,18 @@ class WhiteViewSet(NestedViewSetMixin, ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save()
-
+  
+    def get_queryset(self):
+        s = Session.objects.get(newid=self.kwargs['parent_lookup_room'])
+        player = Player.objects.get(player_session=s.newid)
+        if player.player2_name is None:
+            single_enter(player)
+        else:
+            if player.player1_color == "black":
+                double_enter(player,1)
+            else:
+                double_enter(player,2)
+        return White.objects.filter(room=s.newid)
 
 def ResultData(request, sessionid):
     tmp = ResultOmok.objects.filter(room=sessionid)

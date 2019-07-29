@@ -73,7 +73,7 @@ var AppRoutingModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "#main\r\n{\r\n\tmargin: 0 auto;\r\n\theight: 600px;\r\n        position: relative;\r\n        width: 600px;\r\n        background: gold;\r\n}\r\n\r\n#board\r\n{\r\n        margin: 30px;\r\n        background-image: repeating-linear-gradient(0deg,transparent,transparent 29px, black 29px, black 30px), repeating-linear-gradient(-90deg,transparent,transparent 29px, black 29px, black 30px);\r\n        background-size: 30px 30px;\r\n        height: 541;\r\n        position: absolute;\r\n        width: 541;\r\n}\r\n\r\n.smallcircle\r\n{\r\n        border-radius: 50%;\r\n        width: 4;\r\n        height: 4;\r\n        background: black;\r\n        border: solid black;\r\n        position: absolute;\r\n}\r\n\r\n#smallcircle1\r\n{\r\n\ttop: 117px;\r\n        left: 117px;\r\n}\r\n\r\n#smallcircle2\r\n{\r\n        top: 117px;\r\n        left: 297px;\r\n}\r\n\r\n#smallcircle3\r\n{\r\n        top: 117px;\r\n        left: 477px;\r\n}\r\n\r\n#smallcircle4\r\n{\r\n\ttop: 297px;\r\n        left: 117px;\r\n}\r\n\r\n#smallcircle5\r\n{\r\n\ttop: 297px;\r\n        left: 297px;\r\n}\r\n\r\n#smallcircle6\r\n{\r\n\ttop: 297px;\r\n        left: 477px;\r\n}\r\n\r\n#smallcircle7\r\n{\r\n\ttop: 477px;\r\n        left: 117px;\r\n}\r\n\r\n#smallcircle8\r\n{\r\n\ttop: 477px;\r\n        left: 297px;\r\n}\r\n\r\n#smallcircle9\r\n{\r\n\ttop: 477px;\r\n        left: 477px;\r\n}\r\n\r\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImFwcC9hcHAuY29tcG9uZW50LmNzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTs7Q0FFQyxjQUFjO0NBQ2QsYUFBYTtRQUNOLGtCQUFrQjtRQUNsQixZQUFZO1FBQ1osZ0JBQWdCO0FBQ3hCOztBQUVBOztRQUVRLFlBQVk7UUFDWiw4TEFBOEw7UUFDOUwsMEJBQTBCO1FBQzFCLFdBQVc7UUFDWCxrQkFBa0I7UUFDbEIsVUFBVTtBQUNsQjs7QUFFQTs7UUFFUSxrQkFBa0I7UUFDbEIsUUFBUTtRQUNSLFNBQVM7UUFDVCxpQkFBaUI7UUFDakIsbUJBQW1CO1FBQ25CLGtCQUFrQjtBQUMxQjs7QUFFQTs7Q0FFQyxVQUFVO1FBQ0gsV0FBVztBQUNuQjs7QUFFQTs7UUFFUSxVQUFVO1FBQ1YsV0FBVztBQUNuQjs7QUFFQTs7UUFFUSxVQUFVO1FBQ1YsV0FBVztBQUNuQjs7QUFFQTs7Q0FFQyxVQUFVO1FBQ0gsV0FBVztBQUNuQjs7QUFFQTs7Q0FFQyxVQUFVO1FBQ0gsV0FBVztBQUNuQjs7QUFFQTs7Q0FFQyxVQUFVO1FBQ0gsV0FBVztBQUNuQjs7QUFFQTs7Q0FFQyxVQUFVO1FBQ0gsV0FBVztBQUNuQjs7QUFFQTs7Q0FFQyxVQUFVO1FBQ0gsV0FBVztBQUNuQjs7QUFFQTs7Q0FFQyxVQUFVO1FBQ0gsV0FBVztBQUNuQiIsImZpbGUiOiJhcHAvYXBwLmNvbXBvbmVudC5jc3MiLCJzb3VyY2VzQ29udGVudCI6WyIjbWFpblxyXG57XHJcblx0bWFyZ2luOiAwIGF1dG87XHJcblx0aGVpZ2h0OiA2MDBweDtcclxuICAgICAgICBwb3NpdGlvbjogcmVsYXRpdmU7XHJcbiAgICAgICAgd2lkdGg6IDYwMHB4O1xyXG4gICAgICAgIGJhY2tncm91bmQ6IGdvbGQ7XHJcbn1cclxuXHJcbiNib2FyZFxyXG57XHJcbiAgICAgICAgbWFyZ2luOiAzMHB4O1xyXG4gICAgICAgIGJhY2tncm91bmQtaW1hZ2U6IHJlcGVhdGluZy1saW5lYXItZ3JhZGllbnQoMGRlZyx0cmFuc3BhcmVudCx0cmFuc3BhcmVudCAyOXB4LCBibGFjayAyOXB4LCBibGFjayAzMHB4KSwgcmVwZWF0aW5nLWxpbmVhci1ncmFkaWVudCgtOTBkZWcsdHJhbnNwYXJlbnQsdHJhbnNwYXJlbnQgMjlweCwgYmxhY2sgMjlweCwgYmxhY2sgMzBweCk7XHJcbiAgICAgICAgYmFja2dyb3VuZC1zaXplOiAzMHB4IDMwcHg7XHJcbiAgICAgICAgaGVpZ2h0OiA1NDE7XHJcbiAgICAgICAgcG9zaXRpb246IGFic29sdXRlO1xyXG4gICAgICAgIHdpZHRoOiA1NDE7XHJcbn1cclxuXHJcbi5zbWFsbGNpcmNsZVxyXG57XHJcbiAgICAgICAgYm9yZGVyLXJhZGl1czogNTAlO1xyXG4gICAgICAgIHdpZHRoOiA0O1xyXG4gICAgICAgIGhlaWdodDogNDtcclxuICAgICAgICBiYWNrZ3JvdW5kOiBibGFjaztcclxuICAgICAgICBib3JkZXI6IHNvbGlkIGJsYWNrO1xyXG4gICAgICAgIHBvc2l0aW9uOiBhYnNvbHV0ZTtcclxufVxyXG5cclxuI3NtYWxsY2lyY2xlMVxyXG57XHJcblx0dG9wOiAxMTdweDtcclxuICAgICAgICBsZWZ0OiAxMTdweDtcclxufVxyXG5cclxuI3NtYWxsY2lyY2xlMlxyXG57XHJcbiAgICAgICAgdG9wOiAxMTdweDtcclxuICAgICAgICBsZWZ0OiAyOTdweDtcclxufVxyXG5cclxuI3NtYWxsY2lyY2xlM1xyXG57XHJcbiAgICAgICAgdG9wOiAxMTdweDtcclxuICAgICAgICBsZWZ0OiA0NzdweDtcclxufVxyXG5cclxuI3NtYWxsY2lyY2xlNFxyXG57XHJcblx0dG9wOiAyOTdweDtcclxuICAgICAgICBsZWZ0OiAxMTdweDtcclxufVxyXG5cclxuI3NtYWxsY2lyY2xlNVxyXG57XHJcblx0dG9wOiAyOTdweDtcclxuICAgICAgICBsZWZ0OiAyOTdweDtcclxufVxyXG5cclxuI3NtYWxsY2lyY2xlNlxyXG57XHJcblx0dG9wOiAyOTdweDtcclxuICAgICAgICBsZWZ0OiA0NzdweDtcclxufVxyXG5cclxuI3NtYWxsY2lyY2xlN1xyXG57XHJcblx0dG9wOiA0NzdweDtcclxuICAgICAgICBsZWZ0OiAxMTdweDtcclxufVxyXG5cclxuI3NtYWxsY2lyY2xlOFxyXG57XHJcblx0dG9wOiA0NzdweDtcclxuICAgICAgICBsZWZ0OiAyOTdweDtcclxufVxyXG5cclxuI3NtYWxsY2lyY2xlOVxyXG57XHJcblx0dG9wOiA0NzdweDtcclxuICAgICAgICBsZWZ0OiA0NzdweDtcclxufVxyXG4iXX0= */"
+module.exports = "#main\n{\n\tmargin: 0 auto;\n\theight: 600px;\n        position: relative;\n        width: 600px;\n        background: gold;\n}\n\n#board\n{\n        margin: 30px;\n        background-image: repeating-linear-gradient(0deg,transparent,transparent 29px, black 29px, black 30px), repeating-linear-gradient(-90deg,transparent,transparent 29px, black 29px, black 30px);\n        background-size: 30px 30px;\n        height: 541;\n        position: absolute;\n        width: 541;\n}\n\n.smallcircle\n{\n        border-radius: 50%;\n        width: 4;\n        height: 4;\n        background: black;\n        border: solid black;\n        position: absolute;\n}\n\n#smallcircle1\n{\n\ttop: 117px;\n        left: 117px;\n}\n\n#smallcircle2\n{\n        top: 117px;\n        left: 297px;\n}\n\n#smallcircle3\n{\n        top: 117px;\n        left: 477px;\n}\n\n#smallcircle4\n{\n\ttop: 297px;\n        left: 117px;\n}\n\n#smallcircle5\n{\n\ttop: 297px;\n        left: 297px;\n}\n\n#smallcircle6\n{\n\ttop: 297px;\n        left: 477px;\n}\n\n#smallcircle7\n{\n\ttop: 477px;\n        left: 117px;\n}\n\n#smallcircle8\n{\n\ttop: 477px;\n        left: 297px;\n}\n\n#smallcircle9\n{\n\ttop: 477px;\n        left: 477px;\n}\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uL2FwcC5jb21wb25lbnQuY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBOztDQUVDLGNBQWM7Q0FDZCxhQUFhO1FBQ04sa0JBQWtCO1FBQ2xCLFlBQVk7UUFDWixnQkFBZ0I7QUFDeEI7O0FBRUE7O1FBRVEsWUFBWTtRQUNaLDhMQUE4TDtRQUM5TCwwQkFBMEI7UUFDMUIsV0FBVztRQUNYLGtCQUFrQjtRQUNsQixVQUFVO0FBQ2xCOztBQUVBOztRQUVRLGtCQUFrQjtRQUNsQixRQUFRO1FBQ1IsU0FBUztRQUNULGlCQUFpQjtRQUNqQixtQkFBbUI7UUFDbkIsa0JBQWtCO0FBQzFCOztBQUVBOztDQUVDLFVBQVU7UUFDSCxXQUFXO0FBQ25COztBQUVBOztRQUVRLFVBQVU7UUFDVixXQUFXO0FBQ25COztBQUVBOztRQUVRLFVBQVU7UUFDVixXQUFXO0FBQ25COztBQUVBOztDQUVDLFVBQVU7UUFDSCxXQUFXO0FBQ25COztBQUVBOztDQUVDLFVBQVU7UUFDSCxXQUFXO0FBQ25COztBQUVBOztDQUVDLFVBQVU7UUFDSCxXQUFXO0FBQ25COztBQUVBOztDQUVDLFVBQVU7UUFDSCxXQUFXO0FBQ25COztBQUVBOztDQUVDLFVBQVU7UUFDSCxXQUFXO0FBQ25COztBQUVBOztDQUVDLFVBQVU7UUFDSCxXQUFXO0FBQ25CIiwiZmlsZSI6Ii4uL2FwcC5jb21wb25lbnQuY3NzIiwic291cmNlc0NvbnRlbnQiOlsiI21haW5cbntcblx0bWFyZ2luOiAwIGF1dG87XG5cdGhlaWdodDogNjAwcHg7XG4gICAgICAgIHBvc2l0aW9uOiByZWxhdGl2ZTtcbiAgICAgICAgd2lkdGg6IDYwMHB4O1xuICAgICAgICBiYWNrZ3JvdW5kOiBnb2xkO1xufVxuXG4jYm9hcmRcbntcbiAgICAgICAgbWFyZ2luOiAzMHB4O1xuICAgICAgICBiYWNrZ3JvdW5kLWltYWdlOiByZXBlYXRpbmctbGluZWFyLWdyYWRpZW50KDBkZWcsdHJhbnNwYXJlbnQsdHJhbnNwYXJlbnQgMjlweCwgYmxhY2sgMjlweCwgYmxhY2sgMzBweCksIHJlcGVhdGluZy1saW5lYXItZ3JhZGllbnQoLTkwZGVnLHRyYW5zcGFyZW50LHRyYW5zcGFyZW50IDI5cHgsIGJsYWNrIDI5cHgsIGJsYWNrIDMwcHgpO1xuICAgICAgICBiYWNrZ3JvdW5kLXNpemU6IDMwcHggMzBweDtcbiAgICAgICAgaGVpZ2h0OiA1NDE7XG4gICAgICAgIHBvc2l0aW9uOiBhYnNvbHV0ZTtcbiAgICAgICAgd2lkdGg6IDU0MTtcbn1cblxuLnNtYWxsY2lyY2xlXG57XG4gICAgICAgIGJvcmRlci1yYWRpdXM6IDUwJTtcbiAgICAgICAgd2lkdGg6IDQ7XG4gICAgICAgIGhlaWdodDogNDtcbiAgICAgICAgYmFja2dyb3VuZDogYmxhY2s7XG4gICAgICAgIGJvcmRlcjogc29saWQgYmxhY2s7XG4gICAgICAgIHBvc2l0aW9uOiBhYnNvbHV0ZTtcbn1cblxuI3NtYWxsY2lyY2xlMVxue1xuXHR0b3A6IDExN3B4O1xuICAgICAgICBsZWZ0OiAxMTdweDtcbn1cblxuI3NtYWxsY2lyY2xlMlxue1xuICAgICAgICB0b3A6IDExN3B4O1xuICAgICAgICBsZWZ0OiAyOTdweDtcbn1cblxuI3NtYWxsY2lyY2xlM1xue1xuICAgICAgICB0b3A6IDExN3B4O1xuICAgICAgICBsZWZ0OiA0NzdweDtcbn1cblxuI3NtYWxsY2lyY2xlNFxue1xuXHR0b3A6IDI5N3B4O1xuICAgICAgICBsZWZ0OiAxMTdweDtcbn1cblxuI3NtYWxsY2lyY2xlNVxue1xuXHR0b3A6IDI5N3B4O1xuICAgICAgICBsZWZ0OiAyOTdweDtcbn1cblxuI3NtYWxsY2lyY2xlNlxue1xuXHR0b3A6IDI5N3B4O1xuICAgICAgICBsZWZ0OiA0NzdweDtcbn1cblxuI3NtYWxsY2lyY2xlN1xue1xuXHR0b3A6IDQ3N3B4O1xuICAgICAgICBsZWZ0OiAxMTdweDtcbn1cblxuI3NtYWxsY2lyY2xlOFxue1xuXHR0b3A6IDQ3N3B4O1xuICAgICAgICBsZWZ0OiAyOTdweDtcbn1cblxuI3NtYWxsY2lyY2xlOVxue1xuXHR0b3A6IDQ3N3B4O1xuICAgICAgICBsZWZ0OiA0NzdweDtcbn1cbiJdfQ== */"
 
 /***/ }),
 
@@ -84,7 +84,7 @@ module.exports = "#main\r\n{\r\n\tmargin: 0 auto;\r\n\theight: 600px;\r\n       
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<router-outlet></router-outlet>\r\n"
+module.exports = "<router-outlet></router-outlet>\n"
 
 /***/ }),
 
@@ -181,7 +181,7 @@ var AppModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "#digitalClock{\r\n    font-size: 150px;\r\n    color:      rgb(0, 19, 26);\r\n    text-align: center;\r\n    font-family: 'Istok Web', sans-serif;\r\n}\r\n#clock{\r\n     border:1px solid rgb(200,200,200);\r\n     border-radius: 5px;\r\n}\r\n#board\r\n{\r\n        margin: 0 auto;\r\n        background-image: url(\"/static/images/board.jpg\");\r\n        background-repeat: no-repeat;\r\n        background-position: center-top;\r\n        background-size: contain;\r\n        height: 768px;\r\n        position: relative;\r\n        width: 768px;\r\n}\r\n\r\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImFwcC9iYXR0bGUvYmF0dGxlLmNvbXBvbmVudC5jc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7SUFDSSxnQkFBZ0I7SUFDaEIsMEJBQTBCO0lBQzFCLGtCQUFrQjtJQUNsQixvQ0FBb0M7QUFDeEM7QUFDQTtLQUNLLGlDQUFpQztLQUNqQyxrQkFBa0I7QUFDdkI7QUFFQTs7UUFFUSxjQUFjO1FBQ2QsaURBQWlEO1FBQ2pELDRCQUE0QjtRQUM1QiwrQkFBK0I7UUFDL0Isd0JBQXdCO1FBQ3hCLGFBQWE7UUFDYixrQkFBa0I7UUFDbEIsWUFBWTtBQUNwQiIsImZpbGUiOiJhcHAvYmF0dGxlL2JhdHRsZS5jb21wb25lbnQuY3NzIiwic291cmNlc0NvbnRlbnQiOlsiI2RpZ2l0YWxDbG9ja3tcclxuICAgIGZvbnQtc2l6ZTogMTUwcHg7XHJcbiAgICBjb2xvcjogICAgICByZ2IoMCwgMTksIDI2KTtcclxuICAgIHRleHQtYWxpZ246IGNlbnRlcjtcclxuICAgIGZvbnQtZmFtaWx5OiAnSXN0b2sgV2ViJywgc2Fucy1zZXJpZjtcclxufVxyXG4jY2xvY2t7XHJcbiAgICAgYm9yZGVyOjFweCBzb2xpZCByZ2IoMjAwLDIwMCwyMDApO1xyXG4gICAgIGJvcmRlci1yYWRpdXM6IDVweDtcclxufVxyXG5cclxuI2JvYXJkXHJcbntcclxuICAgICAgICBtYXJnaW46IDAgYXV0bztcclxuICAgICAgICBiYWNrZ3JvdW5kLWltYWdlOiB1cmwoXCIvc3RhdGljL2ltYWdlcy9ib2FyZC5qcGdcIik7XHJcbiAgICAgICAgYmFja2dyb3VuZC1yZXBlYXQ6IG5vLXJlcGVhdDtcclxuICAgICAgICBiYWNrZ3JvdW5kLXBvc2l0aW9uOiBjZW50ZXItdG9wO1xyXG4gICAgICAgIGJhY2tncm91bmQtc2l6ZTogY29udGFpbjtcclxuICAgICAgICBoZWlnaHQ6IDc2OHB4O1xyXG4gICAgICAgIHBvc2l0aW9uOiByZWxhdGl2ZTtcclxuICAgICAgICB3aWR0aDogNzY4cHg7XHJcbn1cclxuIl19 */"
+module.exports = "#digitalClock{\n    font-size: 150px;\n    color:      rgb(0, 19, 26);\n    text-align: center;\n    font-family: 'Istok Web', sans-serif;\n}\n#clock{\n     border:1px solid rgb(200,200,200);\n     border-radius: 5px;\n}\n#board\n{\n        margin: 0 auto;\n        background-image: url(\"/static/images/board.jpg\");\n        background-repeat: no-repeat;\n        background-position: center-top;\n        background-size: contain;\n        height: 768px;\n        position: relative;\n        width: 768px;\n}\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uL2JhdHRsZS9iYXR0bGUuY29tcG9uZW50LmNzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtJQUNJLGdCQUFnQjtJQUNoQiwwQkFBMEI7SUFDMUIsa0JBQWtCO0lBQ2xCLG9DQUFvQztBQUN4QztBQUNBO0tBQ0ssaUNBQWlDO0tBQ2pDLGtCQUFrQjtBQUN2QjtBQUVBOztRQUVRLGNBQWM7UUFDZCxpREFBaUQ7UUFDakQsNEJBQTRCO1FBQzVCLCtCQUErQjtRQUMvQix3QkFBd0I7UUFDeEIsYUFBYTtRQUNiLGtCQUFrQjtRQUNsQixZQUFZO0FBQ3BCIiwiZmlsZSI6Ii4uL2JhdHRsZS9iYXR0bGUuY29tcG9uZW50LmNzcyIsInNvdXJjZXNDb250ZW50IjpbIiNkaWdpdGFsQ2xvY2t7XG4gICAgZm9udC1zaXplOiAxNTBweDtcbiAgICBjb2xvcjogICAgICByZ2IoMCwgMTksIDI2KTtcbiAgICB0ZXh0LWFsaWduOiBjZW50ZXI7XG4gICAgZm9udC1mYW1pbHk6ICdJc3RvayBXZWInLCBzYW5zLXNlcmlmO1xufVxuI2Nsb2Nre1xuICAgICBib3JkZXI6MXB4IHNvbGlkIHJnYigyMDAsMjAwLDIwMCk7XG4gICAgIGJvcmRlci1yYWRpdXM6IDVweDtcbn1cblxuI2JvYXJkXG57XG4gICAgICAgIG1hcmdpbjogMCBhdXRvO1xuICAgICAgICBiYWNrZ3JvdW5kLWltYWdlOiB1cmwoXCIvc3RhdGljL2ltYWdlcy9ib2FyZC5qcGdcIik7XG4gICAgICAgIGJhY2tncm91bmQtcmVwZWF0OiBuby1yZXBlYXQ7XG4gICAgICAgIGJhY2tncm91bmQtcG9zaXRpb246IGNlbnRlci10b3A7XG4gICAgICAgIGJhY2tncm91bmQtc2l6ZTogY29udGFpbjtcbiAgICAgICAgaGVpZ2h0OiA3NjhweDtcbiAgICAgICAgcG9zaXRpb246IHJlbGF0aXZlO1xuICAgICAgICB3aWR0aDogNzY4cHg7XG59XG4iXX0= */"
 
 /***/ }),
 
@@ -192,7 +192,7 @@ module.exports = "#digitalClock{\r\n    font-size: 150px;\r\n    color:      rgb
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container\">\r\n    <div class=\"row\">\r\n        <div class=\"col-md-12 \" id=\"clock\">\r\n                <div id=\"digitalClock\">{{currentTime}}</div>\r\n        </div>\r\n    </div>\r\n</div>\r\n\r\n\r\n<div style=\"text-align:center\">\r\n  <h1>\r\n    result {{ c1.result }}\r\n  </h1>\r\n  <h2>\r\n    now turn {{ turn_color }}\r\n  </h2>\r\n  <button (click)='game_start()'>Game Start</button>\r\n</div>\r\n\r\n<br/>\r\n<div style = \"text-align:center\">\r\n<body>\r\n    <canvas id=\"board\" width=768px height=768px></canvas>\r\n</body>\r\n</div>\r\n"
+module.exports = "\n<h1>\n  player1_status {{ c3.player1_status }}\n</h1>\n\n<h2>\n  player2_status {{ c3.player2_status }}\n</h2>\n\n<div class=\"container\">\n    <div class=\"row\">\n        <div class=\"col-md-12 \" id=\"clock\">\n                <div id=\"digitalClock\">{{currentTime}}</div>\n        </div>\n    </div>\n</div>\n\n\n<div style=\"text-align:center\">\n  <h1>\n    result {{ c1.result }}\n  </h1>\n  <h2>\n    now turn {{ turn_color }}\n  </h2>\n</div>\n\n<br/>\n<div style = \"text-align:center\">\n<body>\n    <canvas id=\"board\" width=768px height=768px></canvas>\n</body>\n</div>\n"
 
 /***/ }),
 
@@ -200,7 +200,7 @@ module.exports = "<div class=\"container\">\r\n    <div class=\"row\">\r\n      
 /*!********************************************!*\
   !*** ./src/app/battle/battle.component.ts ***!
   \********************************************/
-/*! exports provided: BattleComponent, Result, Session */
+/*! exports provided: BattleComponent, Result, Session, Status */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -208,6 +208,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "BattleComponent", function() { return BattleComponent; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Result", function() { return Result; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Session", function() { return Session; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Status", function() { return Status; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
@@ -231,23 +232,16 @@ var BattleComponent = /** @class */ (function () {
         this.products = [];
         this.c1 = new Result();
         this.c2 = new Session();
+        this.c3 = new Status();
         this.turn = 0;
         this.turn_color = '';
         this.c1.result = '';
+        this.c3.player1_status = "대기중입니다";
+        this.c3.player2_status = "대기중입니다";
         this.http.get("./getsession2/" + route.snapshot.params['id']).subscribe(function (c) { return _this.c2.session = c.toString(); });
+        this.sub = this.source.subscribe(function (t) { return _this.onTimeOut(); });
     }
     BattleComponent.prototype.ngOnInit = function () {
-    };
-    BattleComponent.prototype.game_start = function () {
-        var _this = this;
-        if (this.chk == 0) {
-            this.showDigitalClock();
-            this.chk += 1;
-        }
-        else {
-            alert("NO");
-        }
-        this.sub = this.source.subscribe(function (t) { return _this.onTimeOut(); });
     };
     BattleComponent.prototype.showDigitalClock = function () {
         var _this = this;
@@ -258,54 +252,67 @@ var BattleComponent = /** @class */ (function () {
     };
     BattleComponent.prototype.onTimeOut = function () {
         var _this = this;
-        this.resultData().subscribe(function (m) { return _this.c1.result = m.toString(); });
-        this.getAllData().subscribe(function (data) {
-            _this.products = data;
-            _this.old_turn = _this.turn;
-            _this.turn = _this.products.length;
-            if (_this.currentTime > 0 && _this.old_turn < _this.turn) {
-                _this.currentTime = 7;
-            }
-            if (_this.currentTime < 0 && _this.old_turn == _this.turn) {
-                alert("Game Over");
-                _this.sub.unsubscribe();
-                _this.currentTime = 0;
-                clearTimeout(_this.intervalId);
-            }
-            if (_this.c1.result != '') {
-                _this.sub.unsubscribe();
-                clearTimeout(_this.intervalId);
-            }
+        this.statusData().subscribe(function (s) {
+            _this.c3.player1_status = s.player1_status.toString();
+            _this.c3.player2_status = s.player2_status.toString();
         });
-        var canvas = document.getElementById('board');
-        if (canvas.getContext) {
-            var count = 0;
-            for (var _i = 0, _a = this.products; _i < _a.length; _i++) {
-                var entry = _a[_i];
-                count++;
-                var color = entry.color;
-                var coor_X1 = entry.x;
-                var coor_Y1 = entry.y;
-                var ctx = canvas.getContext('2d');
-                var x1 = this.convX(coor_X1);
-                var y1 = this.convY(coor_Y1);
-                var line_color = "black";
-                if (this.turn == count)
-                    line_color = "red";
-                this.turn_color = color;
-                ctx.beginPath();
-                ctx.arc(x1, y1, 19, 0, 2 * Math.PI, false);
-                ctx.fillStyle = color;
-                ctx.fill();
-                ctx.lineWidth = 2;
-                ctx.strokeStyle = line_color;
-                ctx.stroke();
-                if (color == "black")
-                    ctx.fillStyle = "white";
-                else
-                    ctx.fillStyle = "black";
-                ctx.font = "17px Comic Sans MS";
-                ctx.fillText(count, x1 - 5.8, y1 + 6);
+        if (this.c3.player1_status != "대기중입니다" && this.c3.player2_status != "대기중입니다") {
+            if (this.chk == 0) {
+                this.showDigitalClock();
+                this.chk += 1;
+            }
+            else {
+                alert("NO");
+            }
+            this.resultData().subscribe(function (m) { return _this.c1.result = m.toString(); });
+            this.getAllData().subscribe(function (data) {
+                _this.products = data;
+                _this.old_turn = _this.turn;
+                _this.turn = _this.products.length;
+                if (_this.currentTime > 0 && _this.old_turn < _this.turn) {
+                    _this.currentTime = 7;
+                }
+                if (_this.currentTime < 0 && _this.old_turn == _this.turn) {
+                    alert("Game Over");
+                    _this.sub.unsubscribe();
+                    _this.currentTime = 0;
+                    clearTimeout(_this.intervalId);
+                }
+                if (_this.c1.result != '') {
+                    _this.sub.unsubscribe();
+                    clearTimeout(_this.intervalId);
+                }
+            });
+            var canvas = document.getElementById('board');
+            if (canvas.getContext) {
+                var count = 0;
+                for (var _i = 0, _a = this.products; _i < _a.length; _i++) {
+                    var entry = _a[_i];
+                    count++;
+                    var color = entry.color;
+                    var coor_X1 = entry.x;
+                    var coor_Y1 = entry.y;
+                    var ctx = canvas.getContext('2d');
+                    var x1 = this.convX(coor_X1);
+                    var y1 = this.convY(coor_Y1);
+                    var line_color = "black";
+                    if (this.turn == count)
+                        line_color = "red";
+                    this.turn_color = color;
+                    ctx.beginPath();
+                    ctx.arc(x1, y1, 19, 0, 2 * Math.PI, false);
+                    ctx.fillStyle = color;
+                    ctx.fill();
+                    ctx.lineWidth = 2;
+                    ctx.strokeStyle = line_color;
+                    ctx.stroke();
+                    if (color == "black")
+                        ctx.fillStyle = "white";
+                    else
+                        ctx.fillStyle = "black";
+                    ctx.font = "17px Comic Sans MS";
+                    ctx.fillText(count, x1 - 5.8, y1 + 6);
+                }
             }
         }
     };
@@ -375,6 +382,9 @@ var BattleComponent = /** @class */ (function () {
         }
         return x + 24;
     };
+    BattleComponent.prototype.statusData = function () {
+        return this.http.get("./double_status/" + this.c2.session);
+    };
     BattleComponent.prototype.resultData = function () {
         return this.http.get("./resultdata/" + this.c2.session);
     };
@@ -405,6 +415,12 @@ var Session = /** @class */ (function () {
     return Session;
 }());
 
+var Status = /** @class */ (function () {
+    function Status() {
+    }
+    return Status;
+}());
+
 
 
 /***/ }),
@@ -416,7 +432,7 @@ var Session = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJhcHAvbWFuYWdlci9tYW5hZ2VyLmNvbXBvbmVudC5jc3MifQ== */"
+module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiIuLi9tYW5hZ2VyL21hbmFnZXIuY29tcG9uZW50LmNzcyJ9 */"
 
 /***/ }),
 
@@ -472,7 +488,7 @@ var ManagerComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "#digitalClock{\r\n    font-size: 150px;\r\n    color: \trgb(0, 19, 26);\r\n    text-align: center;\r\n    font-family: 'Istok Web', sans-serif;\r\n}\r\n#clock{\r\n     border:1px solid rgb(200,200,200);\r\n     border-radius: 5px;\r\n}\r\n#board\r\n{\r\n        margin: 0 auto;\r\n        background-image: url(\"/static/images/board.jpg\");\r\n        background-repeat: no-repeat;\r\n        background-position: center-top;\r\n        background-size: contain;\r\n        height: 768px;\r\n        position: relative;\r\n        width: 768px;\r\n}\r\n\r\n\r\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImFwcC9vbW9rL29tb2suY29tcG9uZW50LmNzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtJQUNJLGdCQUFnQjtJQUNoQixzQkFBc0I7SUFDdEIsa0JBQWtCO0lBQ2xCLG9DQUFvQztBQUN4QztBQUNBO0tBQ0ssaUNBQWlDO0tBQ2pDLGtCQUFrQjtBQUN2QjtBQUVBOztRQUVRLGNBQWM7UUFDZCxpREFBaUQ7UUFDakQsNEJBQTRCO1FBQzVCLCtCQUErQjtRQUMvQix3QkFBd0I7UUFDeEIsYUFBYTtRQUNiLGtCQUFrQjtRQUNsQixZQUFZO0FBQ3BCIiwiZmlsZSI6ImFwcC9vbW9rL29tb2suY29tcG9uZW50LmNzcyIsInNvdXJjZXNDb250ZW50IjpbIiNkaWdpdGFsQ2xvY2t7XHJcbiAgICBmb250LXNpemU6IDE1MHB4O1xyXG4gICAgY29sb3I6IFx0cmdiKDAsIDE5LCAyNik7XHJcbiAgICB0ZXh0LWFsaWduOiBjZW50ZXI7XHJcbiAgICBmb250LWZhbWlseTogJ0lzdG9rIFdlYicsIHNhbnMtc2VyaWY7XHJcbn1cclxuI2Nsb2Nre1xyXG4gICAgIGJvcmRlcjoxcHggc29saWQgcmdiKDIwMCwyMDAsMjAwKTtcclxuICAgICBib3JkZXItcmFkaXVzOiA1cHg7XHJcbn1cclxuXHJcbiNib2FyZFxyXG57XHJcbiAgICAgICAgbWFyZ2luOiAwIGF1dG87XHJcbiAgICAgICAgYmFja2dyb3VuZC1pbWFnZTogdXJsKFwiL3N0YXRpYy9pbWFnZXMvYm9hcmQuanBnXCIpO1xyXG4gICAgICAgIGJhY2tncm91bmQtcmVwZWF0OiBuby1yZXBlYXQ7XHJcbiAgICAgICAgYmFja2dyb3VuZC1wb3NpdGlvbjogY2VudGVyLXRvcDtcclxuICAgICAgICBiYWNrZ3JvdW5kLXNpemU6IGNvbnRhaW47XHJcbiAgICAgICAgaGVpZ2h0OiA3NjhweDtcclxuICAgICAgICBwb3NpdGlvbjogcmVsYXRpdmU7XHJcbiAgICAgICAgd2lkdGg6IDc2OHB4O1xyXG59XHJcblxyXG4iXX0= */"
+module.exports = "#digitalClock{\n    font-size: 150px;\n    color: \trgb(0, 19, 26);\n    text-align: center;\n    font-family: 'Istok Web', sans-serif;\n}\n#clock{\n     border:1px solid rgb(200,200,200);\n     border-radius: 5px;\n}\n#board\n{\n        margin: 0 auto;\n        background-image: url(\"/static/images/board.jpg\");\n        background-repeat: no-repeat;\n        background-position: center-top;\n        background-size: contain;\n        height: 768px;\n        position: relative;\n        width: 768px;\n}\n\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIm9tb2suY29tcG9uZW50LmNzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtJQUNJLGdCQUFnQjtJQUNoQixzQkFBc0I7SUFDdEIsa0JBQWtCO0lBQ2xCLG9DQUFvQztBQUN4QztBQUNBO0tBQ0ssaUNBQWlDO0tBQ2pDLGtCQUFrQjtBQUN2QjtBQUVBOztRQUVRLGNBQWM7UUFDZCxpREFBaUQ7UUFDakQsNEJBQTRCO1FBQzVCLCtCQUErQjtRQUMvQix3QkFBd0I7UUFDeEIsYUFBYTtRQUNiLGtCQUFrQjtRQUNsQixZQUFZO0FBQ3BCIiwiZmlsZSI6Im9tb2suY29tcG9uZW50LmNzcyIsInNvdXJjZXNDb250ZW50IjpbIiNkaWdpdGFsQ2xvY2t7XG4gICAgZm9udC1zaXplOiAxNTBweDtcbiAgICBjb2xvcjogXHRyZ2IoMCwgMTksIDI2KTtcbiAgICB0ZXh0LWFsaWduOiBjZW50ZXI7XG4gICAgZm9udC1mYW1pbHk6ICdJc3RvayBXZWInLCBzYW5zLXNlcmlmO1xufVxuI2Nsb2Nre1xuICAgICBib3JkZXI6MXB4IHNvbGlkIHJnYigyMDAsMjAwLDIwMCk7XG4gICAgIGJvcmRlci1yYWRpdXM6IDVweDtcbn1cblxuI2JvYXJkXG57XG4gICAgICAgIG1hcmdpbjogMCBhdXRvO1xuICAgICAgICBiYWNrZ3JvdW5kLWltYWdlOiB1cmwoXCIvc3RhdGljL2ltYWdlcy9ib2FyZC5qcGdcIik7XG4gICAgICAgIGJhY2tncm91bmQtcmVwZWF0OiBuby1yZXBlYXQ7XG4gICAgICAgIGJhY2tncm91bmQtcG9zaXRpb246IGNlbnRlci10b3A7XG4gICAgICAgIGJhY2tncm91bmQtc2l6ZTogY29udGFpbjtcbiAgICAgICAgaGVpZ2h0OiA3NjhweDtcbiAgICAgICAgcG9zaXRpb246IHJlbGF0aXZlO1xuICAgICAgICB3aWR0aDogNzY4cHg7XG59XG5cbiJdfQ== */"
 
 /***/ }),
 
@@ -483,7 +499,7 @@ module.exports = "#digitalClock{\r\n    font-size: 150px;\r\n    color: \trgb(0,
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container\">\r\n    <div class=\"row\">\r\n        <div class=\"col-md-12 \" id=\"clock\">\r\n\t\t<div id=\"digitalClock\">{{currentTime}}</div>\r\n        </div>\r\n    </div>\r\n</div>\r\n\r\n\r\n<div style=\"text-align:center\">\r\n  <h1>\r\n    result {{ c1.result }}\r\n  </h1>\r\n  <h2>\r\n    now turn {{ turn_color }}\r\n  </h2>\r\n  <button (click)='game_start()'>Game Start</button>\r\n</div>\r\n\r\n<br/>\r\n<div style = \"text-align:center\">\r\n<body>\r\n    <canvas id=\"board\" width=768px height=768px></canvas>\r\n</body>\r\n</div>\r\n\r\n\r\n"
+module.exports = "<h1>\n  status {{ c3.status }}\n</h1>\n<div class=\"container\">\n    <div class=\"row\">\n        <div class=\"col-md-12 \" id=\"clock\">\n\t\t<div id=\"digitalClock\">{{currentTime}}</div>\n        </div>\n    </div>\n</div>\n\n\n<div style=\"text-align:center\">\n  <h1>\n    result {{ c1.result }}\n  </h1>\n  <h2>\n    now turn {{ turn_color }}\n  </h2>\n</div>\n\n<br/>\n<div style = \"text-align:center\">\n<body>\n    <canvas id=\"board\" width=768px height=768px></canvas>\n</body>\n</div>\n\n\n"
 
 /***/ }),
 
@@ -491,7 +507,7 @@ module.exports = "<div class=\"container\">\r\n    <div class=\"row\">\r\n      
 /*!****************************************!*\
   !*** ./src/app/omok/omok.component.ts ***!
   \****************************************/
-/*! exports provided: OmokComponent, Result, Session */
+/*! exports provided: OmokComponent, Result, Session, Status */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -499,6 +515,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "OmokComponent", function() { return OmokComponent; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Result", function() { return Result; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Session", function() { return Session; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Status", function() { return Status; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
@@ -520,23 +537,15 @@ var OmokComponent = /** @class */ (function () {
         this.products = [];
         this.c1 = new Result();
         this.c2 = new Session();
+        this.c3 = new Status();
         this.turn = 0;
         this.turn_color = '';
         this.c1.result = '';
+        this.c3.status = "대기중입니다";
         this.http.get("./getsession/").subscribe(function (c) { return _this.c2.session = c.toString(); });
+        this.sub = this.source.subscribe(function (t) { return _this.onTimeOut(); });
     }
     OmokComponent.prototype.ngOnInit = function () {
-    };
-    OmokComponent.prototype.game_start = function () {
-        var _this = this;
-        if (this.chk == 0) {
-            this.showDigitalClock();
-            this.chk += 1;
-        }
-        else {
-            alert("NO");
-        }
-        this.sub = this.source.subscribe(function (t) { return _this.onTimeOut(); });
     };
     OmokComponent.prototype.showDigitalClock = function () {
         var _this = this;
@@ -547,54 +556,64 @@ var OmokComponent = /** @class */ (function () {
     };
     OmokComponent.prototype.onTimeOut = function () {
         var _this = this;
-        this.resultData().subscribe(function (m) { return _this.c1.result = m.toString(); });
-        this.getAllData().subscribe(function (data) {
-            _this.products = data;
-            _this.old_turn = _this.turn;
-            _this.turn = _this.products.length;
-            if (_this.currentTime > 0 && _this.old_turn < _this.turn) {
-                _this.currentTime = 7;
+        this.statusData().subscribe(function (s) { return _this.c3.status = s.toString(); });
+        if (this.c3.status != "대기중입니다") {
+            if (this.chk == 0) {
+                this.showDigitalClock();
+                this.chk += 1;
             }
-            if (_this.currentTime < 0 && _this.old_turn == _this.turn) {
-                alert("Game Over");
-                _this.sub.unsubscribe();
-                _this.currentTime = 0;
-                clearTimeout(_this.intervalId);
+            else {
+                alert("NO");
             }
-            if (_this.c1.result != '') {
-                _this.sub.unsubscribe();
-                clearTimeout(_this.intervalId);
-            }
-        });
-        var canvas = document.getElementById('board');
-        if (canvas.getContext) {
-            var count = 0;
-            for (var _i = 0, _a = this.products; _i < _a.length; _i++) {
-                var entry = _a[_i];
-                count++;
-                var color = entry.color;
-                var coor_X1 = entry.x;
-                var coor_Y1 = entry.y;
-                var ctx = canvas.getContext('2d');
-                var x1 = this.convX(coor_X1);
-                var y1 = this.convY(coor_Y1);
-                var line_color = "black";
-                if (this.turn == count)
-                    line_color = "red";
-                this.turn_color = color;
-                ctx.beginPath();
-                ctx.arc(x1, y1, 19, 0, 2 * Math.PI, false);
-                ctx.fillStyle = color;
-                ctx.fill();
-                ctx.lineWidth = 2;
-                ctx.strokeStyle = line_color;
-                ctx.stroke();
-                if (color == "black")
-                    ctx.fillStyle = "white";
-                else
-                    ctx.fillStyle = "black";
-                ctx.font = "17px Comic Sans MS";
-                ctx.fillText(count, x1 - 5.8, y1 + 6);
+            this.resultData().subscribe(function (m) { return _this.c1.result = m.toString(); });
+            this.getAllData().subscribe(function (data) {
+                _this.products = data;
+                _this.old_turn = _this.turn;
+                _this.turn = _this.products.length;
+                if (_this.currentTime > 0 && _this.old_turn < _this.turn) {
+                    _this.currentTime = 7;
+                }
+                if (_this.currentTime < 0 && _this.old_turn == _this.turn) {
+                    alert("Game Over");
+                    _this.sub.unsubscribe();
+                    _this.currentTime = 0;
+                    clearTimeout(_this.intervalId);
+                }
+                if (_this.c1.result != '') {
+                    _this.sub.unsubscribe();
+                    clearTimeout(_this.intervalId);
+                }
+            });
+            var canvas = document.getElementById('board');
+            if (canvas.getContext) {
+                var count = 0;
+                for (var _i = 0, _a = this.products; _i < _a.length; _i++) {
+                    var entry = _a[_i];
+                    count++;
+                    var color = entry.color;
+                    var coor_X1 = entry.x;
+                    var coor_Y1 = entry.y;
+                    var ctx = canvas.getContext('2d');
+                    var x1 = this.convX(coor_X1);
+                    var y1 = this.convY(coor_Y1);
+                    var line_color = "black";
+                    if (this.turn == count)
+                        line_color = "red";
+                    this.turn_color = color;
+                    ctx.beginPath();
+                    ctx.arc(x1, y1, 19, 0, 2 * Math.PI, false);
+                    ctx.fillStyle = color;
+                    ctx.fill();
+                    ctx.lineWidth = 2;
+                    ctx.strokeStyle = line_color;
+                    ctx.stroke();
+                    if (color == "black")
+                        ctx.fillStyle = "white";
+                    else
+                        ctx.fillStyle = "black";
+                    ctx.font = "17px Comic Sans MS";
+                    ctx.fillText(count, x1 - 5.8, y1 + 6);
+                }
             }
         }
     };
@@ -664,6 +683,9 @@ var OmokComponent = /** @class */ (function () {
         }
         return x + 24;
     };
+    OmokComponent.prototype.statusData = function () {
+        return this.http.get("./single_status/" + this.c2.session);
+    };
     OmokComponent.prototype.resultData = function () {
         return this.http.get("./resultdata/" + this.c2.session);
     };
@@ -692,6 +714,12 @@ var Session = /** @class */ (function () {
     function Session() {
     }
     return Session;
+}());
+
+var Status = /** @class */ (function () {
+    function Status() {
+    }
+    return Status;
 }());
 
 
@@ -759,7 +787,7 @@ Object(_angular_platform_browser_dynamic__WEBPACK_IMPORTED_MODULE_1__["platformB
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /home/bodago/new/WorldOfConnect6/Angular/src/main.ts */"./src/main.ts");
+module.exports = __webpack_require__(/*! /home/cykim/WorldOfConnect6/Angular/src/main.ts */"./src/main.ts");
 
 
 /***/ })

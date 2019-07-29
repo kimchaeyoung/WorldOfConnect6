@@ -6,8 +6,9 @@ def first_stone(request, room_id):
     y = random.randrange(1,20)
     
     data = { 'room': room_id, 'color': "black", 'x1': x, 'y1': y, 'x2': '', 'y2': 0 }
-    url = request.build_absolute_uri('/')[:-1]+"/api/sessions/"+str(room_id)+"/stones/"
+    url = request.build_absolute_uri('/')[:-1]+"/api/sessions/"+str(room_id)+"/blacks/"
     requests.post(url, data=data)
+#    requests.post(url, data=data, auth=("admin","12341234"))
 
 def second_stone(request, room_id, color):
     x1 = random.choice(ascii_uppercase[:-7])
@@ -18,7 +19,8 @@ def second_stone(request, room_id, color):
 
     data = { 'room': room_id, 'x1': x1, 'y1': y1, 'x2': x2, 'y2': y2 }
     url = request.build_absolute_uri('/')[:-1]+"/api/sessions/"+str(room_id)+"/" + str(color)+"s/"
-    requests.post(url, data=data)
+    requests.post(url,data=data)
+#    requests.post(url, data=data, auth=("admin","12341234"))
 
   
   

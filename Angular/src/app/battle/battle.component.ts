@@ -23,37 +23,47 @@ export class BattleComponent implements OnInit {
    private sub : Subscription;
    c1 : Result = new Result()
    c2 : Session = new Session()
+   c3 : Status = new Status()
 
    constructor(private http:HttpClient, route: ActivatedRoute) {
      this.turn = 0;
      this.turn_color = '';
      this.c1.result = '';
+     this.c3.player1_status = "대기중입니다";
+     this.c3.player2_status = "대기중입니다";
      this.http.get("./getsession2/"+route.snapshot.params['id']).subscribe(c=>this.c2.session=c.toString());
+     this.sub = this.source.subscribe((t)=>this.onTimeOut()); 
    }
 
    ngOnInit() {
    }
 
-   game_start(){
-        if(this.chk==0){
-                this.showDigitalClock();
-                this.chk +=1;
-        }
-        else{
-                alert("NO");
-        }
-
-        this.sub = this.source.subscribe((t)=> this.onTimeOut());
-   }
 
   showDigitalClock(){
         this.currentTime -= 1;
         this.intervalId= setTimeout(()=>{
           this.showDigitalClock();
         },1000);
-   }
+  }
 
   onTimeOut(){
+    this.statusData().subscribe(s=>
+        {
+        this.c3.player1_status = s.player1_status.toString();
+        this.c3.player2_status = s.player2_status.toString();
+        }
+    );
+    
+    if (this.c3.player1_status != "대기중입니다" && this.c3.player2_status != "대기중입니다"){
+    if(this.chk==0){
+            this.showDigitalClock();
+            this.chk +=1;
+    }
+    else{
+            alert("NO");
+    }
+
+    
     this.resultData().subscribe(m=>this.c1.result = m.toString());
     this.getAllData().subscribe(data =>
       {
@@ -118,6 +128,7 @@ export class BattleComponent implements OnInit {
 
       }
     }
+    }
   }
 
   convY(oriY)
@@ -152,6 +163,10 @@ export class BattleComponent implements OnInit {
     return x + 24;
   }
 
+  statusData()
+  {
+    return this.http.get<Status>("./double_status/"+this.c2.session)
+  }
 
   resultData()
   {
@@ -172,3 +187,7 @@ export class Session{
   session : String;
 }
 
+export class Status{
+    player1_status : String;
+    player2_status : String;
+}

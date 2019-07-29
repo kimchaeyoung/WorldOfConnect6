@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, timer, Subscription } from 'rxjs';
+import { HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector: 'app-omok',
@@ -22,27 +23,20 @@ export class OmokComponent implements OnInit {
    private sub : Subscription;
    c1 : Result = new Result()
    c2 : Session = new Session()
+   c3 : Status = new Status()
 
    constructor(private http:HttpClient) {
      this.turn = 0;
      this.turn_color = '';
      this.c1.result = '';
+     this.c3.status = "대기중입니다";
      this.http.get("./getsession/").subscribe(c=> this.c2.session = c.toString());
+     this.sub = this.source.subscribe((t)=> this.onTimeOut());
+ 
    }
+
 
    ngOnInit() {
-   }
-
-   game_start(){
-        if(this.chk==0){
-                this.showDigitalClock();
-                this.chk +=1;
-        }
-        else{
-                alert("NO");
-        }
-
-        this.sub = this.source.subscribe((t)=> this.onTimeOut());
    }
 
   showDigitalClock(){
@@ -53,6 +47,17 @@ export class OmokComponent implements OnInit {
    }
 
   onTimeOut(){
+    this.statusData().subscribe(s=>this.c3.status = s.toString());
+    if(this.c3.status != "대기중입니다"){
+     if(this.chk==0){
+            this.showDigitalClock();
+            this.chk +=1;
+     }
+     else{
+            alert("NO");
+     }
+
+
     this.resultData().subscribe(m=>this.c1.result = m.toString());
     this.getAllData().subscribe(data =>
       {
@@ -114,9 +119,8 @@ export class OmokComponent implements OnInit {
         ctx.font = "17px Comic Sans MS";
         ctx.fillText(count , x1-5.8, y1+6);
 
-
-
       }
+    }
     }
   }
 
@@ -152,6 +156,10 @@ export class OmokComponent implements OnInit {
     return x + 24;
   }
 
+  statusData()
+  {
+    return this.http.get("./single_status/"+this.c2.session)
+  }
 
   resultData()
   {
@@ -160,7 +168,7 @@ export class OmokComponent implements OnInit {
 
   getAllData()
   {
-    return this.http
+      return this.http
       .get("./api/sessions/"+this.c2.session+"/stones")
   }
 }
@@ -172,3 +180,6 @@ export class Session{
   session : String;
 }
 
+export class Status{
+  status : String;
+}
