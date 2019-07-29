@@ -13,7 +13,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework import permissions
-
+import datetime
 import random, requests, time, string
 from django.conf import settings
 from string import ascii_uppercase
@@ -185,6 +185,14 @@ def getSession2(request, room_name):
     return JsonResponse(str(s.newid), safe=False)
 
 
+def gettime(request):
+    time = datetime.datetime.now()
+    return JsonResponse(time, safe=False)
+
+def getdiff(request, first, second):
+    diff = first - second
+    return JsonResponse(diff.seconds, safe=False)
+
 class SessionViewSet(NestedViewSetMixin, ModelViewSet):
     serializer_class = SessionSerializer
     queryset = Session.objects.all()
@@ -199,54 +207,18 @@ class UserViewSet(NestedViewSetMixin, ModelViewSet):
 class StoneViewSet(NestedViewSetMixin, ModelViewSet):
     serializer_class = StoneSerializer
     queryset = ResultOmok.objects.all()
-'''
-    def create(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
-        headers = self.get_success_headers(serializer.data)
+#    pt;
 
-        tmp = Stone.objects.last()
-        resultRoom = Session.objects.get(session_name = tmp.room).newid
-        resultName = Session.objects.get(session_name = tmp.room).session_name
-        resultColor = str(tmp.color)
-        resultX1 = str(tmp.x1)
-        resultY1 = tmp.y1
-        resultX2 = str(tmp.x2)
-        resultY2 = tmp.y2
+#    def get(self, request):
+#       lastStone = ResultOmok.objects.last()
+#       if() #상대방이 보낸 새로운 데이터를 get했을 때
+#             pt = gettime()
 
-        resultOmok = ResultOmok(room = resultRoom, color = resultColor, x = resultX1, y = resultY1)
-        resultOmok.save()
-        
-        resultOmok = ResultOmok(room = resultRoom, color = resultColor, x = resultX2, y = resultY2)
-        resultOmok.save()
-         
-        program_status = Session.objects.get(newid=resultRoom).status
-        player = Player.objects.get(player_session=resultRoom)
-        if(program_status is not False):
-            if(player.player2_name is None):
-                if(str(Stone.objects.last().color) == player.player1_color):
-                    if(player.player1_color == "white"):
-                        mColor = "black"
-                    else:
-                        mColor = "white"
+#    def create(self, request, *args, **kwargs):
+#        ct = gettime()
+#        getdiff(pt, ct)
 
-                    time.sleep(2)
-                    monkey.second_stone(request, resultRoom, mColor)
-        else:
-            print("session finish")
 
-        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
-
-    def perform_create(self, serializer):
-        serializer.save()
-
-#    def get_queryset(self):
-#        session_key = self.request.COOKIES.get(settings.SESSION_COOKIE_NAME)
-#        s = Session.objects.get(session_name=session_key)
-#        return Stone.objects.filter(room=s.id)
-
-'''
 class BlackViewSet(NestedViewSetMixin, ModelViewSet):
     serializer_class = BlackSerializer
     queryset = Black.objects.all()
