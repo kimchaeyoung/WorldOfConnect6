@@ -94,6 +94,7 @@ export class BattleComponent implements OnInit {
       var count = 0;
       for(let entry of this.products)
       {
+        if(entry.x == "") continue;
         count++;
         var color = entry.color;
         var coor_X1 = entry.x;

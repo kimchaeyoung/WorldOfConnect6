@@ -20,6 +20,8 @@ urlpatterns = [
     url(r'^getsession/$', views.getSession),
     url(r'^getsession2/(?P<room_name>[^/]+)/', views.getSession2),
     url(r'^watch/', views.watch, name='watch'),
+    url(r'^gettime/', views.gettime, name='time'),
+    url(r'^getdiff/', views.getdiff, name='diff'),
 ]
 
 #urlpatterns = format_suffix_patterns(urlpatterns)

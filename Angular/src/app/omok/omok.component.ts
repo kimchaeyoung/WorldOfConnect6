@@ -88,7 +88,8 @@ export class OmokComponent implements OnInit {
       var count = 0;
       for(let entry of this.products)
       {
-        count++;
+        if(entry.x == "") continue;
+        count++; 
         var color = entry.color;
         var coor_X1 = entry.x;
         var coor_Y1 = entry.y;

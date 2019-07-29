@@ -282,6 +282,8 @@ var BattleComponent = /** @class */ (function () {
             var count = 0;
             for (var _i = 0, _a = this.products; _i < _a.length; _i++) {
                 var entry = _a[_i];
+                if (entry.x == "")
+                    continue;
                 count++;
                 var color = entry.color;
                 var coor_X1 = entry.x;
@@ -571,6 +573,8 @@ var OmokComponent = /** @class */ (function () {
             var count = 0;
             for (var _i = 0, _a = this.products; _i < _a.length; _i++) {
                 var entry = _a[_i];
+                if (entry.x == "")
+                    continue;
                 count++;
                 var color = entry.color;
                 var coor_X1 = entry.x;

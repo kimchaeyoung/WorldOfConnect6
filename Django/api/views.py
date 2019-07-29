@@ -13,7 +13,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework import permissions
-
+import datetime
 import random, requests, time, string
 from django.conf import settings
 from string import ascii_uppercase
@@ -135,7 +135,7 @@ def guide(request,room_name):
         if p.player2_name is None:
             return HttpResponseRedirect(reverse(single_game, kwargs={'session_key':s.newid}))
         else:
-            return HttpResponseRedirect(reverse(double_game, kwargs={'session_key':s.newid}))
+            return HttpResponseRedirect(reverse(double_game, kwargs={'session_key':room_name}))
     else:
         return render(request, 'guide.html', {'room_name':room_name, 'session_key': s.newid,
 'P1': p.player1_name, 'P2': p.player2_name, 'P1_color': p.player1_color, 'P2_color': p.player2_color})
@@ -151,8 +151,8 @@ def single_game(request, session_key):
 
 
 def double_game(request, session_key):
-    if Session.objects.filter(newid=session_key).exists():
-        s = Session.objects.get(newid=session_key)
+    if Session.objects.filter(session_name=session_key).exists():
+        s = Session.objects.get(session_name=session_key)
         p = Player.objects.get(player_session=s.newid)
         return render(request, 'double_room.html', {'room_name': s.session_name, 'P1': p.player1_name, 'P2': p.player2_name, 'P1_color': p.player1_color, 'P2_color': p.player2_color})
     else:
@@ -214,9 +214,17 @@ def getSession(request):
 
 
 def getSession2(request, room_name):
-    s = Session.objects.get(newid=room_name)
+    s = Session.objects.get(session_name=room_name)
     return JsonResponse(str(s.newid), safe=False)
 
+
+def gettime(request):
+    time = datetime.datetime.now()
+    return JsonResponse(time, safe=False)
+
+def getdiff(request, first, second):
+    diff = first - second
+    return JsonResponse(diff.seconds, safe=False)
 
 class SessionViewSet(NestedViewSetMixin, ModelViewSet):
     serializer_class = SessionSerializer
@@ -232,7 +240,6 @@ class UserViewSet(NestedViewSetMixin, ModelViewSet):
 class StoneViewSet(NestedViewSetMixin, ModelViewSet):
     serializer_class = StoneSerializer
     queryset = ResultOmok.objects.all()
-#    permission_classes = (permissions.IsAuthenticated,)
 
 class BlackViewSet(NestedViewSetMixin, ModelViewSet):
     serializer_class = BlackSerializer
@@ -246,27 +253,30 @@ class BlackViewSet(NestedViewSetMixin, ModelViewSet):
 
         tmp = Black.objects.last()
         resultRoom = Session.objects.get(session_name=tmp.room).newid
-        resultName = Session.objects.get(session_name=tmp.room).session_name
-        resultColor = "black"
-        resultX1 = str(tmp.x1)
-        resultY1 = tmp.y1
-        resultX2 = str(tmp.x2)
-        resultY2 = tmp.y2
-        resultOmok = ResultOmok(room=resultRoom, color = resultColor, x = resultX1 , y = resultY1)
-        resultOmok.save()
-        resultOmok = ResultOmok(room=resultRoom, color = resultColor, x = resultX2 , y = resultY2)
-        resultOmok.save()
-
         program_status = Session.objects.get(newid=resultRoom).status
-        player = Player.objects.get(player_session=resultRoom)
-        if(program_status is not False):
+        if(program_status is False):
+            print("False")
+            raise Exception('Status False')
+        else:
+            resultName = Session.objects.get(session_name=tmp.room).session_name
+            resultColor = "black"
+            resultX1 = str(tmp.x1)
+            resultY1 = tmp.y1
+            resultX2 = str(tmp.x2)
+            resultY2 = tmp.y2
+            resultOmok = ResultOmok(room=resultRoom, color = resultColor, x = resultX1 , y = resultY1)
+            resultOmok.save()
+            resultOmok = ResultOmok(room=resultRoom, color = resultColor, x = resultX2 , y = resultY2)
+            resultOmok.save()
+
+            player = Player.objects.get(player_session=resultRoom)
             if(player.player2_name is None):
                 if(player.player1_color == "black"):
                     mColor = "white"
                     time.sleep(2)
                     monkey.second_stone(request, resultRoom, mColor)
 
-        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+            return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
     def perform_create(self, serializer):
         serializer.save()
@@ -295,27 +305,29 @@ class WhiteViewSet(NestedViewSetMixin, ModelViewSet):
 
         tmp = White.objects.last()
         resultRoom = Session.objects.get(session_name=tmp.room).newid
-        resultName = Session.objects.get(session_name=tmp.room).session_name
-        resultColor = "white"
-        resultX1 = str(tmp.x1)
-        resultY1 = tmp.y1
-        resultX2 = str(tmp.x2)
-        resultY2 = tmp.y2
-        resultOmok = ResultOmok(room=resultRoom, color = resultColor, x = resultX1 , y = resultY1)
-        resultOmok.save()
-        resultOmok = ResultOmok(room=resultRoom, color = resultColor, x = resultX2 , y = resultY2)
-        resultOmok.save()
-
         program_status = Session.objects.get(newid=resultRoom).status
-        player = Player.objects.get(player_session=resultRoom)
-        if(program_status is not False):
+        if(program_status is False):
+            raise Exception('Status False')
+        else:
+            resultName = Session.objects.get(session_name=tmp.room).session_name
+            resultColor = "white"
+            resultX1 = str(tmp.x1)
+            resultY1 = tmp.y1
+            resultX2 = str(tmp.x2)
+            resultY2 = tmp.y2
+            resultOmok = ResultOmok(room=resultRoom, color = resultColor, x = resultX1 , y = resultY1)
+            resultOmok.save()
+            resultOmok = ResultOmok(room=resultRoom, color = resultColor, x = resultX2 , y = resultY2)
+            resultOmok.save()
+
+            player = Player.objects.get(player_session=resultRoom)
             if(player.player2_name is None):
                 if(player.player1_color == "white"):
                     mColor = "black"
                     time.sleep(2)
                     monkey.second_stone(request, resultRoom, mColor)
 
-        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+            return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
     def perform_create(self, serializer):
         serializer.save()
