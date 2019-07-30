@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, timer, Subscription } from 'rxjs';
 import { HttpHeaders } from '@angular/common/http';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-omok',
@@ -25,12 +26,12 @@ export class OmokComponent implements OnInit {
    c2 : Session = new Session()
    c3 : Status = new Status()
 
-   constructor(private http:HttpClient) {
+   constructor(private http:HttpClient, route: ActivatedRoute) {
      this.turn = 0;
      this.turn_color = '';
      this.c1.result = '';
      this.c3.status = "대기중입니다";
-     this.http.get("./getsession/").subscribe(c=> this.c2.session = c.toString());
+     this.c2.session = route.snapshot.params['id'];
      this.sub = this.source.subscribe((t)=> this.onTimeOut());
  
    }
@@ -52,9 +53,6 @@ export class OmokComponent implements OnInit {
      if(this.chk==0){
             this.showDigitalClock();
             this.chk +=1;
-     }
-     else{
-            alert("NO");
      }
 
 

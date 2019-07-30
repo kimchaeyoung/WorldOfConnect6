@@ -5,7 +5,19 @@ from django.contrib.auth.models import User
 class SessionSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = Session
-		fields = ('newid', 'session_name', 'status')
+		fields = ('session_name', 'blackid', 'whiteid', 'status', 'mode')
+
+
+class BlackSessionSerializer(serializers.ModelSerializer):
+	class Meta:
+		model = blackSession
+		fields = ('colorid', 'session_name', 'status')
+
+class WhiteSessionSerializer(serializers.ModelSerializer):
+	class Meta:
+		model = whiteSession
+		fields = ('colorid', 'session_name', 'status')
+
 
 class UserSerializer(serializers.ModelSerializer):
         stones = serializers.PrimaryKeyRelatedField(many=True, queryset=Stone.objects.all())

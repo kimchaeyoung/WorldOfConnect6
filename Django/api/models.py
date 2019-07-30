@@ -2,9 +2,30 @@ from __future__ import unicode_literals
 from django.db import models
 
 class Session(models.Model):
-	newid = models.CharField(primary_key=True, max_length=10, unique=True)
+	MODE = (('S', 'Single'), ('D', 'Double'))	
+	session_name = models.CharField(primary_key=True, max_length=200, unique=True)
+	blackid = models.CharField(max_length=10, unique=True)
+	whiteid = models.CharField(max_length=10, unique=True)
+	status = models.BooleanField(default=False)
+	mode = models.CharField(max_length=1, choices=MODE)
+
+	def __str__(self):
+		return self.session_name
+
+
+class blackSession(models.Model):
+	colorid = models.CharField(primary_key=True, max_length=10, unique=True)
 	session_name = models.CharField(max_length=200, unique=True)
 	status = models.BooleanField(default=False)
+
+	def __str__(self):
+		return self.session_name
+
+class whiteSession(models.Model):
+	colorid = models.CharField(primary_key=True, max_length=10, unique=True)
+	session_name = models.CharField(max_length=200, unique=True)
+	status = models.BooleanField(default=False)
+
 
 	def __str__(self):
 		return self.session_name
@@ -30,20 +51,22 @@ class Stone(models.Model):
 		return self.color
 
 class Black(models.Model):
-	room = models.ForeignKey(Session, related_name='black_room', on_delete=models.CASCADE, null=True, blank=True)
+	room = models.ForeignKey(blackSession, related_name='black_room', on_delete=models.CASCADE, null=True, blank=True)
 	x1 = models.CharField(max_length = 10)
 	y1 = models.IntegerField()
 	x2 = models.CharField(max_length = 10, blank=True, null=True)
 	y2 = models.IntegerField(blank=True, null=True)
-
+	get_time = models.DateTimeField(null=True)
+	post_time = models.DateTimeField(auto_now_add=True, blank=True)
 
 class White(models.Model):
-	room = models.ForeignKey(Session, related_name='white_room', on_delete=models.CASCADE, null=True, blank=True)
+	room = models.ForeignKey(whiteSession, related_name='white_room', on_delete=models.CASCADE, null=True, blank=True)
 	x1 = models.CharField(max_length = 10)
 	y1 = models.IntegerField()
 	x2 = models.CharField(max_length = 10, blank=True, null=True)
 	y2 = models.IntegerField(blank=True, null=True)
-
+	get_time = models.DateTimeField(null=True)
+	post_time = models.DateTimeField(auto_now_add=True, blank=True)
 
 class ResultOmok(models.Model):
 	room = models.CharField(max_length=10)

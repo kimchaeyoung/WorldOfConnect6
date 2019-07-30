@@ -31,7 +31,7 @@ export class BattleComponent implements OnInit {
      this.c1.result = '';
      this.c3.player1_status = "대기중입니다";
      this.c3.player2_status = "대기중입니다";
-     this.http.get("./getsession2/"+route.snapshot.params['id']).subscribe(c=>this.c2.session=c.toString());
+     this.c2.session = route.snapshot.params['id'];
      this.sub = this.source.subscribe((t)=>this.onTimeOut()); 
    }
 
@@ -58,9 +58,6 @@ export class BattleComponent implements OnInit {
     if(this.chk==0){
             this.showDigitalClock();
             this.chk +=1;
-    }
-    else{
-            alert("NO");
     }
 
     

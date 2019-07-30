@@ -68,8 +68,8 @@
   <p> Player 1 <br/>
   <br/><h5> id: {{P1}}
   <h5> color: {{P1_color}}
-  <h5>GET /api/sessions/{{session_key}}/stones
-  <h5>POST /api/sessions/{{session_key}}/{{P1_color}}s { 'room': {{session_key}}, 'x1': A-S, 'y1':1-19, 'x2':A-S, 'y2':1-19 }</p><br/>
+  <h5>GET /api/session/{{room_name}}/stones
+  <h5>POST /api/{{P1_color}}-session/{{P1_key}}/{{P1_color}}s { 'room': {{P1_key}}, 'x1': A-S, 'y1':1-19, 'x2':A-S, 'y2':1-19 }</p><br/>
 </div>
 </div>
 
@@ -78,8 +78,8 @@
   <p> Player 1 <br/> 
   <br/><h5> id: {{P1}}
   <h5> color: {{P1_color}}
-  <h5>GET /api/sessions/{{session_key}}/stones
-  <h5>POST /api/sessions/{{session_key}}/{{P1_color}}s { 'room': {{session_key}}, 'x1': A-S, 'y1':1-19, 'x2':A-S, 'y2':1-19 }</p><br/>
+  <h5>GET /api/sessions/{{room_name}}/stones
+  <h5>POST /api/{{P1_color}}-session/{{P1_key}}/{{P1_color}}s { 'room': {{P1_key}}, 'x1': A-S, 'y1':1-19, 'x2':A-S, 'y2':1-19 }</p><br/>
 </div>
 
 <div class="row">
@@ -87,8 +87,8 @@
     <p> Player 2 <br/>
     <br/><h5> id: {{P2}} 
     <h5> color: {{P2_color}} 
-    <h5>GET /api/sessions/{{session_key}}/stones
-    <h5>POST /api/sessions/{{session_key}}/{{P2_color}}s { 'room': {{session_key}}, 'x1': A-S, 'y1':1-19, 'x2':A-S, 'y2':1-19 }</p><br/>
+    <h5>GET /api/sessions/{{room_name}}/stones
+    <h5>POST /api/{{P2_color}}-session/{{P2_key}}/{{P2_color}}s { 'room': {{P2_key}}, 'x1': A-S, 'y1':1-19, 'x2':A-S, 'y2':1-19 }</p><br/>
   </div>
 </div>
 {% endif %}
@@ -104,7 +104,7 @@
   <textarea rows="4" cols="50" id="codesnippet_readonly">
     #GET
     def get(text, session):
-      url = 'http://turnincode.cafe24.com:8880/api/sessions/{{session_key}}/stones/'
+      url = 'http://turnincode.cafe24.com:8880/api/sessions/{{room_name}}/stones'
       res = requests.get(url)
       if res.status_code == 404:
         time.sleep(1)
@@ -117,8 +117,8 @@
     
     #POST
     def post():
-      data = {'room': {{session_key}}, 'x1' : 'A', 'y1' : 1, 'x2' : 'B', 'y2' : 1}
-      requests.post('http://turnincode.cafe24.com:8880/api/sessions/{{session_key}}/{{P1_color}}s/', data=data) 
+      data = {'room': {{P2_key}}, 'x1' : 'A', 'y1' : 1, 'x2' : 'B', 'y2' : 1}
+      requests.post('http://turnincode.cafe24.com:8880/api/{{P2_color}}-session/{{P2_key}}/{{P2_color}}s/', data=data) 
   </textarea>
 </div>
 
