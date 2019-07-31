@@ -270,8 +270,10 @@ class BlackViewSet(NestedViewSetMixin, ModelViewSet):
         s = blackSession.objects.get(colorid=self.kwargs['parent_lookup_room'])
         s.post_time = utc.localize(datetime.now())
         s.timer = 7
-        program_status = s.status
-        if(program_status is False):
+        a = Session.objects.get(session_name=s.session_name)
+        if(a.status is False):
+            raise Exception('Status False')
+        elif(s.status is False):
             raise Exception('Status False')
         else:
             serializer = self.get_serializer(data=request.data)
@@ -318,9 +320,11 @@ class WhiteViewSet(NestedViewSetMixin, ModelViewSet):
     def create(self, request, *args, **kwargs):
         s = whiteSession.objects.get(colorid=self.kwargs['parent_lookup_room'])
         s.post_time = utc.localize(datetime.now())
-        s.timer = 7
-        program_status = s.status
-        if(program_status is False):
+        s.timer = 10
+        a = Session.objects.get(session_name=s.session_name)
+        if(a.status is False):
+            raise Exception('Status False')
+        elif(s.status is False):
             raise Exception('Status False')
         elif not Black.objects.filter(room=Session.objects.get(session_name=s.session_name).blackid).exists():
             raise Exception('Not Your Turn')
