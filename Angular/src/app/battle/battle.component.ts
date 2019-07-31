@@ -102,7 +102,7 @@ export class BattleComponent implements OnInit {
         var y1 = this.convY(coor_Y1);
 
         var line_color = "black";
-        if (this.turn == count)
+        if (this.turn < count+3)
           line_color = "red";
           this.turn_color = color
 

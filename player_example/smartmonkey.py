@@ -6,37 +6,35 @@ def first_stone(request, room_id):
     y = random.randrange(4,14)
     
     data = { 'room': room_id, 'x1': x, 'y1': y, 'x2': '', 'y2': 0 }
-    url = request.build_absolute_uri('/')[:-1]+"/api/sessions/"+str(room_id)+"/blacks/"
+    url = request.build_absolute_uri('/')[:-1]+"/api/black-session/"+str(room_id)+"/blacks/"
     requests.post(url, data=data)
 #    requests.post(url, data=data, auth=("admin","12341234"))
 
-def second_stone(request, room_id, color):
+def second_stone(request, room_id, player_id, color):
     player_color = "blacks"
     if color == "black":
         player_color = "whites"
-    url = request.build_absolute_uri('/')[:-1]+"/api/sessions/"+str(room_id)
-    player_url = url + "/" + player_color + "/"
-    monkey_url = url + "/" + color + "s/" 
-    player_data = requests.get(player_url).json()
-    monkey_data  = requests.get(monkey_url).json()
+    url = request.build_absolute_uri('/')[:-1]+"/api/"
+    getUrl = url + "sessions/"+ room_id + "/stones/"
+    monkeyUrl = url + color + "-session/" + str(player_id) + "/" + color + "s/"
+    get_data = requests.get(getUrl).json()
    
-    length = len(player_data)
-    if(length == 1):
-        x1 = chr(ord(player_data[0]['x1'])+1)
-        y1 = player_data[0]['y1']
+    length = len(get_data)
+    if(length == 2 or (color=="black" and length <=4)):
+        x1 = chr(ord(get_data[0]['x'])+1)
+        y1 = get_data[0]['y']
         x2 = x1
         y2 = y1 +1       
     else:
-        
-        last_x1 = player_data[-1]['x1']
-        last_x2 = player_data[-1]['x2']
-        prelast_x1 = player_data[-2]['x1']
-        prelast_x2 = player_data[-2]['x2']
+        last_x1 = get_data[-1]['x']
+        last_x2 = get_data[-2]['x']
+        prelast_x1 = get_data[-5]['x']
+        prelast_x2 = get_data[-6]['x']
 
-        last_y1 = player_data[-1]['y1']
-        last_y2 = player_data[-1]['y2']
-        prelast_y1 = player_data[-2]['y1']
-        prelast_y2 = player_data[-2]['y2']
+        last_y1 = get_data[-1]['y']
+        last_y2 = get_data[-2]['y']
+        prelast_y1 = get_data[-5]['y']
+        prelast_y2 = get_data[-6]['y']
 
         x_data = [last_x1, last_x2, prelast_x1, prelast_x2]
         y_data = [last_y1, last_y2, prelast_y1, prelast_y2]
@@ -59,7 +57,7 @@ def second_stone(request, room_id, color):
             if cntx >= 3:
                 x1 = chr(ord(standard_x)-1)
                 x2 = chr(ord(max(x_data))+1)
-                y1 = player_data[-1]['y1']
+                y1 = get_data[-1]['y']
                 y2 = y1
 
             standard_y = min(y_data)
@@ -73,7 +71,7 @@ def second_stone(request, room_id, color):
                 cnty += 1
       
             if cnty >= 3:
-                last_x1 = player_data[-1]['x1']
+                last_x1 = get_data[-1]['x']
                 x1 = last_x1
                 x2 = x1
                 y1 = standard_y-1
@@ -81,10 +79,10 @@ def second_stone(request, room_id, color):
             
          
         if cntx < 3 and cnty < 3:
-            x1 = monkey_data[-1]['x2']
+            x1 = get_data[-3]['x']
             x2 = x1
-            monkey_y = max(monkey_data[-1]['y1'], monkey_data[-1]['y2'])
-            y1 = monkey_y + 1
+            get_y = max(get_data[-3]['y'], get_data[-4]['y'])
+            y1 = get_y + 1
             y2 = y1 + 1
 
         x_list = list(ascii_uppercase[:-7]) 
@@ -98,25 +96,16 @@ def second_stone(request, room_id, color):
             y2 = random.randrange(1,20)
 
  
-        for i in player_data:
-            if i['x1'] == x1 and i['y1'] == y1:
+        for i in get_data:
+            if i['x'] == x1 and i['y'] == y1:
                x1 = random.choice(x_list)
                y1 = random.randrange(1,20)
-            if i['x2'] == x2 and i['y2'] == y2:
-               x2 = random.choice(x_list)
-               y2 = random.randrand(1,20)
-
-        for i in monkey_data:
-            if i['x1'] == x1 and i['y1'] == y1:
-               x1 = random.choice(x_list)
-               y1 = random.randrange(1,20)
-            if i['x2'] == x2 and i['y2'] == y2:
+            if i['x'] == x2 and i['y'] == y2:
                x2 = random.choice(x_list)
                y2 = random.randrand(1,20)
         
-        
-    data = { 'room': room_id, 'x1': x1, 'y1': y1, 'x2': x2, 'y2': y2 }
-    requests.post(monkey_url,data=data)
+    data = { 'room': player_id, 'x1': x1, 'y1': y1, 'x2': x2, 'y2': y2 }
+    requests.post(monkeyUrl,data=data)
            
   
   
