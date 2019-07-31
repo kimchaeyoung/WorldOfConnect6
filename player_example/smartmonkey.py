@@ -21,7 +21,7 @@ def second_stone(request, room_id, player_id, color):
     get_data = requests.get(getUrl).json()
    
     length = len(get_data)
-    if(length == 2 or (color=="black" and length <=4)):
+    if(length == 7 or (color=="black" and length <=9)):
         x1 = chr(ord(get_data[0]['x'])+1)
         y1 = get_data[0]['y']
         x2 = x1
@@ -103,7 +103,7 @@ def second_stone(request, room_id, player_id, color):
                y1 = random.randrange(1,20)
             if i['x'] == x2 and i['y'] == y2:
                x2 = random.choice(x_list)
-               y2 = random.randrand(1,20)
+               y2 = random.randrange(1,20)
         
     s1 = x1 + str(y1)
     s2 = x2 + str(y2)

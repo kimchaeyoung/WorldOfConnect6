@@ -27,6 +27,7 @@ from django.contrib.auth.models import User
 import sys, os
 sys.path.append(os.path.abspath("../player_example/"))
 import smartmonkey
+import randomstone
 
 from .forms import *
 
@@ -67,7 +68,8 @@ def single(request):
                     mcolor = "black"
                     ycolor = "white"
                 p = Player(player_session=s, player1_name=player, player2_name=None,  player1_color=mcolor, player2_color=ycolor)
-                p.save() 
+                p.save()
+                randomstone.random_stone(request,player)   
             return HttpResponseRedirect(reverse(guide, kwargs={'room':player})) 
     else:
         form = single_form()
@@ -110,7 +112,8 @@ def double(request):
                     p2_color = "white"
                 player = Player(player_session=s, player1_name=player1, player2_name=player2, player1_color=p1_color, player2_color=p2_color)
                 player.save()
-
+                randomstone.random_stone(request,room)   
+      
             return HttpResponseRedirect(reverse(guide, kwargs={'room':room}))
     else:
         form = double_form()

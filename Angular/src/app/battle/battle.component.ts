@@ -103,8 +103,10 @@ export class BattleComponent implements OnInit {
 
         var line_color = "black";
         if (this.turn < count+3){
-          line_color = "red";
-          this.turn_color = color
+          if (color != "red"){
+              line_color = "red";
+              this.turn_color = color
+          }
         }
 
         ctx.beginPath();
@@ -121,7 +123,8 @@ export class BattleComponent implements OnInit {
             ctx.fillStyle = "black";
  
         ctx.font = "17px Comic Sans MS";
-        ctx.fillText(count , x1-5.8, y1+6);
+        if (color != "red")
+            ctx.fillText(count-7 , x1-5.8, y1+6);
 
 
 

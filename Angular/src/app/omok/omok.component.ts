@@ -34,11 +34,11 @@ export class OmokComponent implements OnInit {
      this.c3.status = "대기중입니다";
      this.c2.session = route.snapshot.params['id'];
      this.sub = this.source.subscribe((t)=> this.onTimeOut());
-     
    }
 
 
    ngOnInit() {
+              
    }
 
   showDigitalClock(){
@@ -62,7 +62,7 @@ export class OmokComponent implements OnInit {
       {
         this.products = data;
         this.old_turn = this.turn;
-        this.turn = this.products.length;
+        this.turn = this.products.length ;
         if(this.currentTime > 0 && this.old_turn < this.turn)
         {
           this.currentTime = 7;
@@ -100,9 +100,13 @@ export class OmokComponent implements OnInit {
         var y1 = this.convY(coor_Y1);
 
         var line_color = "black";
+            
+
         if (this.turn < count+3){
-          line_color = "red";
-          this.turn_color = color
+          if (color != "red"){
+              line_color = "red";
+              this.turn_color = color
+          }
         }
 
         ctx.beginPath();
@@ -120,7 +124,8 @@ export class OmokComponent implements OnInit {
             ctx.fillStyle = "black";
  
         ctx.font = "17px Comic Sans MS";
-        ctx.fillText(count , x1-5.8, y1+6);
+        if (color != "red")
+            ctx.fillText(count-7 , x1-5.8, y1+6);
 
       }
     }
