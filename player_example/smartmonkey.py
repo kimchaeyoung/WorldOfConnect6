@@ -3,9 +3,10 @@ from string import ascii_uppercase
 
 def first_stone(request, room_id):
     x = random.choice(ascii_uppercase[4:-12]) #EFGHIJKLMN
-    y = random.randrange(4,14)
-    
-    data = { 'room': room_id, 'x1': x, 'y1': y, 'x2': '', 'y2': 0 }
+    y = str(random.randrange(4,14))
+    s1 = x + y
+     
+    data = { 'room': room_id, 's1': s1, 's2': '' }
     url = request.build_absolute_uri('/')[:-1]+"/api/black-session/"+str(room_id)+"/blacks/"
     requests.post(url, data=data)
 #    requests.post(url, data=data, auth=("admin","12341234"))
@@ -40,7 +41,7 @@ def second_stone(request, room_id, player_id, color):
         y_data = [last_y1, last_y2, prelast_y1, prelast_y2]
         cntx = 0
         cnty = 0
-        if None in y_data:
+        if 0 in y_data:
             cntx = 0
             cnty = 0
         else: 
@@ -104,7 +105,9 @@ def second_stone(request, room_id, player_id, color):
                x2 = random.choice(x_list)
                y2 = random.randrand(1,20)
         
-    data = { 'room': player_id, 'x1': x1, 'y1': y1, 'x2': x2, 'y2': y2 }
+    s1 = x1 + str(y1)
+    s2 = x2 + str(y2)
+    data = { 'room': player_id, 's1': s1, 's2': s2 }
     requests.post(monkeyUrl,data=data)
            
   

@@ -261,9 +261,13 @@ class BlackViewSet(NestedViewSetMixin, ModelViewSet):
             resultS1 = tmp.s1
             resultS2 = tmp.s2
             resultX1 = resultS1[0]
-            resultY1 = resultS1[1]
-            resultX2 = resultS2[0]
-            resultY2 = resultS2[1]
+            resultY1 = resultS1[1:]
+            if len(resultS2) == 0:
+                resultX2 = ""
+                resultY2 = 0 
+            else:
+                resultX2 = resultS2[0]
+                resultY2 = resultS2[1:]
             resultOmok = ResultOmok(room=resultRoom, color = resultColor, x = resultX1 , y = resultY1)
             resultOmok.save()
             resultOmok = ResultOmok(room=resultRoom, color = resultColor, x = resultX2 , y = resultY2)
@@ -325,9 +329,9 @@ class WhiteViewSet(NestedViewSetMixin, ModelViewSet):
             resultS1 = tmp.s1
             resultS2 = tmp.s2
             resultX1 = resultS1[0]
-            resultY1 = resultS1[1]
+            resultY1 = resultS1[1:]
             resultX2 = resultS2[0]
-            resultY2 = resultS2[1]
+            resultY2 = resultS2[1:]
             resultOmok = ResultOmok(room=resultRoom, color = resultColor, x = resultX1 , y = resultY1)
             resultOmok.save()
             resultOmok = ResultOmok(room=resultRoom, color = resultColor, x = resultX2 , y = resultY2)
