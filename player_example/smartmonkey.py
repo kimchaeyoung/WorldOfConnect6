@@ -16,7 +16,7 @@ def second_stone(request, room_id, player_id, color):
     if color == "black":
         player_color = "whites"
     url = request.build_absolute_uri('/')[:-1]+"/api/"
-    getUrl = url + "sessions/"+ room_id + "/stones/"
+    getUrl = url + "sessions/"+ room_id + "/stones/?colorid="+player_id
     monkeyUrl = url + color + "-session/" + str(player_id) + "/" + color + "s/"
     get_data = requests.get(getUrl).json()
    

@@ -17,6 +17,9 @@ class blackSession(models.Model):
 	colorid = models.CharField(primary_key=True, max_length=10, unique=True)
 	session_name = models.CharField(max_length=200, unique=True)
 	status = models.BooleanField(default=False)
+	name = models.CharField(max_length = 50, null=True, blank=True)
+	timer = models.IntegerField(default=7)
+	post_time = models.DateTimeField(null=True)
 
 	def __str__(self):
 		return self.session_name
@@ -25,20 +28,12 @@ class whiteSession(models.Model):
 	colorid = models.CharField(primary_key=True, max_length=10, unique=True)
 	session_name = models.CharField(max_length=200, unique=True)
 	status = models.BooleanField(default=False)
-
+	name = models.CharField(max_length = 50, null=True, blank=True)
+	timer = models.IntegerField(default=7)
+	post_time = models.DateTimeField(null=True)
 
 	def __str__(self):
 		return self.session_name
-
-class Player(models.Model):
-        player_session = models.ForeignKey(Session, related_name='player_session', on_delete=models.CASCADE, null=True, blank=True)
-        player1_name = models.CharField(max_length = 50)
-        player2_name = models.CharField(max_length = 50, null=True, blank=True)
-        player1_color = models.CharField(max_length = 10, default="")
-        player2_color = models.CharField(max_length = 10, null=True, blank=True)
-        player1_status = models.BooleanField(default=False)
-        player2_status = models.BooleanField(default=False)
-
 
 class Black(models.Model):
 	room = models.ForeignKey(blackSession, related_name='black_room', on_delete=models.CASCADE, null=True, blank=True)

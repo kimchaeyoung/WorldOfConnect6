@@ -62,23 +62,11 @@
 </head>
 
 <body>
-{% if P2 is None %}
-<div class ="row">
-<div class="basic">
-  <p> Player 1 <br/>
-  <br/><h5> id: {{P1}}
-  <h5> color: {{P1_color}}
-  <h5>GET /api/session/{{room_name}}/stones
-  <h5>POST /api/{{P1_color}}-session/{{P1_key}}/{{P1_color}}s { 'room': {{P1_key}}, 'x1': A-S, 'y1':1-19, 'x2':A-S, 'y2':1-19 }</p><br/>
-</div>
-</div>
-
-{% else %}
 <div class="left-half">
   <p> Player 1 <br/> 
   <br/><h5> id: {{P1}}
   <h5> color: {{P1_color}}
-  <h5>GET /api/sessions/{{room_name}}/stones
+  <h5>GET /api/sessions/{{room_name}}/stones/?colorid={{P1_key}}
   <h5>POST /api/{{P1_color}}-session/{{P1_key}}/{{P1_color}}s { 'room': {{P1_key}}, 'x1': A-S, 'y1':1-19, 'x2':A-S, 'y2':1-19 }</p><br/>
 </div>
 
@@ -87,11 +75,10 @@
     <p> Player 2 <br/>
     <br/><h5> id: {{P2}} 
     <h5> color: {{P2_color}} 
-    <h5>GET /api/sessions/{{room_name}}/stones
+    <h5>GET /api/sessions/{{room_name}}/stones/?colorid={{P2_key}}
     <h5>POST /api/{{P2_color}}-session/{{P2_key}}/{{P2_color}}s { 'room': {{P2_key}}, 'x1': A-S, 'y1':1-19, 'x2':A-S, 'y2':1-19 }</p><br/>
   </div>
 </div>
-{% endif %}
 
 <link rel="stylesheet" href="http://codemirror.net/lib/codemirror.css">
 <script src="http://codemirror.net/lib/codemirror.js"></script>

@@ -70,6 +70,9 @@ export class BattleComponent implements OnInit {
         if(this.currentTime > 0 && this.old_turn < this.turn)
         {
           this.currentTime = 7;
+          var audio = new Audio('http://pds81.cafe.daum.net/original/5/cafe/2008/08/18/10/38/48a8d292cf08f&token=20080818&.wav');
+          audio.play();
+ 
         }
         if(this.currentTime < 0 && this.old_turn == this.turn)
         {

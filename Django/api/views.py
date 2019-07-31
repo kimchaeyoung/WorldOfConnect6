@@ -13,7 +13,6 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework import permissions
-import datetime
 import random, requests, time, string
 from django.conf import settings
 from string import ascii_uppercase
@@ -30,6 +29,11 @@ import smartmonkey
 import randomstone
 
 from .forms import *
+
+import pytz
+utc = pytz.UTC
+from datetime import datetime
+import threading
 
 
 def home(request):
@@ -52,23 +56,25 @@ def single(request):
             if Session.objects.filter(session_name=player).exists():
                 s = Session.objects.get(session_name=player)
             else: 
-                wid = makeRandomString()
-                s = whiteSession(colorid=wid, session_name=player, status=True)
-                s.save()
-                bid = makeRandomString()
-                s = blackSession(colorid=bid, session_name=player, status=True)
-                s.save()
-                s = Session(session_name=player, blackid=bid, whiteid=wid, status=True, mode="S")
-                s.save()
                 colorNum = random.randrange(1,3)
                 if colorNum == 1:
-                    mcolor = "white"
-                    ycolor = "black"
+                    wid = makeRandomString()
+                    s = whiteSession(colorid=wid, session_name=player, status=False, name=player)
+                    s.save()
+                    bid = makeRandomString()
+                    s = blackSession(colorid=bid, session_name=player, status=False, name="Monkey")
+                    s.save()
+                    s = Session(session_name=player, blackid=bid, whiteid=wid, status=False, mode="S")
+                    s.save()
                 else :
-                    mcolor = "black"
-                    ycolor = "white"
-                p = Player(player_session=s, player1_name=player, player2_name=None,  player1_color=mcolor, player2_color=ycolor)
-                p.save()
+                    wid = makeRandomString()
+                    s = whiteSession(colorid=wid, session_name=player, status=False, name="Monkey")
+                    s.save()
+                    bid = makeRandomString()
+                    s = blackSession(colorid=bid, session_name=player, status=False, name=player)
+                    s.save()
+                    s = Session(session_name=player, blackid=bid, whiteid=wid, status=False, mode="S")
+                    s.save()
                 randomstone.random_stone(request,player)   
             return HttpResponseRedirect(reverse(guide, kwargs={'room':player})) 
     else:
@@ -85,33 +91,32 @@ def double(request):
             player1 = form.cleaned_data['player1_name']
             player2 = form.cleaned_data['player2_name']
 
-            colorNum = random.randrange(1,3)
-
-            if colorNum == 1:
-                p1_color = "white"
-                p2_color = "black"
-            else :
-                p1_color = "black"
-                p2_color = "white"
-
             if not Session.objects.filter(session_name=room).exists():
-                wid = makeRandomString()
-                s = whiteSession(colorid=wid, session_name=room, status=True)
-                s.save()
-                bid = makeRandomString()
-                s = blackSession(colorid=bid, session_name=room, status=True)
-                s.save()
-                s = Session(session_name = room, blackid=bid, whiteid=wid, status=True, mode="D")
-                s.save()
+
                 colorNum = random.randrange(1,3)
+
                 if colorNum == 1:
-                    p1_color = "white"
-                    p2_color = "black"
-                else:
+                    wid = makeRandomString()
+                    s = whiteSession(colorid=wid, session_name=room, status=False, name=player1)                                          
+                    s.save()                                                                                               
+                    bid = makeRandomString()                                                                               
+                    s = blackSession(colorid=bid, session_name=room, status=False, name=player2)
+                    s.save()                                                                                               
+                    s = Session(session_name = room, blackid=bid, whiteid=wid, status=False, mode="D")                      
+                    s.save()
+  
+                else :
                     p1_color = "black"
                     p2_color = "white"
-                player = Player(player_session=s, player1_name=player1, player2_name=player2, player1_color=p1_color, player2_color=p2_color)
-                player.save()
+                    wid = makeRandomString()
+                    s = whiteSession(colorid=wid, session_name=room, status=False, name=player2)
+                    s.save()
+                    bid = makeRandomString()
+                    s = blackSession(colorid=bid, session_name=room, status=False, name=player1)
+                    s.save()
+                    s = Session(session_name = room, blackid=bid, whiteid=wid, status=False, mode="D")
+                    s.save()
+
                 randomstone.random_stone(request,room)   
       
             return HttpResponseRedirect(reverse(guide, kwargs={'room':room}))
@@ -123,74 +128,55 @@ def double(request):
 def guide(request,room):
     if Session.objects.filter(session_name=room).exists():
         s = Session.objects.get(session_name=room)
-        p = Player.objects.get(player_session=s)
+        ws = whiteSession.objects.get(session_name=room)
+        bs = blackSession.objects.get(session_name=room)
     else:
         return redirect('home')
 
     if request.method == 'POST':
-        if p.player2_name is None:
-            return HttpResponseRedirect(reverse(single_game, kwargs={'session_key':room}))
-        else:
-            return HttpResponseRedirect(reverse(double_game, kwargs={'session_key':room}))
+        return HttpResponseRedirect(reverse(double_game, kwargs={'session_key':room}))
     else:
-        bs = blackSession.objects.get(session_name=room)
-        ws = whiteSession.objects.get(session_name=room)
-        if p.player1_color=="black":
-            return render(request, 'guide.html', {'room_name':room, 'P1_key': bs.colorid, 'P2_key': ws.colorid, 'P1': p.player1_name, 'P2': p.player2_name, 'P1_color': p.player1_color, 'P2_color': p.player2_color})
-        elif p.player1_color=="white":
-            return render(request, 'guide.html', {'room_name':room, 'P1_key':ws.colorid, 'P2_key': bs.colorid, 'P1': p.player1_name, 'P2': p.player2_name, 'P1_color': p.player1_color, 'P2_color': p.player2_color})
-
-def single_game(request, session_key):
-    s = Session.objects.get(session_name=session_key)
-    p = Player.objects.get(player_session=session_key)
-    if p.player1_color == "white":
-        b = blackSession.objects.get(session_name=session_key)
-        if not Black.objects.filter(room=b.colorid).exists():
-            smartmonkey.first_stone(request, b.colorid) 
-    return render(request, 'single_room.html', {'room_name': s.session_name, 'P1': p.player1_name, 'P1_color': p.player1_color})
-
+        return render(request, 'guide.html', {'room_name':room, 'P1_key': bs.colorid, 'P2_key': ws.colorid, 'P1': bs.name, 'P2': ws.name, 'P1_color': "black", 'P2_color': "white"})
 
 def double_game(request, session_key):
     if Session.objects.filter(session_name=session_key).exists():
         s = Session.objects.get(session_name=session_key)
-        if s.mode == "S": 
-            return redirect('home')
-        p = Player.objects.get(player_session=session_key)
-        return render(request, 'double_room.html', {'room_name': session_key, 'P1': p.player1_name, 'P2': p.player2_name, 'P1_color': p.player1_color, 'P2_color': p.player2_color})
+        bs = blackSession.objects.get(session_name=session_key)
+        ws = whiteSession.objects.get(session_name=session_key)
+        url = request.build_absolute_uri('/')[:-1]
+        if bs.name == "Monkey":
+            if not Black.objects.filter(room=bs.colorid).exists():
+                requests.get(url+"/api/sessions/"+bs.session_name+"/stones/?colorid="+bs.colorid)
+                smartmonkey.first_stone(request, bs.colorid)
+        elif ws.name=="Monkey":
+            requests.get(url+"/api/sessions/"+ws.session_name+"/stones/?colorid="+ws.colorid)
+        return render(request, 'double_room.html', {'room_name': session_key, 'P1': bs.name, 'P2': ws.name, 'P1_color': "black", 'P2_color': "white"})
     else:
         return redirect('home')
 
-def single_enter(player):
-    if player.player1_status is False:
-        player.player1_status = True
+def enter(player):
+    if player.status is False:
+        player.status = True
         player.save()
-
-def double_enter(player, num):
-    if num == 1:
-        if player.player1_status is False:
-            player.player1_status = True
-    else:
-        if player.player2_status is False:
-            player.player2_status = True
-    player.save()
-
-def single_status(request, session_key):
-    if Session.objects.filter(session_name=session_key).exists():
-        p = Player.objects.get(player_session=session_key)
-        if p.player1_status is True:
-            return JsonResponse("입장하였습니다", safe=False)
-    return HttpResponse()          
 
 def double_status(request, session_key):
     if Session.objects.filter(session_name=session_key).exists():
-        p = Player.objects.get(player_session=session_key)
-        player1_status = "대기중입니다"
-        player2_status = "대기중입니다"
-        if p.player1_status is True:
+        bs = blackSession.objects.get(session_name=session_key)
+        ws = whiteSession.objects.get(session_name=session_key)
+        s = Session.objects.get(session_name=session_key)
+        if s.status is False:
+            player1_status = "대기중입니다"
+            player2_status = "대기중입니다"
+            if bs.status is True:
+                player1_status = "입장하였습니다"
+            if ws.status is True:
+                player2_status = "입장하였습니다"
+            if bs.status is True and ws.status is True:
+                s.status = True
+                s.save()
+        else:
             player1_status = "입장하였습니다"
-        if p.player2_status is True:
-            player2_status = "입장하였습니다"
-        
+            player2_status = "입장하였습니다" 
         status = {'player1_status' : player1_status , 'player2_status' : player2_status}
         return JsonResponse(status, safe=False)
     return HttpResponse()          
@@ -206,13 +192,35 @@ class JSONResponse(HttpResponse):
         kwargs['content_type'] = 'application/json'
         super(JSONResponse, self).__init__(content, **kwargs)
 
-def gettime(request):
-    time = datetime.datetime.now()
-    return JsonResponse(time, safe=False)
 
-def getdiff(request, first, second):
-    diff = first - second
-    return JsonResponse(diff.seconds, safe=False)
+def timer(count, gettime, key, colorid):
+    if Session.objects.get(session_name=key).blackid == colorid:
+        ts = blackSession.objects.get(session_name=key)
+    elif Session.objects.get(session_name=key).whiteid == colorid:
+        ts = whiteSession.objects.get(session_name=key)
+    else:
+        print("error")
+        print(colorid)
+        print(Session.objects.get(session_name=key).blackid)
+        print(Session.objects.get(session_name=key).whiteid)
+    count-=1
+    ts.timer = count
+    ts.save()
+    posttime = ts.post_time
+    
+    t = threading.Timer(1, timer, args=[count, gettime, key, colorid])
+    t.start()
+
+    if posttime is not None:
+        if gettime < posttime:
+            t.cancel()
+
+    if count == 1:
+        ts.status = False
+        ts.save()
+        t.cancel()
+
+
 
 class SessionViewSet(NestedViewSetMixin, ModelViewSet):
     serializer_class = SessionSerializer
@@ -231,16 +239,26 @@ class StoneViewSet(NestedViewSetMixin, ModelViewSet):
     queryset = ResultOmok.objects.all()
 
     def get_queryset(self):
-        s = Session.objects.get(session_name=self.kwargs['parent_lookup_room'])
+        gettime = utc.localize(datetime.now())
+        room = self.kwargs['parent_lookup_room']
+        s = Session.objects.get(session_name=room)
         colorid = self.request.GET.get('colorid', None)
         if colorid == "admin":
-            return ResultOmok.objects.filter(room=s.session_name)
+            return ResultOmok.objects.filter(room=room)
         elif colorid == s.blackid:
-            print("BLACK!!!") #정보 전달과 동시에 Black Player의 시간 감소 시작
-            return ResultOmok.objects.filter(room=s.session_name)
+            bs = blackSession.objects.get(session_name=room)
+            if ResultOmok.objects.filter(room=room).last().color=="red":
+                enter(bs)
+            elif ResultOmok.objects.filter(room=room).last().color=="white":
+                timer(10, gettime, room, colorid)
+            return ResultOmok.objects.filter(room=room)
         elif colorid == s.whiteid:
-            print("WHITE!!!") #정보 전달과 동시에 White Player의 시간 감소 시작
-            return ResultOmok.objects.filter(room=s.session_name)
+            ws = whiteSession.objects.get(session_name=room)
+            if ResultOmok.objects.filter(room=room).last().color=="red":
+                enter(ws)
+            elif ResultOmok.objects.filter(room=room).last().color=="black":
+                timer(10, gettime, room, colorid)
+            return ResultOmok.objects.filter(room=room)
         else:
             print("Cannot Access")
 
@@ -249,31 +267,22 @@ class BlackViewSet(NestedViewSetMixin, ModelViewSet):
     queryset = Black.objects.all()
 
     def create(self, request, *args, **kwargs):
-
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
-        headers = self.get_success_headers(serializer.data)
-
         s = blackSession.objects.get(colorid=self.kwargs['parent_lookup_room'])
-        blacks = Black.objects.filter(room=s.colorid)
-        tmp = blacks.last()
-
-#        s = Session.objects.get(newid=self.kwargs['parent_lookup_room'])
-#        whites = White.objects.filter(room=s.newid)
-#        tmp2 = whites.last()
-#        st = tmp2.get_time
-#        et = tmp.get_time
-#        diff = et - st
-#        if(diff.seconds>7):
-#            raise Exception('Time Over')
-
-        resultRoom = s.session_name
+        s.post_time = utc.localize(datetime.now())
+        s.timer = 7
         program_status = s.status
         if(program_status is False):
-            print("False")
             raise Exception('Status False')
         else:
+            serializer = self.get_serializer(data=request.data)
+            serializer.is_valid(raise_exception=True)
+            serializer.save()
+            headers = self.get_success_headers(serializer.data)
+
+            blacks = Black.objects.filter(room=s.colorid)
+            tmp = blacks.last()
+
+            resultRoom = s.session_name
             resultColor = "black"
             resultS1 = tmp.s1
             resultS2 = tmp.s2
@@ -290,37 +299,16 @@ class BlackViewSet(NestedViewSetMixin, ModelViewSet):
             resultOmok = ResultOmok(room=resultRoom, color = resultColor, x = resultX2 , y = resultY2)
             resultOmok.save()
 
-            player = Player.objects.get(player_session=resultRoom)
-            if(player.player2_name is None):
-                if(player.player1_color == "black"):
-                    t = whiteSession.objects.get(session_name=s.session_name)
-                    mColor = "white"
-                    time.sleep(2)
-                    smartmonkey.second_stone(request, resultRoom, t.colorid, mColor)
+            ws = whiteSession.objects.get(session_name=s.session_name)
+            s.status = False
+            ws.status = True
+            s.save()
+            ws.save()
+            if ws.name == "Monkey":
+                time.sleep(2)
+                smartmonkey.second_stone(request, resultRoom, ws.colorid, "white")
 
             return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
-
-    def perform_create(self, serializer):
-        serializer.save()
-
-    def get_queryset(self):
-        s = blackSession.objects.get(colorid=self.kwargs['parent_lookup_room'])
-        player = Player.objects.get(player_session=s.session_name)
-        if player.player2_name is None:
-            single_enter(player)
-        else:
-            if player.player1_color == "white":
-                double_enter(player,1)
-            else:
-                double_enter(player,2)
-#        blacks = Black.objects.filter(room=s.newid)
-#        if blacks is not None:
-#            if blacks.last().get_time is None:
-#                tmp = blacks.last()
-#                tmp.get_time = datetime.datetime.now()
-#                tmp.save()
-        return Black.objects.filter(room=s.colorid)
-
 
 
 class WhiteViewSet(NestedViewSetMixin, ModelViewSet):
@@ -328,20 +316,24 @@ class WhiteViewSet(NestedViewSetMixin, ModelViewSet):
     queryset = White.objects.all()
     
     def create(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
-        headers = self.get_success_headers(serializer.data)
-
         s = whiteSession.objects.get(colorid=self.kwargs['parent_lookup_room'])
-        whites = White.objects.filter(room=s.colorid)
-        tmp = whites.last()
-
-        resultRoom = s.session_name
+        s.post_time = utc.localize(datetime.now())
+        s.timer = 7
         program_status = s.status
         if(program_status is False):
             raise Exception('Status False')
+        elif not Black.objects.filter(room=Session.objects.get(session_name=s.session_name).blackid).exists():
+            raise Exception('Not Your Turn')
         else:
+            serializer = self.get_serializer(data=request.data)
+            serializer.is_valid(raise_exception=True)
+            serializer.save()
+            headers = self.get_success_headers(serializer.data)
+
+            whites = White.objects.filter(room=s.colorid)
+            tmp = whites.last()
+
+            resultRoom = s.session_name
             resultColor = "white"
             resultS1 = tmp.s1
             resultS2 = tmp.s2
@@ -354,35 +346,16 @@ class WhiteViewSet(NestedViewSetMixin, ModelViewSet):
             resultOmok = ResultOmok(room=resultRoom, color = resultColor, x = resultX2 , y = resultY2)
             resultOmok.save()
 
-            player = Player.objects.get(player_session=resultRoom)
-            if(player.player2_name is None):
-                if(player.player1_color == "white"):
-                    t = blackSession.objects.get(session_name=s.session_name)
-                    mColor = "black"
-                    time.sleep(2)
-                    smartmonkey.second_stone(request,resultRoom, t.colorid, mColor)
+            bs = blackSession.objects.get(session_name=s.session_name)
+            s.status = False
+            bs.status = True
+            s.save()
+            bs.save()
+            if bs.name == "Monkey":
+                time.sleep(2)
+                smartmonkey.second_stone(request,resultRoom, bs.colorid, "black")
 
             return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
-
-    def perform_create(self, serializer):
-        serializer.save()
-  
-    def get_queryset(self):
-        s = whiteSession.objects.get(colorid=self.kwargs['parent_lookup_room'])
-        player = Player.objects.get(player_session=s.session_name)
-        if player.player2_name is None:
-            single_enter(player)
-        else:
-            if player.player1_color == "black":
-                double_enter(player,1)
-            else:
-                double_enter(player,2)
-#        whites = White.objects.filter(room=s.newid)
-#        if(whites.last().get_time is None):
-#            tmp = whites.last()
-#            tmp.get_time = datetime.datetime.now()
-#            tmp.save()
-        return White.objects.filter(room=s.colorid)
 
 
 def ResultData(request, sessionid):

@@ -192,7 +192,7 @@ module.exports = "#digitalClock{\r\n    font-size: 150px;\r\n    color:      rgb
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<audio autoplay loops>\r\n    <source src=\"/media/BornSinger.mp3\" type=\"audio/mp3\">\r\n</audio>\r\n<h1>\r\n  player1_status {{ c3.player1_status }}\r\n</h1>\r\n\r\n<h2>\r\n  player2_status {{ c3.player2_status }}\r\n</h2>\r\n\r\n<div class=\"container\">\r\n    <div class=\"row\">\r\n        <div class=\"col-md-12 \" id=\"clock\">\r\n                <div id=\"digitalClock\">{{currentTime}}</div>\r\n        </div>\r\n    </div>\r\n</div>\r\n\r\n\r\n<div style=\"text-align:center\">\r\n  <h1>\r\n    result {{ c1.result }}\r\n  </h1>\r\n  <h2>\r\n    now turn {{ turn_color }}\r\n  </h2>\r\n</div>\r\n\r\n<br/>\r\n<div style = \"text-align:center\">\r\n<body>\r\n    <canvas id=\"board\" width=768px height=768px></canvas>\r\n</body>\r\n</div>\r\n"
+module.exports = "<audio autoplay loops>\r\n    <source src=\"https://t1.daumcdn.net/cfile/tistory/23663547585652B116?original.wav\" type=\"audio/wav\">\r\n</audio>\r\n<h1>\r\n  Black player status {{ c3.player1_status }}\r\n</h1>\r\n\r\n<h2>\r\n  White player status {{ c3.player2_status }}\r\n</h2>\r\n\r\n<div class=\"container\">\r\n    <div class=\"row\">\r\n        <div class=\"col-md-12 \" id=\"clock\">\r\n                <div id=\"digitalClock\">{{currentTime}}</div>\r\n        </div>\r\n    </div>\r\n</div>\r\n\r\n\r\n<div style=\"text-align:center\">\r\n  <h1>\r\n    result {{ c1.result }}\r\n  </h1>\r\n  <h2>\r\n    now turn {{ turn_color }}\r\n  </h2>\r\n</div>\r\n\r\n<br/>\r\n<div style = \"text-align:center\">\r\n<body>\r\n    <canvas id=\"board\" width=768px height=768px></canvas>\r\n</body>\r\n</div>\r\n"
 
 /***/ }),
 
@@ -268,6 +268,8 @@ var BattleComponent = /** @class */ (function () {
                 _this.turn = _this.products.length;
                 if (_this.currentTime > 0 && _this.old_turn < _this.turn) {
                     _this.currentTime = 7;
+                    var audio = new Audio('http://pds81.cafe.daum.net/original/5/cafe/2008/08/18/10/38/48a8d292cf08f&token=20080818&.wav');
+                    audio.play();
                 }
                 if (_this.currentTime < 0 && _this.old_turn == _this.turn) {
                     alert("Game Over");
