@@ -269,7 +269,7 @@ class BlackViewSet(NestedViewSetMixin, ModelViewSet):
     def create(self, request, *args, **kwargs):
         s = blackSession.objects.get(colorid=self.kwargs['parent_lookup_room'])
         s.post_time = utc.localize(datetime.now())
-        s.timer = 7
+        s.timer = 10
         a = Session.objects.get(session_name=s.session_name)
         if(a.status is False):
             raise Exception('Status False')
