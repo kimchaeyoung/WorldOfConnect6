@@ -39,32 +39,18 @@ class Player(models.Model):
         player1_status = models.BooleanField(default=False)
         player2_status = models.BooleanField(default=False)
 
-class Stone(models.Model):
-	room = models.ForeignKey(Session, related_name='stone_session', on_delete=models.CASCADE, null=True, blank=True)
-	color = models.CharField(max_length = 10, default="white")
-	x1 = models.CharField(max_length = 10)
-	y1 = models.IntegerField()
-	x2 = models.CharField(max_length = 10, blank=True, null=True)
-	y2 = models.IntegerField(blank=True, null=True)
-
-	def __str__(self):
-		return self.color
 
 class Black(models.Model):
 	room = models.ForeignKey(blackSession, related_name='black_room', on_delete=models.CASCADE, null=True, blank=True)
-	x1 = models.CharField(max_length = 10)
-	y1 = models.IntegerField()
-	x2 = models.CharField(max_length = 10, blank=True, null=True)
-	y2 = models.IntegerField(blank=True, null=True)
+	s1 = models.CharField(max_length = 10)
+	s2 = models.CharField(max_length = 10, blank=True, null=True)
 	get_time = models.DateTimeField(null=True)
 	post_time = models.DateTimeField(auto_now_add=True, blank=True)
 
 class White(models.Model):
 	room = models.ForeignKey(whiteSession, related_name='white_room', on_delete=models.CASCADE, null=True, blank=True)
-	x1 = models.CharField(max_length = 10)
-	y1 = models.IntegerField()
-	x2 = models.CharField(max_length = 10, blank=True, null=True)
-	y2 = models.IntegerField(blank=True, null=True)
+	s1 = models.CharField(max_length = 10)
+	s2 = models.CharField(max_length = 10)
 	get_time = models.DateTimeField(null=True)
 	post_time = models.DateTimeField(auto_now_add=True, blank=True)
 

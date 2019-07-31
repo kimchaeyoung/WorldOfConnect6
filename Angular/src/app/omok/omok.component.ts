@@ -26,6 +26,7 @@ export class OmokComponent implements OnInit {
    c2 : Session = new Session()
    c3 : Status = new Status()
 
+
    constructor(private http:HttpClient, route: ActivatedRoute) {
      this.turn = 0;
      this.turn_color = '';
@@ -33,7 +34,7 @@ export class OmokComponent implements OnInit {
      this.c3.status = "대기중입니다";
      this.c2.session = route.snapshot.params['id'];
      this.sub = this.source.subscribe((t)=> this.onTimeOut());
- 
+     
    }
 
 
@@ -65,6 +66,8 @@ export class OmokComponent implements OnInit {
         if(this.currentTime > 0 && this.old_turn < this.turn)
         {
           this.currentTime = 7;
+          var audio = new Audio('http://pds81.cafe.daum.net/original/5/cafe/2008/08/18/10/38/48a8d292cf08f&token=20080818&.wav');
+          audio.play();
         }
         if(this.currentTime < 0 && this.old_turn == this.turn)
         {
@@ -97,9 +100,10 @@ export class OmokComponent implements OnInit {
         var y1 = this.convY(coor_Y1);
 
         var line_color = "black";
-        if (this.turn < count+3)
+        if (this.turn < count+3){
           line_color = "red";
           this.turn_color = color
+        }
 
         ctx.beginPath();
         ctx.arc(x1, y1, 19, 0, 2 * Math.PI, false);

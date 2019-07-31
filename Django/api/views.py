@@ -222,12 +222,6 @@ class BlackSessionViewSet(NestedViewSetMixin, ModelViewSet):
 class WhiteSessionViewSet(NestedViewSetMixin, ModelViewSet):
     serializer_class = WhiteSessionSerializer
     queryset = whiteSession.objects.all()
-
-class UserViewSet(NestedViewSetMixin, ModelViewSet):
-    serializer_class = UserSerializer
-    queryset = User.objects.all()
-#    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
-
  
 class StoneViewSet(NestedViewSetMixin, ModelViewSet):
     serializer_class = StoneSerializer
@@ -264,10 +258,12 @@ class BlackViewSet(NestedViewSetMixin, ModelViewSet):
             raise Exception('Status False')
         else:
             resultColor = "black"
-            resultX1 = str(tmp.x1)
-            resultY1 = tmp.y1
-            resultX2 = str(tmp.x2)
-            resultY2 = tmp.y2
+            resultS1 = tmp.s1
+            resultS2 = tmp.s2
+            resultX1 = resultS1[0]
+            resultY1 = resultS1[1]
+            resultX2 = resultS2[0]
+            resultY2 = resultS2[1]
             resultOmok = ResultOmok(room=resultRoom, color = resultColor, x = resultX1 , y = resultY1)
             resultOmok.save()
             resultOmok = ResultOmok(room=resultRoom, color = resultColor, x = resultX2 , y = resultY2)
@@ -326,10 +322,12 @@ class WhiteViewSet(NestedViewSetMixin, ModelViewSet):
             raise Exception('Status False')
         else:
             resultColor = "white"
-            resultX1 = str(tmp.x1)
-            resultY1 = tmp.y1
-            resultX2 = str(tmp.x2)
-            resultY2 = tmp.y2
+            resultS1 = tmp.s1
+            resultS2 = tmp.s2
+            resultX1 = resultS1[0]
+            resultY1 = resultS1[1]
+            resultX2 = resultS2[0]
+            resultY2 = resultS2[1]
             resultOmok = ResultOmok(room=resultRoom, color = resultColor, x = resultX1 , y = resultY1)
             resultOmok.save()
             resultOmok = ResultOmok(room=resultRoom, color = resultColor, x = resultX2 , y = resultY2)

@@ -18,20 +18,6 @@ class WhiteSessionSerializer(serializers.ModelSerializer):
 		model = whiteSession
 		fields = ('colorid', 'session_name', 'status')
 
-
-class UserSerializer(serializers.ModelSerializer):
-        stones = serializers.PrimaryKeyRelatedField(many=True, queryset=Stone.objects.all())
-        class Meta:
-                model = User
-                fields = ('id', 'username', 'stones')
-
-'''
-class StoneSerializer(serializers.ModelSerializer):
-	class Meta:
-		model = Stone
-		fields = ('id', 'room', 'color', 'x1', 'y1', 'x2', 'y2')
-'''
-
 class StoneSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = ResultOmok
@@ -40,9 +26,9 @@ class StoneSerializer(serializers.ModelSerializer):
 class BlackSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = Black
-		fields = ('id', 'room', 'x1', 'y1', 'x2', 'y2')
+		fields = ('id', 'room', 's1', 's2')
 
 class WhiteSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = White
-		fields = ('id', 'room', 'x1', 'y1', 'x2', 'y2')
+		fields = ('id', 'room', 's1', 's2')
