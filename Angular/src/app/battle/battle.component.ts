@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpParams, HttpClient } from '@angular/common/http';
 import { Observable, timer, Subscription } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 
@@ -177,8 +177,10 @@ export class BattleComponent implements OnInit {
 
   getAllData()
   {
+    let params = new HttpParams();
+    params = params.append("colorid", "admin");
     return this.http
-      .get("./api/sessions/"+this.c2.session+"/stones")
+      .get("./api/sessions/"+this.c2.session+"/stones/",{params:params})
   }
 }
 export class Result{

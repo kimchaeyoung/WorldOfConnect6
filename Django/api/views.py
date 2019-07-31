@@ -230,6 +230,20 @@ class StoneViewSet(NestedViewSetMixin, ModelViewSet):
     serializer_class = StoneSerializer
     queryset = ResultOmok.objects.all()
 
+    def get_queryset(self):
+        s = Session.objects.get(session_name=self.kwargs['parent_lookup_room'])
+        colorid = self.request.GET.get('colorid', None)
+        if colorid == "admin":
+            return ResultOmok.objects.filter(room=s.session_name)
+        elif colorid == s.blackid:
+            print("BLACK!!!") #정보 전달과 동시에 Black Player의 시간 감소 시작
+            return ResultOmok.objects.filter(room=s.session_name)
+        elif colorid == s.whiteid:
+            print("WHITE!!!") #정보 전달과 동시에 White Player의 시간 감소 시작
+            return ResultOmok.objects.filter(room=s.session_name)
+        else:
+            print("Cannot Access")
+
 class BlackViewSet(NestedViewSetMixin, ModelViewSet):
     serializer_class = BlackSerializer
     queryset = Black.objects.all()
