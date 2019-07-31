@@ -26,7 +26,7 @@ from django.contrib.auth.models import User
 
 import sys, os
 sys.path.append(os.path.abspath("../player_example/"))
-import monkey
+import smartmonkey
 
 from .forms import *
 
@@ -143,7 +143,7 @@ def single_game(request, session_key):
     if p.player1_color == "white":
         b = blackSession.objects.get(session_name=session_key)
         if not Black.objects.filter(room=b.colorid).exists():
-            monkey.first_stone(request, b.colorid) 
+            smartonkey.first_stone(request, b.colorid) 
     return render(request, 'single_room.html', {'room_name': s.session_name, 'P1': p.player1_name, 'P1_color': p.player1_color})
 
 
@@ -279,7 +279,7 @@ class BlackViewSet(NestedViewSetMixin, ModelViewSet):
                     t = whiteSession.objects.get(session_name=s.session_name)
                     mColor = "white"
                     time.sleep(2)
-                    monkey.second_stone(request, t.colorid, mColor)
+                    smartmonkey.second_stone(request, t.colorid, mColor)
 
             return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
@@ -341,7 +341,7 @@ class WhiteViewSet(NestedViewSetMixin, ModelViewSet):
                     t = blackSession.objects.get(session_name=s.session_name)
                     mColor = "black"
                     time.sleep(2)
-                    monkey.second_stone(request, t.colorid, mColor)
+                    smartmonkey.second_stone(request, t.colorid, mColor)
 
             return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
