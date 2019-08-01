@@ -55,7 +55,6 @@ def single(request):
             player = form.cleaned_data['player_name']
             if not Session.objects.filter(session_name=player).exists():
                 colorNum = random.randrange(1,3)
-                colorNum = 1
                 if colorNum == 1:
                     wid = makeRandomString()
                     s = whiteSession(colorid=wid, session_name=player, status=False, name=player)
@@ -141,18 +140,25 @@ def double_game(request, session_key):
         ws = whiteSession.objects.get(session_name=session_key)
         url = request.build_absolute_uri('/')[:-1]
         if bs.name == "Monkey":
-            if not Black.objects.filter(room=bs.colorid).exists():
-                smartmonkey.first_stone(request, session_key, bs.colorid)
+            requests.get(url+"/api/sessions/"+bs.session_name+"/stones/?colorid="+bs.colorid)
         elif ws.name=="Monkey":
             requests.get(url+"/api/sessions/"+ws.session_name+"/stones/?colorid="+ws.colorid)
         return render(request, 'double_room.html', {'room_name': session_key, 'P1': bs.name, 'P2': ws.name, 'P1_color': "black", 'P2_color': "white"})
     else:
         return redirect('home')
 
-def enter(player):
+def enter(self, player):
     if player.status is False:
         player.status = True
         player.save()
+        s = Session.objects.get(session_name=player.session_name)
+        if player.colorid == s.whiteid:
+            bs = blackSession.objects.get(colorid=s.blackid)
+            if bs.name == "Monkey":
+                if not Black.objects.filter(room=bs.colorid).exists():
+                    print("smart monkey works")
+                    time.sleep(5)
+                    smartmonkey.first_stone(self.request, s.session_name, bs.colorid)
 
 def double_status(request, session_key):
     if Session.objects.filter(session_name=session_key).exists():
@@ -202,11 +208,6 @@ def timer(count, gettime, key, colorid):
         ts = blackSession.objects.get(session_name=key)
     elif Session.objects.get(session_name=key).whiteid == colorid:
         ts = whiteSession.objects.get(session_name=key)
-    else:
-        print("error")
-        print(colorid)
-        print(Session.objects.get(session_name=key).blackid)
-        print(Session.objects.get(session_name=key).whiteid)
     count-=1
     ts.timer = count
     ts.save()
@@ -246,21 +247,20 @@ class StoneViewSet(NestedViewSetMixin, ModelViewSet):
         gettime = utc.localize(datetime.now())
         room = self.kwargs['parent_lookup_room']
         s = Session.objects.get(session_name=room)
+        bs = blackSession.objects.get(session_name=room)
+        ws = whiteSession.objects.get(session_name=room)
         colorid = self.request.GET.get('colorid', None)
         if colorid == "admin":
             return ResultOmok.objects.filter(room=room)
         elif colorid == s.blackid:
-            bs = blackSession.objects.get(session_name=room)
             if ResultOmok.objects.filter(room=room).last().color=="red":
-                print("Black Enter")
-                enter(bs)
+                enter(self, bs)
             elif ResultOmok.objects.filter(room=room).last().color=="white":
                 timer(15, gettime, room, colorid)
             return ResultOmok.objects.filter(room=room)
         elif colorid == s.whiteid:
-            ws = whiteSession.objects.get(session_name=room)
             if ResultOmok.objects.filter(room=room).last().color=="red":
-                enter(ws)
+                enter(self, ws)
             elif ResultOmok.objects.filter(room=room).last().color=="black":
                 timer(15, gettime, room, colorid)
             return ResultOmok.objects.filter(room=room)
@@ -323,10 +323,7 @@ class WhiteViewSet(NestedViewSetMixin, ModelViewSet):
         s = whiteSession.objects.get(colorid=self.kwargs['parent_lookup_room'])
         s.post_time = utc.localize(datetime.now())
         s.timer = 10
-        a = Session.objects.get(session_name=s.session_name)
-        if(a.status is False):
-            raise Exception('Status False')
-        elif(s.status is False):
+        if(s.status is False):
             raise Exception('Status False')
         elif not Black.objects.filter(room=Session.objects.get(session_name=s.session_name).blackid).exists():
             raise Exception('Not Your Turn')
