@@ -259,14 +259,14 @@ class StoneViewSet(NestedViewSetMixin, ModelViewSet):
             if ResultOmok.objects.filter(room=room).last().color=="red":
                 enter(bs)
             elif ResultOmok.objects.filter(room=room).last().color=="white":
-                timer(10, gettime, room, colorid)
+                timer(15, gettime, room, colorid)
             return ResultOmok.objects.filter(room=room)
         elif colorid == s.whiteid:
             ws = whiteSession.objects.get(session_name=room)
             if ResultOmok.objects.filter(room=room).last().color=="red":
                 enter(ws)
             elif ResultOmok.objects.filter(room=room).last().color=="black":
-                timer(10, gettime, room, colorid)
+                timer(15, gettime, room, colorid)
             return ResultOmok.objects.filter(room=room)
         else:
             print("Cannot Access")

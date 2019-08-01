@@ -1,71 +1,81 @@
 {% include 'material/includes/material_css.html' %}
 {% include 'material/includes/material_js.html' %}
 
-<a href="/guide/{{room_name}}/">Go back</a>
-<p><a href="{% url 'home' %}">Home</a></p>
-
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-<title>CSS Website Layout</title>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-
-<style>
-.basic {
-  background-color: white;
-  border-style: solid;
-  border-radius: 25px;
-  border-width: 2px;
-  border-color: black;
-  color: black;
-  float: left;
-  width: 49%;
-}
-.left-half {
-  background-color: {{P1_color}};
-  border-style: solid;
-  border-radius: 25px;
-  border-width: 2px;
-  border-color: black;
-  color: {{P2_color}};
-  float: left;
-  width: 49%;
-}
-.right-half {
-  background-color: {{P2_color}};
-  border-style: solid;
-  border-radius: 25px;
-  border-width: 2px;
-  border-color: black;
-  color: {{P1_color}};
-  float: right;
-  width: 49%;
-}
-.row:after {
-  content: "";
-  padding: 10px;
-  display: table;
-  clear: both;
-}
-.samplecode {
-  background-color: #D8D8D8;
-  width: 100%
-}
-.footer {
-  padding: 10px;
-  text-align: center;
-}
-
-</style>
-
-<h1><center>Player Guide</center></h1>
-<p><h2>Game room is '{{room_name}}'.</b></h2></p>
-
-<h4> Following is your API url. You can get or post stone data using it. </h4>
-</head>
-
+  <head>
+    <style>
+      #header{
+        height: 6%;
+        background-color: #DAC9AA;
+        color: white;
+        font-size: 30px;
+        padding: 10px;
+        text-indent: 40px;
+      }
+      #margin{
+          margin-left: 5%;
+      }
+      .basic {
+          background-color: white;
+          border-style: solid;
+          border-radius: 25px;
+          border-width: 2px;
+          border-color: black;
+          color: black;
+          float: left;
+          width: 49%;
+      }
+      .left-half {
+          background-color: {{P1_color}};
+          border-style: solid;
+          border-radius: 25px;
+          border-width: 2px;
+          border-color: black;
+          color: {{P2_color}};
+          float: left;
+          width: 45%;
+      }
+      .right-half {
+          background-color: {{P2_color}};
+          border-style: solid;
+          border-radius: 25px;
+          border-width: 2px;
+          border-color: black;
+          color: {{P1_color}};
+          float: right;
+          width: 45%;
+          margin-right: 5%;
+      }
+      .row:after {
+          content: "";
+          padding: 10px;
+          display: table;
+          clear: both;
+      }
+      .samplecode {
+          background-color: #D8D8D8;
+          width: 100%
+      }
+      .footer {
+          padding: 10px;
+          text-align: center;
+      } 
+    </style>
+    <meta charset="utf-8">
+    <title>Player Form</title>
+    <base href="/">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    </head>
 <body>
+<div id="header">
+   World of Connect6
+</div>
+<div id="margin">
+<h2>Player Guide</h2>
+<h6>Game room is '{{room_name}}'.</h6>
+<h6> Following is your API url. You can get or post stone data using it. </h6><br/>
 <div class="left-half">
   <p> Player 1 <br/> 
   <br/><h5> id: {{P1}}
@@ -73,7 +83,7 @@
   <h5>GET /api/sessions/{{room_name}}/stones/?colorid={{P1_key}}
   <h5>POST /api/{{P1_color}}-session/{{P1_key}}/{{P1_color}}s { 'room': {{P1_key}}, 'x1': A-S, 'y1':1-19, 'x2':A-S, 'y2':1-19 }</p><br/>
 </div>
-
+</div>
 <div class="row">
   <div class="right-half">
     <p> Player 2 <br/>
@@ -90,7 +100,7 @@
 <script src="http://codemirror.net/addon/edit/continuecomment.js"></script>
 <script src="http://codemirror.net/mode/python/python.js"></script>
 
-<div>
+<div id="margin">
  <h4> Sample code [python] </h4>
   <textarea rows="4" cols="50" id="codesnippet_readonly">
     #GET
@@ -113,7 +123,7 @@
   </textarea>
 </div>
 
-<div class="footer">
+<div class="footer" id="margin">
   <form action="/guide/{{room_name}}/", method="post">
     {% csrf_token %}
     <p><input type="submit" value="I Checked this."></p>

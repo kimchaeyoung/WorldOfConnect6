@@ -192,7 +192,7 @@ module.exports = "#left-half{\n    float: left;\n    width: 49%;\n}\n\n#right-ha
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<audio autoplay loops>\n    <source src=\"https://t1.daumcdn.net/cfile/tistory/23663547585652B116?original.wav\" type=\"audio/wav\">\n</audio>\n<h2 class=\"left-half\">\n  Black player <br/> \n  status: {{ c3.player1_status }} <br/>\n  time: {{ c4.black_timer }}\n</h2>\n\n<h2 class=\"right-half\">\n  White player <br/>\n  status: {{ c3.player2_status }} <br/>\n  time: {{ c4.white_timer }}\n</h2>\n\n<div style=\"text-align:center\">\n  <h1>\n    result {{ c1.result }}\n  </h1>\n  <h2>\n    now turn {{ turn_color }}\n  </h2>\n</div>\n\n<br/>\n<div style = \"text-align:center\">\n<body>\n    <canvas id=\"board\" width=768px height=768px></canvas>\n</body>\n</div>\n"
+module.exports = "<audio autoplay loops>\n    <source src=\"https://t1.daumcdn.net/cfile/tistory/23663547585652B116?original.wav\" type=\"audio/wav\">\n</audio>\n<h4 class=\"left-half\">\n  Black player <br/> \n  status: {{ c3.player1_status }} <br/>\n  time: {{ c4.black_timer }}\n</h4>\n\n<h4 class=\"right-half\">\n  White player <br/>\n  status: {{ c3.player2_status }} <br/>\n  time: {{ c4.white_timer }}\n</h4>\n\n<div style=\"text-align:center\">\n  <h2>\n    result {{ c1.result }}\n  </h2>\n  <h3>\n    now turn {{ turn_color }}\n  </h3>\n</div>\n\n<br/>\n<div style = \"text-align:center\">\n<body>\n    <canvas id=\"board\" width=768px height=768px></canvas>\n</body>\n</div>\n"
 
 /***/ }),
 
@@ -226,7 +226,7 @@ var BattleComponent = /** @class */ (function () {
         this.http = http;
         this.currentTime = 7;
         this.chk = 0;
-        this.source = Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["timer"])(1000, 100);
+        this.source = Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["timer"])(1000, 1000);
         this.turn = 0;
         this.old_turn = 0;
         this.turn_color = '';

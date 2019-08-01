@@ -15,7 +15,7 @@ export class BattleComponent implements OnInit {
    intervalId;
    chk = 0;
 
-   source = timer(1000,100);
+   source = timer(1000,1000);
    turn = 0;
    old_turn = 0;
    turn_color = '';

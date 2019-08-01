@@ -7,3 +7,4 @@ class double_form(forms.Form):
 
 class single_form(forms.Form):
     player_name = forms.CharField(max_length=20)
+    

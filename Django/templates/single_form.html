@@ -8,15 +8,17 @@
 <html lang="en">
   <head>
     <style>
-      html, body {
-        padding: 0;
-        margin: 0;
-      } 
       #header{
         height: 6%;
-        background-color: #7BAED8; 
+        background-color: #DAC9AA; 
         color: white;
-        font-size: 60px;
+        font-size: 30px;
+        padding: 10px;
+        text-indent: 40px;
+      }
+      #margin{
+          margin-left: 5%;
+          margin-right: 50%;
       }
     </style>
     <meta charset="utf-8">
@@ -25,12 +27,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" type="image/x-icon" href="favicon.ico">
   </head>
+<body>
 <div id="header">
    World of Connect6
 </div>   
-<h1>Player information</h1>
-{{alert}}
-<form action="/single/" method="post">
+<form action="/single/" id="margin" method="post">
+    <h2>Player Information</h2>
     {% csrf_token %}
     {{form}}
     <button type="submit" class="btn">Enter</button>

@@ -5,11 +5,24 @@
 
 {% load material_form %}
 
-<a href="{% url 'home'%}">Home</a>
 
 <!doctype html>
 <html lang="en">
   <head>
+    <style>
+      #header{
+        height: 6%;
+        background-color: #DAC9AA;
+        color: white;
+        font-size: 30px;
+        padding: 10px;
+        text-indent: 40px;
+      }
+      #margin{
+          margin-left: 5%;
+          margin-right: 50%;
+      }
+    </style>
     <meta charset="utf-8">
     <title>Player Form</title>
     <base href="/">
@@ -17,8 +30,11 @@
     <link rel="icon" type="image/x-icon" href="favicon.ico">
   </head>
 <body>
-<h3>Player information</h3>
-<form action="/double/" method="post">
+<div id="header">
+   World of Connect6
+</div> 
+<form action="/double/" id="margin" method="post">
+    <h2>Player Information</h2>
     {% csrf_token %}
     {{form}}
     <button type="submit" class="btn">Submit</button>
