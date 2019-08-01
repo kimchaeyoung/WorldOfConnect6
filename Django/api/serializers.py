@@ -11,12 +11,12 @@ class SessionSerializer(serializers.ModelSerializer):
 class BlackSessionSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = blackSession
-		fields = ('colorid', 'session_name', 'status')
+		fields = ('colorid', 'session_name', 'status', 'timer')
 
 class WhiteSessionSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = whiteSession
-		fields = ('colorid', 'session_name', 'status')
+		fields = ('colorid', 'session_name', 'status', 'timer')
 
 class StoneSerializer(serializers.ModelSerializer):
 	class Meta:

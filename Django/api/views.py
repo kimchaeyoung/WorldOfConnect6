@@ -181,6 +181,15 @@ def double_status(request, session_key):
         return JsonResponse(status, safe=False)
     return HttpResponse()          
 
+def double_timer(request, session_key):
+    if Session.objects.filter(session_name=session_key).exists():
+        bs = blackSession.objects.get(session_name=session_key)
+        ws = whiteSession.objects.get(session_name=session_key)
+        s = Session.objects.get(session_name=session_key)
+        
+        timer = {'black_timer' : bs.timer , 'white_timer' : ws.timer}
+        return JsonResponse(timer, safe=False)
+    return HttpResponse()
 
 def watch(request):
     return render(request, 'list.html')

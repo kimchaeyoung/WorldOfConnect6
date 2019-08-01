@@ -1,3 +1,13 @@
+#left-half{
+    float: left;
+    width: 49%;
+}
+
+#right-half{
+    float: right;
+    width: 49%;
+}
+
 #digitalClock{
     font-size: 150px;
     color:      rgb(0, 19, 26);

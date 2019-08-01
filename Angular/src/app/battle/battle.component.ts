@@ -15,7 +15,7 @@ export class BattleComponent implements OnInit {
    intervalId;
    chk = 0;
 
-   source = timer(1000,1000);
+   source = timer(1000,100);
    turn = 0;
    old_turn = 0;
    turn_color = '';
@@ -24,6 +24,7 @@ export class BattleComponent implements OnInit {
    c1 : Result = new Result()
    c2 : Session = new Session()
    c3 : Status = new Status()
+   c4 : Timer = new Timer()
 
    constructor(private http:HttpClient, route: ActivatedRoute) {
      this.turn = 0;
@@ -31,6 +32,8 @@ export class BattleComponent implements OnInit {
      this.c1.result = '';
      this.c3.player1_status = "대기중입니다";
      this.c3.player2_status = "대기중입니다";
+     this.c4.black_timer = 7;
+     this.c4.white_timer = 7;
      this.c2.session = route.snapshot.params['id'];
      this.sub = this.source.subscribe((t)=>this.onTimeOut()); 
    }
@@ -39,13 +42,6 @@ export class BattleComponent implements OnInit {
    }
 
 
-  showDigitalClock(){
-        this.currentTime -= 1;
-        this.intervalId= setTimeout(()=>{
-          this.showDigitalClock();
-        },1000);
-  }
-
   onTimeOut(){
     this.statusData().subscribe(s=>
         {
@@ -53,10 +49,16 @@ export class BattleComponent implements OnInit {
         this.c3.player2_status = s.player2_status.toString();
         }
     );
+
+    this.timerData().subscribe(s=>
+        {
+        this.c4.black_timer = s.black_timer;
+        this.c4.white_timer = s.white_timer;
+        }
+    );
     
     if (this.c3.player1_status != "대기중입니다" && this.c3.player2_status != "대기중입니다"){
     if(this.chk==0){
-            this.showDigitalClock();
             this.chk +=1;
     }
 
@@ -67,24 +69,15 @@ export class BattleComponent implements OnInit {
         this.products = data;
         this.old_turn = this.turn;
         this.turn = this.products.length;
-        if(this.currentTime > 0 && this.old_turn < this.turn)
+        if(this.old_turn < this.turn)
         {
-          this.currentTime = 7;
           var audio = new Audio('http://pds81.cafe.daum.net/original/5/cafe/2008/08/18/10/38/48a8d292cf08f&token=20080818&.wav');
           audio.play();
  
         }
-        if(this.currentTime < 0 && this.old_turn == this.turn)
-        {
-          alert("Game Over")
-          this.sub.unsubscribe();
-          this.currentTime = 0;
-          clearTimeout(this.intervalId);
-        }
         if(this.c1.result != '')
         {
           this.sub.unsubscribe();
-          clearTimeout(this.intervalId);
         }
       });
 
@@ -173,6 +166,11 @@ export class BattleComponent implements OnInit {
     return this.http.get<Status>("./double_status/"+this.c2.session)
   }
 
+  timerData()
+  {
+    return this.http.get<Timer>("./double_timer/"+this.c2.session)
+  }
+
   resultData()
   {
     return this.http.get("./resultdata/"+this.c2.session)
@@ -197,4 +195,9 @@ export class Session{
 export class Status{
     player1_status : String;
     player2_status : String;
+}
+
+export class Timer{
+    black_timer : number;
+    white_timer : number;
 }
