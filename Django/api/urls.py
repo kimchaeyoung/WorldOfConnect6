@@ -12,6 +12,7 @@ urlpatterns = [
     url(r'^guide/(?P<room>[^/]+)/', views.guide, name='guide'),
     url(r'^double_game/(?P<session_key>[^/]+)/$', views.double_game, name='double_game'),
     url(r'^double_status/(?P<session_key>[^/]+)/$', views.double_status, name='double_status'),  
+    url(r'^double_timer/(?P<session_key>[^/]+)/$', views.double_timer, name='double_timer'),
     url(r'^resultdata/(?P<sessionid>[^/]+)/$', views.ResultData),
     url(r'^watch/', views.watch, name='watch'),
 ]
