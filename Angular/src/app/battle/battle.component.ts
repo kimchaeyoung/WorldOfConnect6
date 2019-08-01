@@ -62,7 +62,7 @@ export class BattleComponent implements OnInit {
             this.chk +=1;
     }
 
-    
+    this.resultData().subscribe(m=>this.c1.result = m.toString());
     this.getAllData().subscribe(data =>
       {
         this.products = data;

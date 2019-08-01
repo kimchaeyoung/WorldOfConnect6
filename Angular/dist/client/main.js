@@ -261,6 +261,7 @@ var BattleComponent = /** @class */ (function () {
             if (this.chk == 0) {
                 this.chk += 1;
             }
+            this.resultData().subscribe(function (m) { return _this.c1.result = m.toString(); });
             this.getAllData().subscribe(function (data) {
                 _this.products = data;
                 _this.old_turn = _this.turn;
