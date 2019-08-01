@@ -1,22 +1,17 @@
 <audio autoplay loops>
     <source src="https://t1.daumcdn.net/cfile/tistory/23663547585652B116?original.wav" type="audio/wav">
 </audio>
-<h1>
-  Black player status {{ c3.player1_status }}
-</h1>
-
-<h2>
-  White player status {{ c3.player2_status }}
+<h2 class="left-half">
+  Black player <br/> 
+  status: {{ c3.player1_status }} <br/>
+  time: {{ c4.black_timer }}
 </h2>
 
-<div class="container">
-    <div class="row">
-        <div class="col-md-12 " id="clock">
-                <div id="digitalClock">{{currentTime}}</div>
-        </div>
-    </div>
-</div>
-
+<h2 class="right-half">
+  White player <br/>
+  status: {{ c3.player2_status }} <br/>
+  time: {{ c4.white_timer }}
+</h2>
 
 <div style="text-align:center">
   <h1>
