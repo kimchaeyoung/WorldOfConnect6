@@ -1,3 +1,9 @@
+{% include 'material/includes/material_css.html' %}
+{% include 'material/includes/material_js.html' %}
+
+<a href="/guide/{{room_name}}/">Go back</a>
+<p><a href="{% url 'home' %}">Home</a></p>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -52,8 +58,6 @@
 }
 
 </style>
-
-<p><a href="{% url 'home' %}">홈으로</a></p>
 
 <h1><center>Player Guide</center></h1>
 <p><h2>Game room is '{{room_name}}'.</b></h2></p>

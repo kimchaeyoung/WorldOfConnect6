@@ -1,13 +1,23 @@
 import random, requests
 from string import ascii_uppercase
 
-def first_stone(request, room_id):
+def first_stone(request, room_id, player_id):
     x = random.choice(ascii_uppercase[4:-12]) #EFGHIJKLMN
     y = str(random.randrange(4,14))
+
+    url = request.build_absolute_uri('/')[:-1]+"/api/sessions/"+room_id+"/stones/?colorid="+player_id
+    get_data = requests.get(url).json()
+    x_list = list(ascii_uppercase[:-7])
+
+    for i in get_data:
+        if i['x'] == x and i['y'] == y:
+            x = random.choice(x_list)
+            y = str(random.randrange(1,20))
+    
     s1 = x + y
      
-    data = { 'room': room_id, 's1': s1, 's2': '' }
-    url = request.build_absolute_uri('/')[:-1]+"/api/black-session/"+str(room_id)+"/blacks/"
+    data = { 'room': player_id, 's1': s1, 's2': '' }
+    url = request.build_absolute_uri('/')[:-1]+"/api/black-session/"+str(player_id)+"/blacks/"
     requests.post(url, data=data)
 #    requests.post(url, data=data, auth=("admin","12341234"))
 
@@ -21,11 +31,17 @@ def second_stone(request, room_id, player_id, color):
     get_data = requests.get(getUrl).json()
    
     length = len(get_data)
-    if(length == 7 or (color=="black" and length <=9)):
-        x1 = chr(ord(get_data[0]['x'])+1)
-        y1 = get_data[0]['y']
+    if(length == 9):
+        x1 = chr(ord(get_data[-2]['x'])+1)
+        y1 = get_data[-2]['y']
         x2 = x1
-        y2 = y1 +1       
+        y2 = y1 +1 
+    elif color == "black" and length<=11 :
+        x1 = chr(ord(get_data[-2]['x'])+1)
+        y1 = get_data[-2]['y']
+        x2 = x1
+        y2 = y1 +1 
+       
     else:
         last_x1 = get_data[-1]['x']
         last_x2 = get_data[-2]['x']

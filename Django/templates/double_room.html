@@ -1,6 +1,13 @@
-{% load static %}<!doctype html>
-<a href="/guide/{{room_name}}/">이전으로</a>
-<p><a href="{% url 'home' %}">홈으로</a></p>
+{% include 'material/includes/material_css.html' %}
+{% include 'material/includes/material_js.html' %}
+
+{% load static %}
+
+<!doctype html>
+
+<a href="/guide/{{room_name}}/">Go back</a>
+<p><a href="{% url 'home' %}">Home</a></p>
+
 <html lang="en">
 <head>
 <meta charset="utf-8">

@@ -1,4 +1,12 @@
+{% include 'material/includes/material_css.html' %}
+{% include 'material/includes/material_js.html' %}
+
 {% load static %}
+
+{% load material_form %}
+
+<a href="{% url 'home'%}">Home</a>
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -13,7 +21,7 @@
 <form action="/double/" method="post">
     {% csrf_token %}
     {{form}}
-    <input id="submit" type="submit" value="Enter">
+    <button type="submit" class="btn">Submit</button>
 </form>
 </body>
 </html>

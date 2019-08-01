@@ -1,20 +1,39 @@
+{% include 'material/includes/material_css.html' %}
+{% include 'material/includes/material_js.html' %}
+
 {% load static %}
+{% load material_form %}
+
 <!doctype html>
 <html lang="en">
   <head>
+    <style>
+      html, body {
+        padding: 0;
+        margin: 0;
+      } 
+      #header{
+        height: 6%;
+        background-color: #7BAED8; 
+        color: white;
+        font-size: 60px;
+      }
+    </style>
     <meta charset="utf-8">
     <title>Player Form</title>
     <base href="/">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" type="image/x-icon" href="favicon.ico">
   </head>
-<body>
-<h3>Player information</h3>
+<div id="header">
+   World of Connect6
+</div>   
+<h1>Player information</h1>
 {{alert}}
 <form action="/single/" method="post">
     {% csrf_token %}
     {{form}}
-    <input id="submit" type="submit" value="Enter">
+    <button type="submit" class="btn">Enter</button>
 </form>
 </body>
 </html>

@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.renderers import JSONRenderer
@@ -57,6 +57,7 @@ def single(request):
                 s = Session.objects.get(session_name=player)
             else: 
                 colorNum = random.randrange(1,3)
+                colorNum = 2
                 if colorNum == 1:
                     wid = makeRandomString()
                     s = whiteSession(colorid=wid, session_name=player, status=False, name=player)
@@ -94,7 +95,6 @@ def double(request):
             if not Session.objects.filter(session_name=room).exists():
 
                 colorNum = random.randrange(1,3)
-
                 if colorNum == 1:
                     wid = makeRandomString()
                     s = whiteSession(colorid=wid, session_name=room, status=False, name=player1)                                          
@@ -147,7 +147,7 @@ def double_game(request, session_key):
         if bs.name == "Monkey":
             if not Black.objects.filter(room=bs.colorid).exists():
                 requests.get(url+"/api/sessions/"+bs.session_name+"/stones/?colorid="+bs.colorid)
-                smartmonkey.first_stone(request, bs.colorid)
+                smartmonkey.first_stone(request, session_key, bs.colorid)
         elif ws.name=="Monkey":
             requests.get(url+"/api/sessions/"+ws.session_name+"/stones/?colorid="+ws.colorid)
         return render(request, 'double_room.html', {'room_name': session_key, 'P1': bs.name, 'P2': ws.name, 'P1_color': "black", 'P2_color': "white"})
