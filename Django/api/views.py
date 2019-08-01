@@ -53,11 +53,9 @@ def single(request):
 
         if form.is_valid():
             player = form.cleaned_data['player_name']
-            if Session.objects.filter(session_name=player).exists():
-                s = Session.objects.get(session_name=player)
-            else: 
+            if not Session.objects.filter(session_name=player).exists():
                 colorNum = random.randrange(1,3)
-                colorNum = 2
+                colorNum = 1
                 if colorNum == 1:
                     wid = makeRandomString()
                     s = whiteSession(colorid=wid, session_name=player, status=False, name=player)
@@ -106,8 +104,6 @@ def double(request):
                     s.save()
   
                 else :
-                    p1_color = "black"
-                    p2_color = "white"
                     wid = makeRandomString()
                     s = whiteSession(colorid=wid, session_name=room, status=False, name=player2)
                     s.save()
@@ -146,7 +142,6 @@ def double_game(request, session_key):
         url = request.build_absolute_uri('/')[:-1]
         if bs.name == "Monkey":
             if not Black.objects.filter(room=bs.colorid).exists():
-                requests.get(url+"/api/sessions/"+bs.session_name+"/stones/?colorid="+bs.colorid)
                 smartmonkey.first_stone(request, session_key, bs.colorid)
         elif ws.name=="Monkey":
             requests.get(url+"/api/sessions/"+ws.session_name+"/stones/?colorid="+ws.colorid)
@@ -257,6 +252,7 @@ class StoneViewSet(NestedViewSetMixin, ModelViewSet):
         elif colorid == s.blackid:
             bs = blackSession.objects.get(session_name=room)
             if ResultOmok.objects.filter(room=room).last().color=="red":
+                print("Black Enter")
                 enter(bs)
             elif ResultOmok.objects.filter(room=room).last().color=="white":
                 timer(15, gettime, room, colorid)
@@ -279,10 +275,7 @@ class BlackViewSet(NestedViewSetMixin, ModelViewSet):
         s = blackSession.objects.get(colorid=self.kwargs['parent_lookup_room'])
         s.post_time = utc.localize(datetime.now())
         s.timer = 10
-        a = Session.objects.get(session_name=s.session_name)
-        if(a.status is False):
-            raise Exception('Status False')
-        elif(s.status is False):
+        if(s.status is False):
             raise Exception('Status False')
         else:
             serializer = self.get_serializer(data=request.data)

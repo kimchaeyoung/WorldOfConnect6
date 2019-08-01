@@ -261,7 +261,6 @@ var BattleComponent = /** @class */ (function () {
             if (this.chk == 0) {
                 this.chk += 1;
             }
-            this.resultData().subscribe(function (m) { return _this.c1.result = m.toString(); });
             this.getAllData().subscribe(function (data) {
                 _this.products = data;
                 _this.old_turn = _this.turn;
@@ -804,7 +803,7 @@ Object(_angular_platform_browser_dynamic__WEBPACK_IMPORTED_MODULE_1__["platformB
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /home/jihye/update3/WorldOfConnect6/Angular/src/main.ts */"./src/main.ts");
+module.exports = __webpack_require__(/*! /home/cykim/WorldOfConnect6/Angular/src/main.ts */"./src/main.ts");
 
 
 /***/ })
