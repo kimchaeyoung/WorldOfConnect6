@@ -102,24 +102,24 @@ def second_stone(request, room_id, player_id, color):
             y1 = get_y + 1
             y2 = y1 + 1
 
-        x_list = list(ascii_uppercase[:-7]) 
-        if x1 not in x_list:
-            x1 = random.choice(x_list)
-        if x2 not in x_list:
-            x2 = random.choice(x_list)
-        if y1 > 19 :        
-            y1 = random.randrange(1,20)
-        if y2 > 19:
-            y2 = random.randrange(1,20)
+    x_list = list(ascii_uppercase[:-7]) 
+    if x1 not in x_list:
+        x1 = random.choice(x_list)
+    if x2 not in x_list:
+        x2 = random.choice(x_list)
+    if y1 > 19 :        
+        y1 = random.randrange(1,20)
+    if y2 > 19:
+        y2 = random.randrange(1,20)
 
  
-        for i in get_data:
-            if i['x'] == x1 and i['y'] == y1:
-               x1 = random.choice(x_list)
-               y1 = random.randrange(1,20)
-            if i['x'] == x2 and i['y'] == y2:
-               x2 = random.choice(x_list)
-               y2 = random.randrange(1,20)
+    for i in get_data:
+        if i['x'] == x1 and i['y'] == y1:
+           x1 = random.choice(x_list)
+           y1 = random.randrange(1,20)
+        if i['x'] == x2 and i['y'] == y2:
+           x2 = random.choice(x_list)
+           y2 = random.randrange(1,20)
         
     s1 = x1 + str(y1)
     s2 = x2 + str(y2)

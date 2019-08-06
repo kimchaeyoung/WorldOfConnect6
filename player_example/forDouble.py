@@ -1,39 +1,99 @@
-import requests, time, sys
+'''
+   sys.argv[0] : port
+   sys.argv[1] : session_id 
+   sys.argv[2] : black_id
+   sys.argv[3] : white_id
+'''
 
-text_len = 0
+import sys, requests, random, time
+from string import ascii_uppercase
 
-def getUrl(text, session):
-    url = 'http://turnincode.cafe24.com:'+sys.argv[1]+'/api/sessions/'+session+'/stones/'
-    res = requests.get(url)
-    if res.status_code == 404:
-        time.sleep(1)
-        getUrl(session)
-    if (text == len(res.text)):
-        time.sleep(1)
-        getUrl(session)
-    else:
-        text_len = len(res.text)
+port = sys.argv[1] 
+session_id = sys.argv[2]
+black_id = sys.argv[3]
+white_id = sys.argv[4]
 
+url = 'http://turnincode.cafe24.com:' + port + '/api/'
 
-black = [["I",9],["H",9,"J",9],["F",8,"K",8],["I",10,"H",11],["K",7,"K",6],["K",9,"K",10]]
-white = [["I",8,"H",8],["G",8,"J",8],["F",9,"H",7],["G",12,"L",7],["I",6,"E",10],["D",11,"K",11]]
+session_url = url + 'sessions/' + session_id + '/'
+black_post = url + 'black-session/' + black_id + '/blacks/'
+white_post = url + 'white-session/' + white_id + '/whites/'
+black_get = url + 'sessions/' + session_id + "/stones/?colorid=" + black_id
+white_get = url + 'sessions/' + session_id + "/stones/?colorid=" + white_id
+def duplicate_check(Data, s1, s2):
+    for i in Data:
+        if i['x'] == s1[0] and i['y'] == s1[1:]:
+            x = random.choice(ascii_uppercase[4:-12])
+            y = str(random.randrange(4,14))
+            s1 = x + y
+        if s2 is not None:
+            if i['x'] == s2[0] and i['y'] == s2[1:]:
+                x = random.choice(ascii_uppercase[4:-12])
+                y = str(random.randrange(4,14))
+                s2 = x + y
+    return ( s1, s2 )
 
-requests.get('http://turnincode.cafe24.com:'+sys.argv[1]+'/api/sessions/'+sys.argv[2]+'/whites/')
+def random_stone():
+    x = random.choice(ascii_uppercase[2:-14])
+    y = str(random.randrange(2,15))
+    return x+y
+
+requests.get(black_get)
 time.sleep(1)
-requests.get('http://turnincode.cafe24.com:'+sys.argv[1]+'/api/sessions/'+sys.argv[2]+'/blacks/')
+requests.get(white_get)
+
+x = random.choice(ascii_uppercase[4:-12])
+y = str(random.randrange(4,14))
+s1 = x + y
+
+(s1, s2) = duplicate_check(requests.get(black_get).json() , s1, None)
+data = { 'room' : black_id , 's1' : s1 , 's2' : '' }
+requests.post(black_post, data=data)
 
 
-for i in range(6):
-    if i == 0:
-        data = {'room': sys.argv[2] , 'x1' : black[0][0], 'y1' : black[0][1], 'x2' : '', 'y2' : 0}
-    else:
-        data = {'room': sys.argv[2] , 'x1' : black[i][0], 'y1' : black[i][1], 'x2' : black[i][2], 'y2' : black[i][3]}
+for i in range(20):
+    time.sleep(1)
+    requests.get(white_get)
+    s1 = random_stone()
+    s2 = s1[0] + str(int(s1[1:])+1)
+#    (s1, s2) = duplicate_check( requests.get(white_get).json(), s1, s2 )
+    data = { 'room' : white_id, 's1' : s1 , 's2' : s2 }
+    requests.post(white_post, data=data)
 
     time.sleep(1)
-    res = requests.post('http://turnincode.cafe24.com:'+sys.argv[1]+'/api/sessions/'+sys.argv[2]+'/blacks/', data=data)
-    getUrl(text_len, sys.argv[2])   ##white get
+    requests.get(black_get)
+    s1 = random_stone()
+    s2 = s1[0] + str(int(s1[1:])+1)
+#    (s1, s2) = duplicate_check( requests.get(black_get).json(), s1, s2 )
+    data = { 'room' : black_id, 's1' : s1 , 's2' : s2 }
+    requests.post(black_post, data=data)
+ 
 
-    data = {'room': sys.argv[2] , 'x1' : white[i][0], 'y1' : white[i][1], 'x2' : white[i][2], 'y2' : white[i][3]}
-    time.sleep(1)
-    res = requests.post('http://turnincode.cafe24.com:'+sys.argv[1]+'/api/sessions/'+sys.argv[2]+'/whites/', data=data)
-    getUrl(text_len, sys.argv[2])   ##white get##
+
+
+
+     
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

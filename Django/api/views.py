@@ -55,6 +55,7 @@ def single(request):
             player = form.cleaned_data['player_name']
             if not Session.objects.filter(session_name=player).exists():
                 colorNum = random.randrange(1,3)
+                colorNum = 1
                 if colorNum == 1:
                     wid = makeRandomString()
                     s = whiteSession(colorid=wid, session_name=player, status=False, name=player)
@@ -374,126 +375,120 @@ def ResultData(request, sessionid):
     if Session.objects.filter(session_name=sessionid).exists():
         s = Session.objects.get(session_name=sessionid)
 
-    row = list(ascii_uppercase)
+    if bCount <= 6 or wCount <= 6 :
+        return HttpResponse()
 
+    row = list(ascii_uppercase)[:-7]
+    
     for i in row:
-        for j in range(1,20):
-            if tmp.filter(color="black",x=i, y=j).count() == 1:
-                cnt=1
-                for jj in range(1, 6):
-                    if tmp.filter(color="black",x=i, y=j+jj).count() == 1:
-                        cnt+=1
-                if cnt == 6:
-                    result = str('Black WIN !!! ')
-                    print(result)
-                    if s is not None:
-                        s.status=False
-                        s.save()
-                    return JsonResponse(result , safe = False)
-                else:
-                    cnt =0
-            elif tmp.filter(color="white",x=i, y=j).count() == 1:
-                cnt=1
-                for jj in range(1, 6):
-                    if tmp.filter(color="white",x=i, y=j+jj).count() == 1:
-                        cnt+=1
-                if cnt == 6:
-                    result = str('White WIN !!! ')
-                    print(result)
-                    if s is not None:
-                        s.status=False
-                        s.save()
-                    return JsonResponse(result , safe = False)
-                else:
-                   cnt=0
-    for j in range(1,20):
-        for i in row:
-            if black.filter(x=i, y=j).count() == 1:
-                cnt = 1
-                for jj in range(1, 6):
-                    if black.filter(x=chr(ord(i)+jj), y=j).count() == 1:
-                        cnt +=1
-                if cnt == 6:
-                    result = str('Black WIN !!!! ')
-                    print(result)
-                    if s is not None:
-                        s.status=False
-                        s.save()
-                    return JsonResponse(result, safe = False)
-                else:
-                    cnt =0
-            elif white.filter(x=i, y=j).count() == 1:
-                cnt = 1
-                for jj in range(1,6):
-                    if white.filter(x=chr(ord(i)+jj), y=j).count() == 1:
-                        cnt +=1
-                if cnt == 6:
-                    result = str('White WIN !!!! ')
-                    print(result)
-                    if s is not None:
-                        s.status=False
-                        s.save()
-                    return JsonResponse(result, safe = False)
-                else:
-                    cnt =0
+        if black.filter(x=i).exists():
+            black_x = black.filter(x=i)    
+            for j in black_x:
+                if black_x.count() >= 6:
+                    cnt = 1
+                    for jj in range(1,6):
+                        if black.filter(x=i, y=j.y+jj).exists() == False:
+                            break
+                        cnt += 1
+                    if cnt == 6:
+                        result = str("Black WIN !!!")
+                        if s is not None:
+                            s.status = False
+                            s.save()
+                        return JsonResponse(result, safe=False)
+                    else:
+                        cnt = 1
+                if black.filter(x=chr(ord(i)+1), y=j.y).exists():
+                    cnt = 2
+                    for jj in range(2,6):
+                        if black.filter(x=chr(ord(i)+jj), y=j.y).exists() == False:
+                            break
+                        cnt += 1
+                    if cnt == 6:
+                        result = str("Black WIN !!!")
+                        if s is not None:
+                            s.status = False
+                            s.save()
+                        return JsonResponse(result, safe=False)
+                if black.filter(x=chr(ord(i)+1), y=j.y+1).exists():
+                    cnt = 2
+                    for jj in range(2,6):
+                        if black.filter(x=chr(ord(i)+jj), y=j.y+jj).exists() == False:
+                            break
+                        cnt += 1
+                    if cnt == 6:
+                        result = str("Black WIN !!!")
+                        if s is not None:
+                            s.status = False
+                            s.save()
+                        return JsonResponse(result, safe=False)
+                if black.filter(x=chr(ord(i)+1), y=j.y-1).exists():
+                    cnt = 2
+                    for jj in range(2,6):
+                        if black.filter(x=chr(ord(i)+jj), y=j.y-jj).exists() == False:
+                            break
+                        cnt += 1
+                    if cnt == 6:
+                        result = str("Black WIN !!!")
+                        if s is not None:
+                            s.status = False
+                            s.save()
+                        return JsonResponse(result, safe=False)              
 
-
-    for i in range(1,20):
-        for j in row:
-            if black.filter(x=j, y=i).count() == 1:
-                cnt = 1
-                for jj in range(1,6):
-                    if tmp.filter(color="black", x=chr(ord(j)+jj) , y = i+jj).count()==1:
-                        cnt+=1
-                if cnt == 6:
-                    result = str('Black WIN !!! ')
-                    if s is not None:
-                        s.status=False
-                        s.save()
-                    return JsonResponse(result, safe=False)
-                else:
-                    cnt = 0
-            if white.filter(x=j, y=i).count() == 1:
-                cnt = 1
-                for jj in range(1,6):
-                    if tmp.filter(color="white", x=chr(ord(j)+jj) , y = i+jj).count()==1:
-                        cnt+=1
-                if cnt == 6:
-                    result = str('White WIN !!! ')
-                    if s is not None:
-                        s.status=False
-                        s.save()
-                    return JsonResponse(result, safe=False)
-                else:
-                    cnt = 0
-
-    for i in row:
-        for j in range(1,20):
-            if black.filter(x=i, y=j).count() == 1:
-                cnt = 1
-                for jj in range(1,6):
-                    if tmp.filter(color="black", x=chr(ord(i)+jj) , y = j-jj).count()==1:
-                        cnt+=1
-                if cnt == 6:
-                    result = str('Black WIN !!! ')
-                    if s is not None:
-                        s.status=False
-                        s.save()
-                    return JsonResponse(result, safe=False)
-                else:
-                    cnt = 0
-            if white.filter(x=i, y=j).count() == 1:
-                cnt = 1
-                for jj in range(1,6):
-                    if tmp.filter(color="white", x=chr(ord(i)+jj) , y = j-jj).count()==1:
-                        cnt+=1
-                if cnt == 6:
-                    result = str('White WIN !!! ')
-                    if s is not None:
-                        s.status=False
-                        s.save()
-                    return JsonResponse(result, safe=False)
-                else:
-                    cnt = 0  
-
+        if white.filter(x=i).exists():
+            white_x = white.filter(x=i)   
+            for j in white_x: 
+                if white_x.count() >= 6:
+                    cnt = 1
+                    for jj in range(1,6):
+                        if white.filter(x=i, y=j.y+jj).exists() == False:
+                            break
+                        cnt += 1
+                    if cnt == 6:
+                        result = str("White WIN !!!")
+                        if s is not None:
+                            s.status = False
+                            s.save()
+                        return JsonResponse(result, safe=False)
+                    else:
+                        cnt = 1
+                if white.filter(x=chr(ord(i)+1), y=j.y).exists():
+                    cnt = 2
+                    for jj in range(2,6):
+                        if white.filter(x=chr(ord(i)+jj), y=j.y).exists() == False:
+                            break
+                        cnt += 1
+                    if cnt == 6:
+                        result = str("White WIN !!!")
+                        if s is not None:
+                            s.status = False
+                            s.save()
+                        return JsonResponse(result, safe=False)
+                                   
+                if white.filter(x=chr(ord(i)+1), y=j.y+1).exists():
+                    cnt = 2
+                    for jj in range(2,6):
+                        if white.filter(x=chr(ord(i)+jj), y=j.y+jj).exists() == False:
+                            break
+                        cnt += 1
+                    if cnt == 6:
+                        result = str("White WIN !!!")
+                        if s is not None:
+                            s.status = False
+                            s.save()
+                        return JsonResponse(result, safe=False)
+                 
+                if white.filter(x=chr(ord(i)+1), y=j.y-1).exists():
+                    cnt = 2
+                    for jj in range(2,6):
+                        if white.filter(x=chr(ord(i)+jj), y=j.y-jj).exists() == False:
+                            break
+                        cnt += 1
+                    if cnt == 6:
+                        result = str("White WIN !!!")
+                        if s is not None:
+                            s.status = False
+                            s.save()
+                        return JsonResponse(result, safe=False)              
+            
     return HttpResponse()

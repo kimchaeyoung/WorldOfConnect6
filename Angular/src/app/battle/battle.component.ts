@@ -62,7 +62,6 @@ export class BattleComponent implements OnInit {
             this.chk +=1;
     }
 
-    this.resultData().subscribe(m=>this.c1.result = m.toString());
     this.getAllData().subscribe(data =>
       {
         this.products = data;
@@ -120,11 +119,10 @@ export class BattleComponent implements OnInit {
         ctx.font = "17px Comic Sans MS";
         if (color != "red")
             ctx.fillText(count-7 , x1-5.8, y1+6);
-
-
-
       }
     }
+
+    this.resultData().subscribe(m=>this.c1.result = m.toString()); 
     }
   }
 
