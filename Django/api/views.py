@@ -55,7 +55,6 @@ def single(request):
             player = form.cleaned_data['player_name']
             if not Session.objects.filter(session_name=player).exists():
                 colorNum = random.randrange(1,3)
-                colorNum = 1
                 if colorNum == 1:
                     wid = makeRandomString()
                     s = whiteSession(colorid=wid, session_name=player, status=False, name=player)
