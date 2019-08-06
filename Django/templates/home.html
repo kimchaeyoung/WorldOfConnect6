@@ -1,35 +1,90 @@
-{% include 'material/includes/material_css.html' %}
-{% include 'material/includes/material_js.html' %}
-
 {% load i18n static %}
 {% load material_form %}
 <audio autoplay loops>
     <source src="/media/home.mp3" type="audio/mp3">
 </audio>
-<link href="https://fonts.googleapis.com/css?family=Gugi&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Indie+Flower&display=swap" rel="stylesheet">
 
 <style>
-  .c{font-family: 'Gugi', cursive; font-size: 70px}
-  #tab {
-    margin:50;
+  html,body, .grid{
+    width: 95%;
+    height: 95%;
+    margin-left: 2%;
+    margin-right: 2%;
+    margin-top: 2%;
+    margin-bottom: 2%;
   }
-  #title {
+  .grid{
+    background-image: repeating-linear-gradient(0deg,transparent,transparent 50px,#E2C099 50px,#E2C099 51px),repeating-linear-gradient(-90deg,transparent,transparent 50px,#E2C099 50px,#E2C099 51px);
+    background-size: 51px 51px;
+  }
+  #c{
+    font-family: 'Indie Flower', cursive; font-size: 65px; color: #746554;
+  }
+  .title {
+    padding: 30px;
+    border: solid transparent;
+    text-align: center;
     position: relative;
+  }
+  .one {
+    float: center;
+  }
+  .double {
+    float: center;
+  }
+  .watch {
+    float: center;
+  }
+  .first:after, .list:after {
+    content: " ";
+    display: block;
+    clear: both;
   }
   #right {
-    margin: 10px;
     position: relative;
   }
+  .example_f {
+   background: white;
+   border: none;
+   color: #9D8F7F;
+   text-align: center;
+   text-transform: uppercase;
+   font-size: 25px;
+   padding: 10px;
+   transition: all 0.4s;
+   cursor: pointer;
+ }
+ .example_f span {
+   cursor: pointer;
+   display: inline-block;
+   position: relative;
+   transition: 0.4s;
+ }
+ .example_f span:after {
+   content: '\00bb';
+   position: absolute;
+   opacity: 0;
+   top: 0;
+   right: -20px;
+   transition: 0.5s;
+ }
+ .example_f:hover span {
+   padding-right: 25px;
+ }
+ .example_f:hover span:after {
+   opacity: 1;
+   right: 0;
+ }
 </style>
-
-<div id="title">
-   <p><center><h2 class="c">{% block page_title %}World of Connect6{% endblock %}</h2></center></p>
+<div class="grid">
+    <div class="first" id="c">
+      <div class="title">World of Connect6</div>
+    </div><!--.first-->
+    <br style="line-height:30px;"/><div class="second" id="c">
+      <div class="one" align="center"><a class="example_f" onclick="location.href='{% url 'single' %}'" target="_blank" rel="nofollow"><span>one-player game</a></div>
+      <br style="line-height:10px;"/><div class="double" align="center"><a class="example_f" onclick="location.href='{% url 'double' %}'" target="_blank" rel="nofollow"><span>double game</a></div>
+      <br style="line-height:10px;"/><div class="watch" align="center"><a class="example_f" onclick="location.href='{% url 'watch' %}'" target="_blank" rel="nofollow"><span>watching game</a></div>
+    <br/></div>
 </div>
 
-<div id="tab">
-  </form>
-    <p><center><button type="submit" class="btn" onclick="location.href='{% url 'single' %}'"/>one-player game</center></p>
-    <p><center><button type="submit" class="btn" onclick="location.href='{% url 'double' %}'"/>double game</center></p>
-    <p><center><button type="submit" class="btn" onclick="location.href='{% url 'watch' %}'"/>watching game</center></p>
-  </form>
-</div>

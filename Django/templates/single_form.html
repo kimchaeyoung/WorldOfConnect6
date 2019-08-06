@@ -4,21 +4,60 @@
 {% load static %}
 {% load material_form %}
 
+<link href="https://fonts.googleapis.com/css?family=Indie+Flower&display=swap" rel="stylesheet">
+
 <!doctype html>
 <html lang="en">
   <head>
     <style>
+      html,body, .grid{
+        width: 95%;
+        height: 95%;
+        margin-left: 2%;
+        margin-right: 2%;
+        margin-top: 2%;
+        margin-bottom: 2%;
+      }
+      .grid{
+        background-image: repeating-linear-gradient(0deg,transparent,transparent 50px,#E2C099 50px,#E2C099 51px),repeating-linear-gradient(-90deg,transparent,transparent 50px,#E2C099 50px,#E2C099 51px);
+        background-size: 51px 51px;
+      }
+      .example_d {
+        font-size: 10px;
+        color: #9D8F7F !important;
+        text-transform: uppercase;
+        background: #ffffff;
+        padding: 10px;
+        border: 4px solid #9D8F7F !important;
+        border-radius: 6px;
+        display: inline-block;
+        transition: all 0.3s ease 0s;
+      }
+      .example_d:hover {
+        color: #746554 !important;
+        border-radius: 50px;
+        border-color: #746554 !important;
+        transition: all 0.3s ease 0s;
+      }
+      #c{
+        font-family: 'Indie Flower', cursive; font-size: 65px; color: #746554;
+      }
       #header{
         height: 6%;
-        background-color: #DAC9AA; 
+        background-color: #DAC9AA;
         color: white;
         font-size: 30px;
-        padding: 10px;
+        padding: 5px;
         text-indent: 40px;
       }
       #margin{
           margin-left: 5%;
           margin-right: 50%;
+      }
+      #sidebar{
+        float: right;
+        padding: 15px;
+        font-size: 5px;
       }
     </style>
     <meta charset="utf-8">
@@ -28,15 +67,22 @@
     <link rel="icon" type="image/x-icon" href="favicon.ico">
   </head>
 <body>
+<div class="grid">
+<div id="c">
 <div id="header">
    World of Connect6
+   <div id="sidebar">
+   <a href="{% url 'home' %}">&nbsp;&nbsp;Home</a>
+   </div>
 </div>   
 <form action="/single/" id="margin" method="post">
     <h2>Player Information</h2>
     {% csrf_token %}
     {{form}}
-    <button type="submit" class="btn">Enter</button>
+    <button type="submit" class="example_d">Enter</button>
 </form>
+</div>       
+</div>
 </body>
 </html>
 

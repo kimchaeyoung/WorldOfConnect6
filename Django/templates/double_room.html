@@ -3,22 +3,38 @@
 
 {% load static %}
 
+<link href="https://fonts.googleapis.com/css?family=Indie+Flower&display=swap" rel="stylesheet">
+
 <!doctype html>
 
 <html lang="en">
   <head>
     <style>
+      html,body{
+        margin-left: 2%;
+        margin-right: 2%;
+        margin-top: 2%;
+        margin-bottom: 2%;
+      }
+      #c{
+        font-family: 'Indie Flower', cursive; font-size: 20px; color: #746554;
+      }
       #header{
         height: 6%;
         background-color: #DAC9AA;
         color: white;
         font-size: 30px;
-        padding: 10px;
+        padding: 5px;
         text-indent: 40px;
       }
       #margin{
           margin-left: 5%;
           margin-right: 5%;
+      }
+      #sidebar{
+        float: right;
+        padding: 15px;
+        font-size: 5px;
       }
       .left-half {
           float: left;
@@ -56,8 +72,13 @@
     <link rel="icon" type="image/x-icon" href="favicon.ico">
   </head>
 <body>
+<div id="c">
 <div id="header">
    World of Connect6
+   <div id="sidebar">
+   <a href="/guide/{{room_name}}/">Go back</a>
+   <a href="{% url 'home' %}">&nbsp;&nbsp;Home</a>
+   </div> 
 </div><br/>
 <div id="margin"> 
 <div class="left-half">
@@ -67,9 +88,10 @@
 <div class="row">
 <div class="right-half">
 <span class="dot2"></span> {{P2}}
-</div>
-</div>
-</div>
+</div> 
+</div> 
+</div> 
+</div> 
   <app-root></app-root>
   <script type="text/javascript" src="{% static 'runtime.js' %}"></script>
   <script type="text/javascript" src="{% static 'polyfills.js' %}"></script>
@@ -78,5 +100,4 @@
   <script type="text/javascript" src="{% static 'main.js' %}"></script>
 </body>
 </html>
-
 
