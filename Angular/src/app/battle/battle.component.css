@@ -1,3 +1,21 @@
+html,body{
+        margin-left: 2%;
+        margin-right: 2%;
+        margin-top: 2%;
+        margin-bottom: 2%;
+}
+
+.c{
+    font-family: 'Indie Flower', cursive;  color: #746554;
+}
+
+.margin{
+    margin-left: 5%;
+    margin-right: 5%;
+}
+#shadow{
+    text-shadow: 4px 2px 2px gray;
+}
 #left-half{
     float: left;
     width: 49%;
@@ -30,3 +48,4 @@
         position: relative;
         width: 768px;
 }
+

@@ -1,25 +1,30 @@
 <audio autoplay loops>
     <source src="https://t1.daumcdn.net/cfile/tistory/23663547585652B116?original.wav" type="audio/wav">
 </audio>
-<h4 class="left-half">
-  Black player <br/> 
-  status: {{ c3.player1_status }} <br/>
-  time: {{ c4.black_timer }}
-</h4>
 
-<h4 class="right-half">
-  White player <br/>
-  status: {{ c3.player2_status }} <br/>
-  time: {{ c4.white_timer }}
-</h4>
+<link href="https://fonts.googleapis.com/css?family=Indie+Flower&display=swap" rel="stylesheet">
 
-<div style="text-align:center">
-  <h2>
-    result {{ c1.result }}
-  </h2>
-  <h3>
-    now turn {{ turn_color }}
-  </h3>
+<div id="c">
+  <h5 class="left-half" id="margin">
+    Black player <br/> 
+    status: {{ c3.player1_status }} <br/>
+    time: {{ c4.black_timer }}
+  </h5>
+
+  <h5 class="right-half" id="margin">
+    White player <br/>
+    status: {{ c3.player2_status }} <br/>
+    time: {{ c4.white_timer }}
+  </h5>
+
+  <div style="text-align:center">
+    <h3 style="color:red">
+      {{ c1.result }}
+    </h3>
+    <h4>
+      now turn <div class="shadow"> {{ turn_color }} </div>
+    </h4>
+  </div>
 </div>
 
 <br/>

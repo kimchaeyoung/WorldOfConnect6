@@ -166,18 +166,18 @@ def double_status(request, session_key):
         ws = whiteSession.objects.get(session_name=session_key)
         s = Session.objects.get(session_name=session_key)
         if s.status is False:
-            player1_status = "대기중입니다"
-            player2_status = "대기중입니다"
+            player1_status = "waiting..."
+            player2_status = "waiting..."
             if bs.status is True:
-                player1_status = "입장하였습니다"
+                player1_status = "entering"
             if ws.status is True:
-                player2_status = "입장하였습니다"
+                player2_status = "entering"
             if bs.status is True and ws.status is True:
                 s.status = True
                 s.save()
         else:
-            player1_status = "입장하였습니다"
-            player2_status = "입장하였습니다" 
+            player1_status = "entering"
+            player2_status = "entering" 
         status = {'player1_status' : player1_status , 'player2_status' : player2_status}
         return JsonResponse(status, safe=False)
     return HttpResponse()          

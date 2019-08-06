@@ -30,8 +30,8 @@ export class BattleComponent implements OnInit {
      this.turn = 0;
      this.turn_color = '';
      this.c1.result = '';
-     this.c3.player1_status = "대기중입니다";
-     this.c3.player2_status = "대기중입니다";
+     this.c3.player1_status = "waiting...";
+     this.c3.player2_status = "waiting...";
      this.c4.black_timer = 7;
      this.c4.white_timer = 7;
      this.c2.session = route.snapshot.params['id'];
@@ -57,7 +57,7 @@ export class BattleComponent implements OnInit {
         }
     );
     
-    if (this.c3.player1_status != "대기중입니다" && this.c3.player2_status != "대기중입니다"){
+    if (this.c3.player1_status != "waiting..." && this.c3.player2_status != "waiting..."){
     if(this.chk==0){
             this.chk +=1;
     }
