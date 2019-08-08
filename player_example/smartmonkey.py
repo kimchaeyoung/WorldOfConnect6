@@ -1,25 +1,30 @@
 import random, requests
 from string import ascii_uppercase
 
+def duplicate_check(data, x, y):
+    x_list = list(ascii_uppercase[:-7])
+
+    for i in data:
+        if i['x'] == x and i['y'] == y:
+            x = random.choice(x_list)
+            y = str(random.randrange(1,20))
+            (x, y) = duplicate_check (data, x, y)    
+
+    return (x, y)
+
 def first_stone(request, room_id, player_id):
     x = random.choice(ascii_uppercase[4:-12]) #EFGHIJKLMN
     y = str(random.randrange(4,14))
 
     url = request.build_absolute_uri('/')[:-1]+"/api/sessions/"+room_id+"/stones/?colorid="+player_id
     get_data = requests.get(url).json()
-    x_list = list(ascii_uppercase[:-7])
-
-    for i in get_data:
-        if i['x'] == x and i['y'] == y:
-            x = random.choice(x_list)
-            y = str(random.randrange(1,20))
-    
+    (x , y) = duplicate_check(get_data, x, y)    
+ 
     s1 = x + y
      
     data = { 'room': player_id, 's1': s1, 's2': '' }
     url = request.build_absolute_uri('/')[:-1]+"/api/black-session/"+str(player_id)+"/blacks/"
     requests.post(url, data=data)
-#    requests.post(url, data=data, auth=("admin","12341234"))
 
 def second_stone(request, room_id, player_id, color):
     player_color = "blacks"
@@ -113,14 +118,11 @@ def second_stone(request, room_id, player_id, color):
         y2 = random.randrange(1,20)
 
  
-    for i in get_data:
-        if i['x'] == x1 and i['y'] == y1:
-           x1 = random.choice(x_list)
-           y1 = random.randrange(1,20)
-        if i['x'] == x2 and i['y'] == y2:
-           x2 = random.choice(x_list)
-           y2 = random.randrange(1,20)
-        
+    (x1, y1) = duplicate_check(get_data, x1, y1)
+    if x1 == x2 and y1 == y2 :
+        y2 = random.randrange(1,20)
+    (x2, y2) = duplicate_check(get_data, x2, y2)
+
     s1 = x1 + str(y1)
     s2 = x2 + str(y2)
     data = { 'room': player_id, 's1': s1, 's2': s2 }

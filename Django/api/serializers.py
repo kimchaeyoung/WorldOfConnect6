@@ -21,7 +21,7 @@ class WhiteSessionSerializer(serializers.ModelSerializer):
 class StoneSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = ResultOmok
-		fields = ('id', 'room', 'color', 'x', 'y')
+		fields = ('id', 'room', 'color', 'x', 'y', 'turn')
 
 class BlackSerializer(serializers.ModelSerializer):
 	class Meta:

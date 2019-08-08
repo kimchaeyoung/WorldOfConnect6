@@ -292,15 +292,30 @@ class BlackViewSet(NestedViewSetMixin, ModelViewSet):
             resultS2 = tmp.s2
             resultX1 = resultS1[0]
             resultY1 = resultS1[1:]
+            turn = 0
             if len(resultS2) == 0:
                 resultX2 = ""
                 resultY2 = 0 
             else:
                 resultX2 = resultS2[0]
                 resultY2 = resultS2[1:]
-            resultOmok = ResultOmok(room=resultRoom, color = resultColor, x = resultX1 , y = resultY1)
+            
+            if resultColor != 'red':
+                turn = ResultOmok.objects.filter(room=resultRoom).count() - 7
+                if turn == 1 :
+                    turn = 'null'
+                if turn == 0 : 
+                    turn = 1    
+            resultOmok = ResultOmok(room=resultRoom, color = resultColor, x = resultX1 , y = resultY1, turn=turn)
             resultOmok.save()
-            resultOmok = ResultOmok(room=resultRoom, color = resultColor, x = resultX2 , y = resultY2)
+
+            if resultColor != 'red':
+                turn = ResultOmok.objects.filter(room=resultRoom).count() - 7
+                if turn == 1 :
+                    turn = -1
+                if turn == 0 : 
+                    turn = 1    
+            resultOmok = ResultOmok(room=resultRoom, color = resultColor, x = resultX2 , y = resultY2, turn=turn)
             resultOmok.save()
 
             ws = whiteSession.objects.get(session_name=s.session_name)
@@ -344,9 +359,18 @@ class WhiteViewSet(NestedViewSetMixin, ModelViewSet):
             resultY1 = resultS1[1:]
             resultX2 = resultS2[0]
             resultY2 = resultS2[1:]
-            resultOmok = ResultOmok(room=resultRoom, color = resultColor, x = resultX1 , y = resultY1)
+            turn = 0 
+ 
+            if resultColor != 'red':
+                turn = ResultOmok.objects.filter(room=resultRoom).count() - 7    
+            resultOmok = ResultOmok(room=resultRoom, color = resultColor, x = resultX1 , y = resultY1, turn=turn)
+
             resultOmok.save()
-            resultOmok = ResultOmok(room=resultRoom, color = resultColor, x = resultX2 , y = resultY2)
+
+            if resultColor != 'red':
+                turn = ResultOmok.objects.filter(room=resultRoom).count() - 7    
+            resultOmok = ResultOmok(room=resultRoom, color = resultColor, x = resultX2 , y = resultY2, turn=turn)
+          
             resultOmok.save()
 
             bs = blackSession.objects.get(session_name=s.session_name)

@@ -54,6 +54,7 @@ class ResultOmok(models.Model):
 	color = models.CharField(max_length=10)
 	x = models.CharField(max_length = 10, null=True)
 	y = models.IntegerField(null=True)
+	turn = models.IntegerField(null=True)
 
 	def __str__(self):
 		return self.color
