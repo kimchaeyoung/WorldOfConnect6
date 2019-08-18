@@ -16,7 +16,7 @@ class Session(models.Model):
 class blackSession(models.Model):
 	colorid = models.CharField(primary_key=True, max_length=10, unique=True)
 	session_name = models.CharField(max_length=200, unique=True)
-	status = models.BooleanField(default=False)
+	status = models.IntegerField(default=0)
 	name = models.CharField(max_length = 50, null=True, blank=True)
 	timer = models.IntegerField(default=7)
 	post_time = models.DateTimeField(null=True)
@@ -27,7 +27,7 @@ class blackSession(models.Model):
 class whiteSession(models.Model):
 	colorid = models.CharField(primary_key=True, max_length=10, unique=True)
 	session_name = models.CharField(max_length=200, unique=True)
-	status = models.BooleanField(default=False)
+	status = models.IntegerField(default=0)
 	name = models.CharField(max_length = 50, null=True, blank=True)
 	timer = models.IntegerField(default=7)
 	post_time = models.DateTimeField(null=True)

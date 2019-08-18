@@ -1,6 +1,7 @@
 {% include 'material/includes/material_css.html' %}
 {% include 'material/includes/material_js.html' %}
 
+
 <link href="https://fonts.googleapis.com/css?family=Indie+Flower&display=swap" rel="stylesheet">
 
 <!doctype html>
@@ -139,6 +140,29 @@
   </div>
 </div>
 
+{% if P2 == "Monkey" %}
+<div class="row">
+ <div class="left-half" id="margin">
+  <p><span class="dot1"> Player 1 <br/>
+  <br/><li> id: {{P1}}
+  <li> color: {{P1_color}}
+  <li>GET /api/sessions/{{room_name}}/stones/?colorid={{P1_key}}
+  <li>POST /api/{{P1_color}}-session/{{P1_key}}/{{P1_color}}s { 'room': {{P1_key}}, 'S1': [a-sA-S]{1-19}, 'S2': [a-sA-S]{1-19} }</p><br/>
+ </div>
+</div>
+
+{% elif P1 == "Monkey" %}
+<div class="row">
+  <div class="left-half" id="margin">
+    <p><span class="dot2"> Player 2 <br/>
+    <br/><li> id: {{P2}}
+    <li> color: {{P2_color}}
+    <li>GET /api/sessions/{{room_name}}/stones/?colorid={{P2_key}}
+    <li>POST /api/{{P2_color}}-session/{{P2_key}}/{{P2_color}}s { 'room': {{P2_key}}, 'S1': [a-sA-S]{1-19}, 'S2': [a-sA-S]{1-19} }</p><br/>
+  </div>
+</div>
+
+{% else %}
 <div class="left-half" id="margin">
   <p><span class="dot1"> Player 1 <br/>
   <br/><li> id: {{P1}}
@@ -156,6 +180,8 @@
     <li>POST /api/{{P2_color}}-session/{{P2_key}}/{{P2_color}}s { 'room': {{P2_key}}, 'S1': [a-sA-S]{1-19}, 'S2': [a-sA-S]{1-19} }</p><br/>
   </div>
 </div>
+
+{% endif %}
 
 <link rel="stylesheet" href="http://codemirror.net/lib/codemirror.css">
 <script src="http://codemirror.net/lib/codemirror.js"></script>
