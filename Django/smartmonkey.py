@@ -13,7 +13,7 @@ def duplicate_check(data, x, y):
     return (x, y)
 
 
-def second_stone(request, room_id, player_id, color):
+def monkey_stone(request, room_id, player_id, color):
     player_color = "blacks"
     player = "p2_post"
     if color == "black":

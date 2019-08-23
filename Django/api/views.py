@@ -163,7 +163,7 @@ def enter(self, player):
                 bs.status = 2
                 bs.save()
             if bs.name == "Monkey":
-                x = threading.Thread(target=callmonkeytwo, args=(self.request, s.session_name, bs.colorid, "black"))
+                x = threading.Thread(target=callmonkey, args=(self.request, s.session_name, bs.colorid, "black"))
                 x.start()
 
         elif player.colorid == s.blackid:
@@ -173,14 +173,8 @@ def enter(self, player):
                 bs.status = 2
                 bs.save()
             if ws.name == "Monkey":
-                x = threading.Thread(target=callmonkeytwo, args=(self.request, s.session_name, ws.colorid, "white"))
+                x = threading.Thread(target=callmonkey, args=(self.request, s.session_name, ws.colorid, "white"))
                 x.start()
-
-
-
-def callmonkey(request, session_name, colorid):
-    time.sleep(3)
-    smartmonkey.first_stone(request, session_name, colorid)
 
 
 def double_status(request, session_key):
@@ -357,9 +351,9 @@ class BlackViewSet(NestedViewSetMixin, ModelViewSet):
             return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
 
-def callmonkeytwo(request, room, colorid, color):
+def callmonkey(request, room, colorid, color):
     time.sleep(3)
-    smartmonkey.second_stone(request, room, colorid, color)
+    smartmonkey.monkey_stone(request, room, colorid, color)
 
 
 class WhiteViewSet(NestedViewSetMixin, ModelViewSet):
