@@ -15,11 +15,13 @@ def duplicate_check(data, x, y):
 
 def second_stone(request, room_id, player_id, color):
     player_color = "blacks"
+    player = "p2_post"
     if color == "black":
         player_color = "whites"
+        player = "p1_post"
     url = request.build_absolute_uri('/')[:-1]+"/api/"
-    getUrl = url + "sessions/"+ room_id + "/stones/?colorid="+player_id
-    monkeyUrl = url + color + "-session/" + str(player_id) + "/" + color + "s/"
+    getUrl = url + "sessions/"+ room_id + "/get/?playerid="+player_id
+    monkeyUrl = url + color + "-session/" + str(player_id) + "/" + player +"/"
     get_data = requests.get(getUrl).json()
 
     turn = get_data[-1]['turn']
@@ -36,7 +38,7 @@ def second_stone(request, room_id, player_id, color):
             s1 = x + y
 
             data = { 'room': player_id, 's1': s1, 's2': '' }
-            posturl = request.build_absolute_uri('/')[:-1]+"/api/black-session/"+str(player_id)+"/blacks/"
+            posturl = request.build_absolute_uri('/')[:-1]+"/api/black-session/"+str(player_id)+"/p1_post/"
             requests.post(posturl, data=data)
             turn = 1
             continue

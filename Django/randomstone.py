@@ -3,7 +3,7 @@ from string import ascii_uppercase
 
 def random_stone(request,room_id):
     xy_data = []
-    url = request.build_absolute_uri('/')[:-1]+"/api/sessions/"+room_id+"/stones/"
+    url = request.build_absolute_uri('/')[:-1]+"/api/sessions/"+room_id+"/get/"
     for i in range(7):
         if i < 4:
             x = random.choice(ascii_uppercase[4:-12])

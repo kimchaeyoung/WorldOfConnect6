@@ -140,9 +140,9 @@ def double_game(request, session_key):
         ws = whiteSession.objects.get(session_name=session_key)
         url = request.build_absolute_uri('/')[:-1]
         if bs.name == "Monkey":
-            requests.get(url+"/api/sessions/"+bs.session_name+"/stones/?colorid="+bs.colorid)
+            requests.get(url+"/api/sessions/"+bs.session_name+"/get/?playerid="+bs.colorid)
         elif ws.name=="Monkey":
-            requests.get(url+"/api/sessions/"+ws.session_name+"/stones/?colorid="+ws.colorid)
+            requests.get(url+"/api/sessions/"+ws.session_name+"/get/?playerid="+ws.colorid)
         return render(request, 'double_room.html', {'room_name': session_key, 'P1': bs.name, 'P2': ws.name, 'P1_color': "black", 'P2_color': "white"})
     else:
         return redirect('home')
@@ -269,29 +269,29 @@ class StoneViewSet(NestedViewSetMixin, ModelViewSet):
         s = Session.objects.get(session_name=room)
         bs = blackSession.objects.get(session_name=room)
         ws = whiteSession.objects.get(session_name=room)
-        colorid = self.request.GET.get('colorid', None)
+        playerid = self.request.GET.get('playerid', None)
 
         results = ResultOmok.objects.filter(room=room)
         laststone = results.last()
 
-        if colorid == "admin":
+        if playerid == "admin":
             return results
-        elif colorid == s.blackid: #Black이 Get 했을 때
+        elif playerid == s.blackid: #Black이 Get 했을 때
             if bs.status == 2:
             #elif laststone.color=="white":
                 bs.status = 3
                 bs.save()
                 if results.last().color=="white":
-                    timer(8, gettime, room, colorid)
+                    timer(8, gettime, room, playerid)
             elif bs.status == 0:
                 enter(self, bs)
             return results
-        elif colorid == s.whiteid: #White가 Get 했을 때
+        elif playerid == s.whiteid: #White가 Get 했을 때
             if ws.status == 2:
             #elif laststone.color=="black":
                 ws.status = 3
                 ws.save()
-                timer(8, gettime, room, colorid)
+                timer(8, gettime, room, playerid)
             elif ws.status == 0:
                 enter(self, ws)
             return results
