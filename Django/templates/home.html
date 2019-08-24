@@ -24,10 +24,18 @@
     font-family: 'Indie Flower', cursive; font-size: 65px; color: #746554;
   }
   .title {
-    padding: 30px;
-    border: solid transparent;
+    padding: 10px;
     text-align: center;
     position: relative;
+  }
+  .subtitle {
+    text-align: center;
+    position: relative;
+    font-size: 20px;
+  }
+  .link {
+    padding: 10px;
+    text-align: center;
   }
   .one {
     float: center;
@@ -82,11 +90,15 @@
 <div class="grid">
     <div class="first" id="c">
       <div class="title">World of Connect6</div>
+      <div class="subtitle"> 한동대 AI 육목 콘테스트 대국 서버</div>
     </div><!--.first-->
-    <br style="line-height:30px;"/><div class="second" id="c">
+    <p><div class="link">
+      <input type="button" onclick="window.location.href='{% url 'rule'%}'" style="color: black" value="게임 규칙"/>
+      <input type="button" onclick="window.location.href='{% url 'api'%}'" style="color: black" value="ABOUT PLAYER API"/>
+      <input type="button" onclick="window.location.href='{% url 'api_example'%}'" style="color: black" value="PLAYER API CODE EXAMPLE"/>
+    </div></p>
+    <br style="line-height:50px;"/><div class="second" id="c">
       <div class="one" align="center"><a class="example_f" onclick="location.href='{% url 'single' %}'" target="_blank" rel="nofollow"><span>one-player game</a></div>
       <br style="line-height:10px;"/><div class="double" align="center"><a class="example_f" onclick="location.href='{% url 'double' %}'" target="_blank" rel="nofollow"><span>double game</a></div>
       <br style="line-height:10px;"/><div class="watch" align="center"><a class="example_f" onclick="location.href='{% url 'watch' %}'" target="_blank" rel="nofollow"><span>watching game</a></div>
-    <br/></div>
-</div>
-
+    </div>
