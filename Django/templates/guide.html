@@ -18,21 +18,24 @@
         background-image: repeating-linear-gradient(0deg,transparent,transparent 50px,#E2C099 50px,#E2C099 51px),repeating-linear-gradient(-90deg,transparent,transparent 50px,#E2C099 50px,#E2C099 51px);
         background-size: 51px 51px;
       }
-      .example_d {
-        font-size: 10px;
-        color: #9D8F7F !important;
+      .example_e {
+        border: none;
+        background: #746554;
+        color: #ffffff !important;
+        font-weight: 100;
+        padding: 12px 28px;
         text-transform: uppercase;
-        background: #ffffff;
-        padding: 10px;
-        border: 4px solid #9D8F7F !important;
         border-radius: 6px;
         display: inline-block;
         transition: all 0.3s ease 0s;
       }
-      .example_d:hover {
-        color: #746554 !important;
-        border-radius: 50px;
-        border-color: #746554 !important;
+      .example_e:hover {
+        color: #404040 !important;
+        font-weight: 10 !important;
+        letter-spacing: 3px;
+        background: none;
+        -webkit-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
+        -moz-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
         transition: all 0.3s ease 0s;
       }
       .c{
@@ -74,11 +77,14 @@
           float: left;
           width: 42%;
           color: black;
+          font-size: 15px;
+          margin-top: 5%;
       }
       .right-half {
           float: right;
-          width: 42%;
-          margin-right: 5%;
+          font-size: 15px;
+          margin-right: 25%;
+          margin-top: 5%;
       }
       .dot1 {
           height: 100px;
@@ -108,15 +114,11 @@
       }
       .row:after {
           content: "";
-          padding: 10px;
           display: table;
           clear: both;
-      }
-      .samplecode {
-          background-color: #D8D8D8;
-      }
+      } 
       .footer {
-          padding: 50px;
+          padding: 60px;
       }
     </style>
     <meta charset="utf-8">
@@ -127,7 +129,6 @@
     </head>
 <body>
 <div class="grid">
-
 <div class="c">
   <div id="header">
      World of Connect6
@@ -136,7 +137,7 @@
      </div>
   </div>
   <div id="margin">
-  <h2>Player Guide</h2>
+  <h2>Player Information</h2>
   </div>
 </div>
 
@@ -144,10 +145,13 @@
 <div class="row">
  <div class="left-half" id="margin">
   <p><span class="dot1"> Player 1 <br/>
-  <br/><li> id: {{P1}}
-  <li> color: {{P1_color}}
-  <li>GET /api/sessions/{{room_name}}/get/?playerid={{P1_key}}
-  <li>POST /api/{{P1_color}}-session/{{P1_key}}/p1_post { 'room': {{P1_key}}, 'S1': [a-sA-S]{1-19}, 'S2': [a-sA-S]{1-19} }</p><br/>
+  <br/><li> {{P1}}
+  {% if P1_color == "black" %}
+    <li> 흑돌
+  {% else %}
+    <li> 백돌
+  {% endif %}
+  <li> 플레이어 코드: {{P1_key}}
  </div>
 </div>
 
@@ -155,30 +159,39 @@
 <div class="row">
   <div class="left-half" id="margin">
     <p><span class="dot2"> Player 2 <br/>
-    <br/><li> id: {{P2}}
-    <li> color: {{P2_color}}
-    <li>GET /api/sessions/{{room_name}}/get/?playerid={{P2_key}}
-    <li>POST /api/{{P2_color}}-session/{{P2_key}}/p2_post { 'room': {{P2_key}}, 'S1': [a-sA-S]{1-19}, 'S2': [a-sA-S]{1-19} }</p><br/>
-  </div>
+    <br/><li> {{P2}}
+    {% if P2_color == "black" %}
+      <li> 흑돌 
+    {% else %}
+      <li> 백돌
+    {% endif %}
+      <li> 플레이어 코드: {{P2_key}}
+ </div>
 </div>
 
 {% else %}
 <div class="left-half" id="margin">
   <p><span class="dot1"> Player 1 <br/>
-  <br/><li> id: {{P1}}
-  <li> color: {{P1_color}}
-  <li>GET /api/sessions/{{room_name}}/get/?playerid={{P1_key}}
-  <li>POST /api/{{P1_color}}-session/{{P1_key}}/p1_post { 'room': {{P1_key}}, 'S1': [a-sA-S]{1-19}, 'S2': [a-sA-S]{1-19} }</p><br/>
+  <br/><li> {{P1}}
+    {% if P1_color == "black" %}
+      <li> 흑돌 
+    {% else %}
+      <li> 백돌
+    {% endif %}
+    <li> 플레이어 코드: {{P1_key}}
 </div>
 
 <div class="row">
   <div class="right-half">
     <p><span class="dot2"> Player 2 <br/>
-    <br/><li> id: {{P2}}
-    <li> color: {{P2_color}}
-    <li>GET /api/sessions/{{room_name}}/get/?playerid={{P2_key}}
-    <li>POST /api/{{P2_color}}-session/{{P2_key}}/p2_post { 'room': {{P2_key}}, 'S1': [a-sA-S]{1-19}, 'S2': [a-sA-S]{1-19} }</p><br/>
-  </div>
+    <br/><li> {{P2}}
+    {% if P2_color == "black" %}
+      <li> 흑돌 
+    {% else %}
+      <li> 백돌
+    {% endif %}
+    <li> 플레이어 코드: {{P2_key}}
+ </div>
 </div>
 
 {% endif %}
@@ -189,179 +202,12 @@
 <script src="http://codemirror.net/addon/edit/continuecomment.js"></script>
 <script src="http://codemirror.net/mode/python/python.js"></script>
 
-<div id="margin">
- <h4 class="c1"> Sample code [python] </h4>
-  <textarea rows="4" cols="15" id="codesnippet_readonly">
-
-import random, requests, time
-from string import ascii_uppercase
-
-
-def duplicate_check(data, x, y):
-
-    x_list = list(ascii_uppercase[:-7])
-
-    for i in data:
-        if i['x'] == x and i['y'] == y:
-            x = random.choice(x_list)
-            y = str(random.randrange(1,20))
-            (x, y) = duplicate_check (data, x, y)
-
-    return (x, y)
-
-
-def monkey_stone(request, room_id, player_id, color):
-
-    player_color = "blacks"
-
-    if color == "black":
-        player_color = "whites"
-
-    url = request.build_absolute_uri('/')[:-1]+"/api/"
-    getUrl = url + "sessions/"+ room_id + "/stones/?colorid="+player_id
-    monkeyUrl = url + color + "-session/" + str(player_id) + "/" + color + "s/"
-    get_data = requests.get(getUrl).json()
-    turn = get_data[-1]['turn']
-
-    while True:
-        time.sleep(1)
-        get_data = requests.get(getUrl).json()
-        new_turn = get_data[-1]['turn']
-
-        if color == "black" and get_data[-1]['turn'] is None:  #black first
-            x = random.choice(ascii_uppercase[4:-12]) #EFGHIJKLMN
-            y = str(random.randrange(4,14))
-            (x , y) = duplicate_check(get_data, x, y)
-            s1 = x + y
-
-            data = { 'room': player_id, 's1': s1, 's2': '' }
-            posturl = request.build_absolute_uri('/')[:-1]+"/api/black-session/"+str(player_id)+"/blacks/"
-            requests.post(posturl, data=data)
-            turn = 1
-            continue
-
-        if turn == new_turn:
-            continue
-
-        if color == "white" and get_data[-1]['turn'] is 1:
-            x1 = chr(ord(get_data[-1]['x'])+1)
-            y1 = get_data[-1]['y']
-            x2 = x1
-            y2 = y1 +1
-        elif color == "black" and get_data[-1]['turn'] is 3 :
-            x1 = chr(ord(get_data[-1]['x'])+1)
-            y1 = get_data[-1]['y']
-            x2 = x1
-            y2 = y1 +1
-        else:
-            last_x1 = get_data[-1]['x']
-            last_x2 = get_data[-2]['x']
-            last_y1 = get_data[-1]['y']
-            last_y2 = get_data[-2]['y']
-
-            prelast_x1 = get_data[-5]['x']
-            prelast_y1 = get_data[-5]['y']
-
-            if get_data[-6]['color'] == 'red':
-                x_data = [last_x1, last_x2, prelast_x1]
-                y_data = [last_y1, last_y2, prelast_y1]
-
-            else :
-                prelast_x2 = get_data[-6]['x']
-                prelast_y2 = get_data[-6]['y']
-
-                x_data = [last_x1, last_x2, prelast_x1, prelast_x2]
-                y_data = [last_y1, last_y2, prelast_y1, prelast_y2]
-
-            cntx = 0
-            cnty = 0
-
-            standard_x = min(x_data)
-            if chr(ord(standard_x) + 1) in x_data:
-                cntx += 1
-            if chr(ord(standard_x) + 2) in x_data:
-                cntx += 1
-            if chr(ord(standard_x) + 3) in x_data:
-                cntx += 1
-            if chr(ord(standard_x) + 4) in x_data:
-                cntx +=1
-
-            if cntx >= 3:
-                x1 = chr(ord(standard_x)-1)
-                x2 = chr(ord(max(x_data))+1)
-                y1 = get_data[-1]['y']
-                y2 = y1
-
-            standard_y = min(y_data)
-            if standard_y + 1 in y_data:
-                cnty += 1
-            if standard_y + 2 in y_data:
-                cnty += 1
-            if standard_y + 3 in y_data:
-                cnty += 1
-            if standard_y + 4 in y_data:
-                cnty += 1
-
-            if cnty >= 3:
-                last_x1 = get_data[-1]['x']
-                x1 = last_x1
-                x2 = x1
-                y1 = standard_y-1
-                y2 = max(y_data)+1
-
-
-            if cntx < 3 and cnty < 3:
-                x1 = get_data[-3]['x']
-                x2 = x1
-                get_y = max(get_data[-3]['y'], get_data[-4]['y'])
-                y1 = get_y + 1
-                y2 = y1 + 1
-
-        x_list = list(ascii_uppercase[:-7])
-        if x1 not in x_list:
-            x1 = random.choice(x_list)
-        if x2 not in x_list:
-            x2 = random.choice(x_list)
-        if y1 > 19 :
-            y1 = random.randrange(1,20)
-        if y2 > 19:
-            y2 = random.randrange(1,20)
-
-
-        (x1, y1) = duplicate_check(get_data, x1, y1)
-
-        if x1 == x2 and y1 == y2 :
-            y2 = random.randrange(1,20)
-        (x2, y2) = duplicate_check(get_data, x2, y2)
-
-        s1 = x1 + str(y1)
-        s2 = x2 + str(y2)
-        data = { 'room': player_id, 's1': s1, 's2': s2 }
-        time.sleep(1)
-        requests.post(monkeyUrl,data=data)
-        turn = new_turn
-
-
-
-  </textarea>
-  </div>
-
 <div class="footer">
   <form action="/guide/{{room_name}}/", method="post">
     {% csrf_token %}
-    <p><center><button type="submit" class="example_d">start</center></p>
+    <button type="submit" class="example_e">대국 입장
   </form>
 </div>
 </div>
-
-<script type = "text/javascript"/>
-    var readOnlyCodeMirror = CodeMirror.fromTextArea(document.getElementById('codesnippet_readonly'), {
-    mode: "python",
-    theme: "default",
-    lineNumbers: true,
-    readOnly: true // This make the textarea readonly
-    });
-    readOnlyCodeMirror.setSize("100%",1000);
-</script>
 </body>
 
