@@ -39,6 +39,14 @@ import threading
 def home(request):
         return render(request, 'home.html')
 
+def rule(request):
+        return render(request, 'rule.html')
+
+def api(request):
+        return render(request, 'api.html')
+
+def api_example(request):
+        return render(request, 'api_example.html')
 
 def makeRandomString():
     randomStream=""
@@ -276,7 +284,7 @@ class StoneViewSet(NestedViewSetMixin, ModelViewSet):
                 bs.status = 3
                 bs.save()
                 if results.last().color=="white":
-                    timer(8, gettime, room, playerid)
+                    timer(16, gettime, room, playerid)
             elif bs.status == 0:
                 enter(self, bs)
             return results
@@ -285,7 +293,7 @@ class StoneViewSet(NestedViewSetMixin, ModelViewSet):
             #elif laststone.color=="black":
                 ws.status = 3
                 ws.save()
-                timer(8, gettime, room, playerid)
+                timer(16, gettime, room, playerid)
             elif ws.status == 0:
                 enter(self, ws)
             return results
@@ -299,7 +307,7 @@ class BlackViewSet(NestedViewSetMixin, ModelViewSet):
     def create(self, request, *args, **kwargs):
         s = blackSession.objects.get(colorid=self.kwargs['parent_lookup_room'])
         s.post_time = utc.localize(datetime.now())
-        s.timer = 7
+        s.timer = 15
         ss = Session.objects.get(session_name = s.session_name)
         ws = whiteSession.objects.get(session_name=s.session_name)
         if ss.status is False:
@@ -363,7 +371,7 @@ class WhiteViewSet(NestedViewSetMixin, ModelViewSet):
     def create(self, request, *args, **kwargs):
         s = whiteSession.objects.get(colorid=self.kwargs['parent_lookup_room'])
         s.post_time = utc.localize(datetime.now())
-        s.timer = 7
+        s.timer = 15
         ss = Session.objects.get(session_name = s.session_name)
         if ss.status is False:
             raise Exception('Status False')

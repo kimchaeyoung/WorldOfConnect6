@@ -11,7 +11,7 @@ import { ActivatedRoute } from '@angular/router';
 
 export class BattleComponent implements OnInit {
 
-   private currentTime=7;
+   private currentTime=15;
    intervalId;
    chk = 0;
 
@@ -32,8 +32,8 @@ export class BattleComponent implements OnInit {
      this.c1.result = '';
      this.c3.player1_status = "waiting...";
      this.c3.player2_status = "waiting...";
-     this.c4.black_timer = 7;
-     this.c4.white_timer = 7;
+     this.c4.black_timer = 15;
+     this.c4.white_timer = 15;
      this.c2.session = route.snapshot.params['id'];
      this.sub = this.source.subscribe((t)=>this.onTimeOut()); 
    }

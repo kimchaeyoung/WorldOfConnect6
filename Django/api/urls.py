@@ -5,8 +5,10 @@ from . import views
 
 
 urlpatterns = [
-    url(r'^home/', views.home, name='home'),
-    url('', include('django.contrib.auth.urls')),
+    path('', views.home, name='home'),
+    url(r'^rule/', views.rule, name='rule'),
+    url(r'^player_api/', views.api, name='api'),
+    url(r'^player_code_example/', views.api_example, name='api_example'),
     url(r'^single/', views.single, name='single'),
     url(r'^double/', views.double, name='double'),
     url(r'^guide/(?P<room>[^/]+)/', views.guide, name='guide'),

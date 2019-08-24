@@ -3,33 +3,39 @@
 
 {% load static %}
 
-<link href="https://fonts.googleapis.com/css?family=Indie+Flower&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Sunflower:300&display=swap" rel="stylesheet">
 
 <!doctype html>
-
 <html lang="en">
   <head>
     <style>
-      html,body{
+      html,body, .grid{
+        width: 95%;
+        height: 95%;
         margin-left: 2%;
         margin-right: 2%;
         margin-top: 2%;
         margin-bottom: 2%;
+        background-color: black;
+      }
+      .grid{
+        background-image: repeating-linear-gradient(0deg,transparent,transparent 50px,rgba(255,255,255,0.2) 50px, rgba(255,255,255,0.2) 51px),repeating-linear-gradient(-90deg,transparent,transparent 50px,rgba(255,255,255,0.2) 50px,rgba(255,255,255,0.2) 51px);
+        background-size: 51px 51px;
       }
       #c{
-        font-family: 'Indie Flower', cursive; font-size: 20px; color: #746554;
+        font-family: 'Sunflower', sans-serif; color: white;
       }
       #header{
         height: 6%;
-        background-color: #DAC9AA;
+        background: linear-gradient(to right, #455266, #092D66);
         color: white;
         font-size: 30px;
         padding: 5px;
         text-indent: 40px;
       }
       #margin{
-          margin-left: 5%;
-          margin-right: 5%;
+        margin-left: 5%;
+        margin-right: 5%;
       }
       #sidebar{
         float: right;

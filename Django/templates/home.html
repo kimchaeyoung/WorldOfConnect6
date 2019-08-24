@@ -1,11 +1,7 @@
 {% load i18n static %}
 {% load material_form %}
 
-<audio autoplay loops>
-    <source src="/media/home.mp3" type="audio/mp3">
-</audio>
-
-<link href="https://fonts.googleapis.com/css?family=Indie+Flower&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Sunflower:300&display=swap" rel="stylesheet">
 
 <style>
   html,body, .grid{
@@ -15,55 +11,67 @@
     margin-right: 2%;
     margin-top: 2%;
     margin-bottom: 2%;
+    background-color: black;
   }
   .grid{
-    background-image: repeating-linear-gradient(0deg,transparent,transparent 50px,#E2C099 50px,#E2C099 51px),repeating-linear-gradient(-90deg,transparent,transparent 50px,#E2C099 50px,#E2C099 51px);
+    background-image: repeating-linear-gradient(0deg,transparent,transparent 50px,rgba(255,255,255,0.2) 50px, rgba(255,255,255,0.2) 51px),repeating-linear-gradient(-90deg,transparent,transparent 50px,rgba(255,255,255,0.2) 50px,rgba(255,255,255,0.2) 51px);
     background-size: 51px 51px;
   }
   #c{
-    font-family: 'Indie Flower', cursive; font-size: 65px; color: #746554;
+    font-family: 'Sunflower', sans-serif; color: white;
+  }
+  .center {
+    text-align: center;
   }
   .title {
-    padding: 10px;
-    text-align: center;
+    font-size: 65px;
+    padding: 5px;
     position: relative;
   }
   .subtitle {
     text-align: center;
     position: relative;
-    font-size: 20px;
+    font-size: 30px;
   }
-  .link {
-    padding: 10px;
-    text-align: center;
-  }
-  .one {
-    float: center;
-  }
-  .double {
-    float: center;
-  }
-  .watch {
-    float: center;
-  }
-  .first:after, .list:after {
+  .space:after, .list:after {
     content: " ";
     display: block;
     clear: both;
   }
+  .link {
+    margin-top: 5%;
+  }
+  .game {
+    margin-top: 5%;
+  }
   #right {
     position: relative;
   }
+  .example_e {
+    border: none;
+    background: white;
+    color: black !important;
+    font-weight: 100;
+    font-size: 15px;
+    padding: 4px 15px;
+    text-transform: uppercase;
+    border-radius: 6px;
+    display: inline-block;
+    transition: all 0.3s ease 0s;
+    margin: 15px;
+  }
   .example_f {
-   background: white;
+   border-radius: 4px;
+   background: linear-gradient(to right, #455266, #092D66);
    border: none;
-   color: #9D8F7F;
+   color: white;
    text-align: center;
    text-transform: uppercase;
-   font-size: 25px;
-   padding: 10px;
+   font-size: 22px;
+   padding: 34px 40px;
    transition: all 0.4s;
    cursor: pointer;
+   margin: 10px;
  }
  .example_f span {
    cursor: pointer;
@@ -88,17 +96,20 @@
  }
 </style>
 <div class="grid">
-    <div class="first" id="c">
-      <div class="title">World of Connect6</div>
+  <div class="center">
+    <div id="c">
+      <br/><div class="title">World of Connect6</div>
       <div class="subtitle"> 한동대 AI 육목 콘테스트 대국 서버</div>
-    </div><!--.first-->
+    </div><!--.title-->
     <p><div class="link">
-      <input type="button" onclick="window.location.href='{% url 'rule'%}'" style="color: black" value="게임 규칙"/>
-      <input type="button" onclick="window.location.href='{% url 'api'%}'" style="color: black" value="ABOUT PLAYER API"/>
-      <input type="button" onclick="window.location.href='{% url 'api_example'%}'" style="color: black" value="PLAYER API CODE EXAMPLE"/>
-    </div></p>
-    <br style="line-height:50px;"/><div class="second" id="c">
-      <div class="one" align="center"><a class="example_f" onclick="location.href='{% url 'single' %}'" target="_blank" rel="nofollow"><span>one-player game</a></div>
-      <br style="line-height:10px;"/><div class="double" align="center"><a class="example_f" onclick="location.href='{% url 'double' %}'" target="_blank" rel="nofollow"><span>double game</a></div>
-      <br style="line-height:10px;"/><div class="watch" align="center"><a class="example_f" onclick="location.href='{% url 'watch' %}'" target="_blank" rel="nofollow"><span>watching game</a></div>
-    </div>
+      <a id="c" class="example_e" onclick="location.href='{% url 'rule' %}'" target="_blank" rel="nofollow"><span>게임 규칙</a>  
+      <br/><a id="c" class="example_e" onclick="location.href='{% url 'api' %}'" target="_blank" rel="nofollow"><span>플레이어 API</a>
+      <br/><a id="c" class="example_e" onclick="location.href='{% url 'api_example' %}'" target="_blank" rel="nofollow"><span>플레이어 코드 예제</a>
+    </div></p><!--.link-->
+    <br/><div class="game">
+      <a id="c" class="example_f" onclick="location.href='{% url 'single' %}'" target="_blank" rel="nofollow"><span>서버 AI와 대국</a>
+      <a id="c" class="example_f" onclick="location.href='{% url 'double' %}'" target="_blank" rel="nofollow"><span>대국 시작</a>
+      <a id="c" class="example_f" onclick="location.href='{% url 'watch' %}'" target="_blank" rel="nofollow"><span>대국 관전</a>
+    </div><!--.game-->
+  </div>
+</div>

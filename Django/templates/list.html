@@ -1,9 +1,11 @@
 {% include 'material/includes/material_css.html' %}
 {% include 'material/includes/material_js.html' %}
 
+{% load static %}
 {% load material_form %}
 
-<link href="https://fonts.googleapis.com/css?family=Indie+Flower&display=swap" rel="stylesheet">
+
+<link href="https://fonts.googleapis.com/css?family=Sunflower:300&display=swap" rel="stylesheet">
 
 <!doctype html>
 <html lang="en">
@@ -16,40 +18,42 @@
         margin-right: 2%;
         margin-top: 2%;
         margin-bottom: 2%;
+        background-color: black;
       }
       .grid{
-        background-image: repeating-linear-gradient(0deg,transparent,transparent 50px,#E2C099 50px,#E2C099 51px),repeating-linear-gradient(-90deg,transparent,transparent 50px,#E2C099 50px,#E2C099 51px);
+        background-image: repeating-linear-gradient(0deg,transparent,transparent 50px,rgba(255,255,255,0.2) 50px, rgba(255,255,255,0.2) 51px),repeating-linear-gradient(-90deg,transparent,transparent 50px,rgba(255,255,255,0.2) 50px,rgba(255,255,255,0.2) 51px);
         background-size: 51px 51px;
       }
       .example_d {
         font-size: 10px;
-        color: #9D8F7F !important;
+        color: #455266 !important;
         text-transform: uppercase;
         background: #ffffff;
         padding: 10px;
-        border: 4px solid #9D8F7F !important;
+        border: 4px solid #455266 !important;
         border-radius: 6px;
         display: inline-block;
         transition: all 0.3s ease 0s;
       }
       .example_d:hover {
-        color: #746554 !important;
+        color: #092D66 !important;
         border-radius: 50px;
-        border-color: #746554 !important;
+        border-color: #092D66 !important;
         transition: all 0.3s ease 0s;
       }
       #c{
-        font-family: 'Indie Flower', cursive; font-size: 65px; color: #746554;
+        font-family: 'Sunflower', sans-serif; font-size: 65px; color: white;
       }
       #header{
         height: 6%;
-        background-color: #DAC9AA;
+        background: linear-gradient(to right, #455266, #092D66);
         color: white;
         font-size: 30px;
         padding: 5px;
         text-indent: 40px;
       }
       #margin{
+          margin-top: 5%;
           margin-left: 5%;
           margin-right: 50%;
       }
@@ -69,13 +73,13 @@
 <div class="grid">
 <div id="c">
 <div id="header">
- World of Connect6
- <div id="sidebar">
+   World of Connect6
+   <div id="sidebar">
    <a href="{% url 'home' %}">&nbsp;&nbsp;Home</a>
    </div>
 </div>
 <div id="margin">
-    <h2> Search Room </h2>
+    <h3> Search Room </h3>
     <label> enter room name: </label>
     <input id="room-name-input" type="text" size="50"/><br/>
     <button id="room-name-submit" type="submit" class="example_d">Enter</button>
@@ -88,4 +92,5 @@
      window.location.pathname = '/double_game/'+ roomName;
     };
  </script>
-
+</body>
+</html>

@@ -1,29 +1,87 @@
-<link href="https://fonts.googleapis.com/css?family=Indie+Flower&display=swap" rel="stylesheet">
+{% include 'material/includes/material_css.html' %}
+{% include 'material/includes/material_js.html' %}
 
-<style>
-  html,body, .grid{
-    width: 95%;
-    height: 95%;
-    margin-left: 2%;
-    margin-right: 2%;
-    margin-top: 2%;
-    margin-bottom: 2%;
-  }
-  .grid{
-    background-image: repeating-linear-gradient(0deg,transparent,transparent 50px,#E2C099 50px,#E2C099 51px),repeating-linear-gradient(-90deg,transparent,transparent 50px,#E2C099 50px,#E2C099 51px);
-    background-size: 51px 51px;
-  }
-  #c{
-    font-family: 'Indie Flower', cursive; font-size: 65px; color: #746554;
-  }
-  .title {
-    padding: 10px;
-    text-align: center;
-    position: relative;
-  }
-</style>
+{% load static %}
 
+
+<link href="https://fonts.googleapis.com/css?family=Sunflower:300&display=swap" rel="stylesheet">
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <style>
+      html,body, .grid{
+        width: 95%;
+        height: 95%;
+        margin-left: 2%;
+        margin-right: 2%;
+        margin-top: 2%;
+        margin-bottom: 2%;
+        background-color: black;
+      }
+      .grid{
+        background-image: repeating-linear-gradient(0deg,transparent,transparent 50px,rgba(255,255,255,0.2) 50px, rgba(255,255,255,0.2) 51px),repeating-linear-gradient(-90deg,transparent,transparent 50px,rgba(255,255,255,0.2) 50px,rgba(255,255,255,0.2) 51px);
+        background-size: 51px 51px;
+      }
+      .example_d {
+        font-size: 10px;
+        color: #455266 !important;
+        text-transform: uppercase;
+        background: #ffffff;
+        padding: 10px;
+        border: 4px solid #455266 !important;
+        border-radius: 6px;
+        display: inline-block;
+        transition: all 0.3s ease 0s;
+      }
+      .example_d:hover {
+        color: #092D66 !important;
+        border-radius: 50px;
+        border-color: #092D66 !important;
+        transition: all 0.3s ease 0s;
+      }
+      #c{
+        font-family: 'Sunflower', sans-serif; font-size: 65px; color: white;
+      }
+      #header{
+        height: 6%;
+        background: linear-gradient(to right, #455266, #092D66);
+        color: white;
+        font-size: 30px;
+        padding: 5px;
+        text-indent: 40px;
+      }
+      #margin{
+          margin-top: 5%;
+          margin-left: 5%;
+          margin-right: 50%;
+      }
+      #sidebar{
+        float: right;
+        padding: 15px;
+        font-size: 5px;
+      }
+    </style>
+    <meta charset="utf-8">
+    <title>Game Rule</title>
+    <base href="/">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+  </head>
+<body>
 <div class="grid">
-    <div class="title" id="c">Player API</div>
+<div id="c">
+<div id="header">
+   World of Connect6
+   <div id="sidebar">
+   <a href="{% url 'home' %}">&nbsp;&nbsp;Home</a>
+   </div>
 </div>
+  <div id="margin">
+  <h3>플레이어 API</h3>
+  </div>
+
+</div>
+</body>
+</html>
 

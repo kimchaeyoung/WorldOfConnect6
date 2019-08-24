@@ -224,7 +224,7 @@ var BattleComponent = /** @class */ (function () {
     function BattleComponent(http, route) {
         var _this = this;
         this.http = http;
-        this.currentTime = 15;
+        this.currentTime = 7;
         this.chk = 0;
         this.source = Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["timer"])(1000, 1000);
         this.turn = 0;
@@ -240,8 +240,8 @@ var BattleComponent = /** @class */ (function () {
         this.c1.result = '';
         this.c3.player1_status = "waiting...";
         this.c3.player2_status = "waiting...";
-        this.c4.black_timer = 15;
-        this.c4.white_timer = 15;
+        this.c4.black_timer = 7;
+        this.c4.white_timer = 7;
         this.c2.session = route.snapshot.params['id'];
         this.sub = this.source.subscribe(function (t) { return _this.onTimeOut(); });
     }
