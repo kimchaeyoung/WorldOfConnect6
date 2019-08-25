@@ -17,7 +17,7 @@
         margin-right: 2%;
         margin-top: 2%;
         margin-bottom: 2%;
-        background-color: black;
+        background-color: #28364B;
       }
       .grid{
         background-image: repeating-linear-gradient(0deg,transparent,transparent 50px,rgba(255,255,255,0.2) 50px, rgba(255,255,255,0.2) 51px),repeating-linear-gradient(-90deg,transparent,transparent 50px,rgba(255,255,255,0.2) 50px,rgba(255,255,255,0.2) 51px);
@@ -41,7 +41,10 @@
         transition: all 0.3s ease 0s;
       }
       #c{
-        font-family: 'Sunflower', sans-serif; font-size: 65px; color: white;
+        font-family: 'Sunflower', sans-serif; color: white;
+      }
+      .c1{
+        font-family: 'Sunflower', sans-serif; font-size: 20px; color: white;
       }
       #header{
         height: 6%;
@@ -54,7 +57,6 @@
       #margin{
           margin-top: 5%;
           margin-left: 5%;
-          margin-right: 50%;
       }
       #sidebar{
         float: right;
@@ -77,8 +79,18 @@
    <a href="{% url 'home' %}">&nbsp;&nbsp;Home</a>
    </div>
 </div>
-  <div id="margin">
+  <div class="c1" id="margin">
   <h3>플레이어 API</h3>
+<li> gamestart(playercode) : 본인의 playercode를 argument로 이 함수를 호출하면, 게임 입장을 했다는 의미로 게임 판 상태를 GET 한다.
+<li> placestone(playercode, s1) : 본인의 playercode와 함께 놓을 돌을 argument로 하여 이 함수를 호출하면 해당 돌을 POST 한다.
+<li>&nbsp&nbsp&nbsp&nbsp- 흑돌의 첫수로만 사용될 수 있다.
+<li>&nbsp&nbsp&nbsp&nbsp- 그 외에 사용할 경우 실격 처리 된다.
+<li> placestone(playercode, s1, s2) : 본인의 playercode와 함께 놓을 돌을 argument로 하여 이 함수를 호출하면 해당 돌을 POST 한다.
+돌은 string, 대문자로 통일한다. (예. ‘A1’)
+<li> getstatus(playercode) : 본인의 playercode를 argument로 이 함수를 호출하면 진행중인 게임 판의 전체 상태를 GET 한다.
+<li>&nbsp&nbsp&nbsp&nbsp- status[‘turn’] : 현재 누가 돌을 둘 차례인지 알려준다. ->Black / White / Notready(게임 시작 전)
+<li>&nbsp&nbsp&nbsp&nbsp- status[‘A1’] : 현재 A1 위치의 상태를 알려준다. ->Empty / Black / White / Red
+<li>&nbsp&nbsp&nbsp&nbsp- status[‘black’] : 흑돌이 지금까지 뒀던 수를 list로 제공한다.
   </div>
 
 </div>
