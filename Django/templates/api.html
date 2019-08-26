@@ -44,7 +44,7 @@
         font-family: 'Sunflower', sans-serif; color: white;
       }
       .c1{
-        font-family: 'Sunflower', sans-serif; font-size: 20px; color: white;
+        font-family: 'Sunflower', sans-serif; font-size: 18px; color: white;
       }
       #header{
         height: 6%;
@@ -81,16 +81,16 @@
 </div>
   <div class="c1" id="margin">
   <h3>플레이어 API</h3>
-<li> gamestart(playercode) : 본인의 playercode를 argument로 이 함수를 호출하면, 게임 입장을 했다는 의미로 게임 판 상태를 GET 한다.
-<li> placestone(playercode, s1) : 본인의 playercode와 함께 놓을 돌을 argument로 하여 이 함수를 호출하면 해당 돌을 POST 한다.
-<li>&nbsp&nbsp&nbsp&nbsp- 흑돌의 첫수로만 사용될 수 있다.
-<li>&nbsp&nbsp&nbsp&nbsp- 그 외에 사용할 경우 실격 처리 된다.
-<li> placestone(playercode, s1, s2) : 본인의 playercode와 함께 놓을 돌을 argument로 하여 이 함수를 호출하면 해당 돌을 POST 한다.
+<p> (1) gamestart(playercode) : 본인의 playercode를 argument로 이 함수를 호출하면, 게임 입장을 했다는 의미로 게임 판 상태를 GET 한다.
+<p> (2) placestone(playercode, s1) : 본인의 playercode와 함께 놓을 돌을 argument로 하여 이 함수를 호출하면 해당 돌을 POST 한다.
+<p> &nbsp&nbsp&nbsp&nbsp- 흑돌의 첫수로만 사용될 수 있다.
+<p> &nbsp&nbsp&nbsp&nbsp- 그 외에 사용할 경우 실격 처리 된다.
+<p> (3) placestone(playercode, s1, s2) : 본인의 playercode와 함께 놓을 돌을 argument로 하여 이 함수를 호출하면 해당 돌을 POST 한다.
 돌은 string, 대문자로 통일한다. (예. ‘A1’)
-<li> getstatus(playercode) : 본인의 playercode를 argument로 이 함수를 호출하면 진행중인 게임 판의 전체 상태를 GET 한다.
-<li>&nbsp&nbsp&nbsp&nbsp- status[‘turn’] : 현재 누가 돌을 둘 차례인지 알려준다. ->Black / White / Notready(게임 시작 전)
-<li>&nbsp&nbsp&nbsp&nbsp- status[‘A1’] : 현재 A1 위치의 상태를 알려준다. ->Empty / Black / White / Red
-<li>&nbsp&nbsp&nbsp&nbsp- status[‘black’] : 흑돌이 지금까지 뒀던 수를 list로 제공한다.
+<p> (4) getstatus(playercode) : 본인의 playercode를 argument로 이 함수를 호출하면 진행중인 게임 판의 전체 상태를 GET 한다.
+<p> &nbsp&nbsp&nbsp&nbsp- status[‘turn’] : 현재 누가 돌을 둘 차례인지 알려준다. ->Black / White / Notready(게임 시작 전)
+<p> &nbsp&nbsp&nbsp&nbsp- status[‘A1’] : 현재 A1 위치의 상태를 알려준다. ->Empty / Black / White / Red
+<p> &nbsp&nbsp&nbsp&nbsp- status[‘black’] : 흑돌이 지금까지 뒀던 수를 list로 제공한다.
   </div>
 
 </div>
