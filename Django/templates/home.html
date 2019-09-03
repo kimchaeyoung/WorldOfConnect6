@@ -94,6 +94,16 @@
    opacity: 1;
    right: 0;
  }
+ .copyright{
+   margin-top: 15.5%;
+   font-size: 15px;
+   color: gray;
+   text-align: right;
+  }
+ .question{
+   line-height: 1px;
+ }
+
 </style>
 <div class="grid">
   <div class="center">
@@ -104,12 +114,20 @@
     <p><div class="link">
       <input type="button" id="c" class="example_e" onclick="location.href='{% url 'rule' %}'" target="_blank" rel="nofollow" value="게임 규칙"><span>  
       <br/><input type="button" id="c" class="example_e" onclick="location.href='{% url 'api' %}'" target="_blank" rel="nofollow" value="플레이어 API"><span>
-      <br/><input type="button" id="c" class="example_e" onclick="location.href='{% url 'api_example' %}'" target="_blank" rel="nofollow" value="플레이어 코드 예제"><span>
+      <br/><input type="button" id="c" class="example_e" onclick="location.href='{% url 'home' %}'" target="_blank" rel="nofollow" value="플레이어 코드 예제"><span>
     </div></p><!--.link-->
     <br/><div class="game">
-      <a id="c" class="example_f" onclick="location.href='{% url 'single' %}'" target="_blank" rel="nofollow"><span>서버 AI와 대국</a>
-      <a id="c" class="example_f" onclick="location.href='{% url 'double' %}'" target="_blank" rel="nofollow"><span>대국 시작</a>
+      <a id="c" class="example_f" onclick="location.href='{% url 'double' %}'" target="_blank" rel="nofollow"><span>대국 만들기 (2인용)</a>
+      <a id="c" class="example_f" onclick="location.href='{% url 'single' %}'" target="_blank" rel="nofollow"><span>서버 AI와 대국 (1인용)</a>
       <a id="c" class="example_f" onclick="location.href='{% url 'watch' %}'" target="_blank" rel="nofollow"><span>대국 관전</a>
     </div><!--.game-->
+  </div>
+
+  <div class="copyright">
+  <h4> Copyright 2019. 김채영, 오지혜, 정혜진, 하민지 </h4>
+    <div class="question">
+      <h4> 문의사항 : 21500178@handong.edu</h4>
+      <h4>            21500413@handong.edu</h4>
+    </div>
   </div>
 </div>

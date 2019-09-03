@@ -7,6 +7,7 @@ from rest_framework import generics
 
 from .models import *
 from .serializers import *
+from .randomstone import *
 
 from django.http import Http404, HttpResponseRedirect, JsonResponse
 from rest_framework.views import APIView
@@ -26,7 +27,6 @@ from django.contrib.auth.models import User
 import sys, os
 sys.path.append(os.path.abspath("../player_example/"))
 import smartmonkey
-import randomstone
 
 from .forms import *
 
@@ -48,11 +48,11 @@ def api(request):
 def api_example(request):
         return render(request, 'api_example.html')
 
-def makeRandomString():
+def makeRandomString(color):
     randomStream=""
-    for i in range(0,8):
+    for i in range(0,7):
         randomStream += str(random.choice(string.ascii_letters+string.digits))
-    return randomStream
+    return randomStream+color
 
 
 def single(request):
@@ -61,27 +61,28 @@ def single(request):
 
         if form.is_valid():
             player = form.cleaned_data['player_name']
+            print("here", player)
             if not Session.objects.filter(session_name=player).exists():
                 colorNum = random.randrange(1,3)
                 if colorNum == 1:
-                    wid = makeRandomString()
+                    wid = makeRandomString('w')
                     s = whiteSession(colorid=wid, session_name=player, status=0, name=player)
                     s.save()
-                    bid = makeRandomString()
+                    bid = makeRandomString('b')
                     s = blackSession(colorid=bid, session_name=player, status=0, name="Monkey")
                     s.save()
                     s = Session(session_name=player, blackid=bid, whiteid=wid, status=False, mode="S")
                     s.save()
                 else :
-                    wid = makeRandomString()
+                    wid = makeRandomString('w')
                     s = whiteSession(colorid=wid, session_name=player, status=0, name="Monkey")
                     s.save()
-                    bid = makeRandomString()
+                    bid = makeRandomString('b')
                     s = blackSession(colorid=bid, session_name=player, status=0, name=player)
                     s.save()
                     s = Session(session_name=player, blackid=bid, whiteid=wid, status=False, mode="S")
                     s.save()
-                randomstone.random_stone(request,player)   
+                random_stone(request,player)   
             return HttpResponseRedirect(reverse(guide, kwargs={'room':player})) 
     else:
         form = single_form()
@@ -101,26 +102,26 @@ def double(request):
 
                 colorNum = random.randrange(1,3)
                 if colorNum == 1:
-                    wid = makeRandomString()
+                    wid = makeRandomString('w')
                     s = whiteSession(colorid=wid, session_name=room, status=0, name=player1)                                          
                     s.save()                                                                                               
-                    bid = makeRandomString()                                                                               
+                    bid = makeRandomString('b')                                                                               
                     s = blackSession(colorid=bid, session_name=room, status=0, name=player2)
                     s.save()                                                                                               
                     s = Session(session_name = room, blackid=bid, whiteid=wid, status=False, mode="D")                      
                     s.save()
   
                 else :
-                    wid = makeRandomString()
+                    wid = makeRandomString('w')
                     s = whiteSession(colorid=wid, session_name=room, status=0, name=player2)
                     s.save()
-                    bid = makeRandomString()
+                    bid = makeRandomString('b')
                     s = blackSession(colorid=bid, session_name=room, status=0, name=player1)
                     s.save()
                     s = Session(session_name = room, blackid=bid, whiteid=wid, status=False, mode="D")
                     s.save()
 
-                randomstone.random_stone(request,room)   
+                random_stone(request,room)   
       
             return HttpResponseRedirect(reverse(guide, kwargs={'room':room}))
     else:

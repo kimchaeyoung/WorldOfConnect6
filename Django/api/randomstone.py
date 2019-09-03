@@ -1,9 +1,9 @@
 import random, requests
 from string import ascii_uppercase
+from .models import *
 
 def random_stone(request,room_id):
     xy_data = []
-    url = request.build_absolute_uri('/')[:-1]+"/api/sessions/"+room_id+"/get/"
     for i in range(7):
         if i < 4:
             x = random.choice(ascii_uppercase[4:-12])
@@ -22,10 +22,8 @@ def random_stone(request,room_id):
             x = random.choice(ascii_uppercase[4:-12])
             y = str(random.randrange(4,14))
             XY = x + y
-        data = { 'room' : room_id, 'color': 'red', 'x': x, 'y': y} 
-        
-        requests.post(url, data=data)
-        
+        resultOmok = ResultOmok(room=room_id, color='red', x=x, y=y, turn= None)
+        resultOmok.save()
  
 
 

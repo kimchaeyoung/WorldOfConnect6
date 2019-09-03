@@ -391,7 +391,8 @@ var BattleComponent = /** @class */ (function () {
     BattleComponent.prototype.getAllData = function () {
         var params = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpParams"]();
         params = params.append("playerid", "admin");
-        return this.http.get("./api/sessions/" + this.c2.session + "/get/", { params: params });
+        return this.http
+            .get("./api/sessions/" + this.c2.session + "/get/", { params: params });
     };
     BattleComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({

@@ -177,8 +177,7 @@ export class BattleComponent implements OnInit {
   {
     let params = new HttpParams();
     params = params.append("playerid", "admin");
-    return this.http
-      .get("./api/sessions/"+this.c2.session+"/get/",{params:params})
+    return this.http.get("./api/sessions/"+this.c2.session+"/get/",{params:params})
   }
 }
 export class Result{
