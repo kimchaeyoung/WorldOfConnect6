@@ -2,13 +2,17 @@ import random, requests, time
 from string import ascii_uppercase
 
 def duplicate_check(data, x, y):
+    check=False
     x_list = list(ascii_uppercase[:-7])
     print("dupppppppplicateeeeeeeeeeeeeee!!!!!!")
     for i in data:
         if i['x'] == x and i['y'] == y:
-            x = random.choice(x_list)
-            y = random.randrange(1,20)
-            #(x, y) = duplicate_check(data, x, y)
+            check=True
+            break;
+    if check == True:
+        x = random.choice(x_list)
+        y = random.randrange(1,20)
+        (x, y) = duplicate_check(data, x, y)
 
     return (x, y)
 
