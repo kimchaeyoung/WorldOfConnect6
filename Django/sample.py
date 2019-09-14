@@ -7,7 +7,7 @@ def gamestart(roomcode, playercode):
     params = {'playerid' : playercode}
     requests.get(getURL, params=params)
 
-def placestone(playercode, s1, s2='' ):
+def placestone(playercode, s1, s2=''):
 
     if playercode[-1] is 'b':
         postURL = 'http://turnincode.cafe24.com:8880/api/black-session/' + playercode + '/p1_post/'
@@ -56,48 +56,33 @@ def getstatus(roomcode, playercode):
 
     return status
 
+def randomstone():
+     x = random.choice(ascii_uppercase[:-7])
+     y = random.randrange(1,20)
+
+     return x+str(y)
+
 def sample(roomcode, playercode):
 
     gamestart(roomcode, playercode)
-    if playercode[-1] is 'b':
-        color = "black"
-    else:
-        color = "white"
 
     while True:
         status = getstatus(roomcode, playercode)
         turn = status['turn']
 
-        if color == "black":
-          if turn == "Notready":
-            x1 = random.choice(ascii_uppercase[:-7])
-            y1 = random.randrange(1,20)
-            s1 = x1 + str(y1)
-            placestone(playercode, s1)
-          if turn == "white":
-            continue
-          if color == turn:
-            x1 = random.choice(ascii_uppercase[:-7])
-            x2 = random.choice(ascii_uppercase[:-7])
-            y1 = random.randrange(1,20)
-            y2 = random.randrange(1,20)    
+        if playercode[-1] is 'b':
+            if turn == "white":
+                continue
+            if turn == "Notready":
+                placestone(playercode, randomstone())
+            if turn == "black":
+                placestone(playercode, randomstone(), randomstone())
 
-            s1 = x1 + str(y1)
-            s2 = x2 + str(y2)
-            placestone(playercode, s1, s2)
-
-        if color == "white":
-          if turn == "black":
-              continue
-          if color == turn:
-            x1 = random.choice(ascii_uppercase[:-7])
-            x2 = random.choice(ascii_uppercase[:-7])
-            y1 = random.randrange(1,20)
-            y2 = random.randrange(1,20)    
-
-            s1 = x1 + str(y1)
-            s2 = x2 + str(y2)
-            placestone(playercode, s1, s2)
+        if playercode[-1] is 'w':
+            if turn == "black":
+                continue
+            if turn == "white":
+                placestone(playercode, randomstone(), randomstone())
 
 
     

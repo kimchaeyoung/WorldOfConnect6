@@ -18,7 +18,7 @@ class blackSession(models.Model):
 	session_name = models.CharField(max_length=200, unique=True)
 	status = models.IntegerField(default=0)
 	name = models.CharField(max_length = 50, null=True, blank=True)
-	timer = models.IntegerField(default=7)
+	timer = models.IntegerField(default=15)
 	post_time = models.DateTimeField(null=True)
 
 	def __str__(self):
@@ -29,7 +29,7 @@ class whiteSession(models.Model):
 	session_name = models.CharField(max_length=200, unique=True)
 	status = models.IntegerField(default=0)
 	name = models.CharField(max_length = 50, null=True, blank=True)
-	timer = models.IntegerField(default=7)
+	timer = models.IntegerField(default=15)
 	post_time = models.DateTimeField(null=True)
 
 	def __str__(self):
