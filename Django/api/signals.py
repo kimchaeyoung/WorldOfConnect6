@@ -24,5 +24,6 @@ def stone_pre_save(sender, instance, **kwargs):
     if ResultOmok.objects.filter(room=instance.room, x=instance.x, y=instance.y).exists():
         s = Session.objects.get(session_name=instance.room)
         s.status = False
+        s.mode = "duplication"
         s.save()
         raise Exception('Duplication') 
