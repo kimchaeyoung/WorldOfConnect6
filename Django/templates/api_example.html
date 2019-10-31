@@ -3,8 +3,7 @@
 
 {% load static %}
 
-
-<link href="https://fonts.googleapis.com/css?family=Sunflower:300&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Gothic+A1&display=swap" rel="stylesheet">
 
 <link rel="stylesheet" href="http://codemirror.net/lib/codemirror.css">
 <script src="http://codemirror.net/lib/codemirror.js"></script>
@@ -47,7 +46,7 @@
         transition: all 0.3s ease 0s;
       }
       #c{
-        font-family: 'Sunflower', sans-serif; color: white;
+        font-family: 'Gothic A1', sans-serif; color: white;
       }
       #header{
         height: 6%;
@@ -86,40 +85,36 @@
   <div id="margin">
   <h3>플레이어 코드 예제</h3>
   <textarea rows="4" cols="50" id="codesnippet_readonly">
-   import random, requests
-   from string import ascii_uppercase
+  def randomstone():
+       x = random.choice(ascii_uppercase[:-7])
+       y = random.randrange(1,20)
 
-   def random_stone():
+       return x+str(y)
 
-      x = random.choice(ascii_uppercase[:-7])
-      y = str(random.randrange(1,20))
-      data = x + y
-
-      return data
-
-   def sample(player_id, color, getURL, postURL):
-
-      get_data = requests.get(getURL).json()
-
-      if color == "black":   #first black
-          s1 = random_stone()
-          data = { 'room' : player_id, 's1' : s1, 's2' : ''}
-          requests.post(postURL, data= data)
-
-      turn = get_data[-1]['turn']
+  def sample(roomname, playercode):
+  
+      gamestart(roomname, playercode)
 
       while True:
-          get_data = requests.get(getURL).json()
-          new_turn = get_data[-1]['turn']
-          if turn == new_turn:
-              continue
-          s1 = random_stone()
-          s2 = random_stone()
-          data = { 'room' : player_id, 's1' : s1, 's2' : s2}
-          requests.post(postURL, data= data)
+          status = getstatus(roomname, playercode)
+          turn = status['turn']
 
-          turn = new_turn 
-  </textarea>
+          if playercode[-1] is 'b':
+              if turn == "white":
+                  continue
+              if turn == "Notready":
+                  placestone(playercode, randomstone())
+              if turn == "black":
+                  placestone(playercode, randomstone(), randomstone())
+
+          if playercode[-1] is 'w':
+              if turn == "black":
+                  continue
+              if turn == "white":
+                  placestone(playercode, randomstone(), randomstone())
+
+
+ </textarea>
   </div>
 <script type = "text/javascript"/>
     var readOnlyCodeMirror = CodeMirror.fromTextArea(document.getElementById('codesnippet_readonly'), {
@@ -128,7 +123,7 @@
     lineNumbers: true,
     readOnly: true // This make the textarea readonly
     });
-    readOnlyCodeMirror.setSize(600, 500);
+    readOnlyCodeMirror.setSize(1000, 500);
 </script>
 </body>
 </html>

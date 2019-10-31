@@ -3,8 +3,14 @@
 
 {% load static %}
 
+<link href="https://fonts.googleapis.com/css?family=Gothic+A1&display=swap" rel="stylesheet">
 
-<link href="https://fonts.googleapis.com/css?family=Sunflower:300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="http://codemirror.net/lib/codemirror.css">
+<script src="http://codemirror.net/lib/codemirror.js"></script>
+<script src="http://codemirror.net/addon/edit/matchbrackets.js"></script>
+<script src="http://codemirror.net/addon/edit/continuecomment.js"></script>
+<script src="http://codemirror.net/mode/python/python.js"></script>
+
 
 <!doctype html>
 <html lang="en">
@@ -12,7 +18,6 @@
     <style>
       html,body, .grid{
         width: 95%;
-        height: 95%;
         margin-left: 2%;
         margin-right: 2%;
         margin-top: 2%;
@@ -41,10 +46,10 @@
         transition: all 0.3s ease 0s;
       }
       #c{
-        font-family: 'Sunflower', sans-serif; color: white;
+        font-family: 'Gothic A1', sans-serif; color: white;
       }
       .c1{
-        font-family: 'Sunflower', sans-serif; font-size: 18px; color: white;
+        font-family: 'Gothic A1', sans-serif; font-size: 18px; color: white;
       }
       #header{
         height: 6%;
@@ -81,17 +86,89 @@
 </div>
   <div class="c1" id="margin">
   <h3>플레이어 API</h3>
-<p> (1) gamestart(playercode) : 본인의 playercode를 argument로 이 함수를 호출하면, 게임 입장을 했다는 의미로 게임 판 상태를 GET 한다.
+<p> (1) gamestart(roomname, playercode) : 현재 속해있는 room name 과 본인의 playercode를 argument로 이 함수를 호출하면, 게임 입장을 했다는 의미로 게임 판 상태를 GET 한다.
 <p> (2) placestone(playercode, s1) : 본인의 playercode와 함께 놓을 돌을 argument로 하여 이 함수를 호출하면 해당 돌을 POST 한다.
 <p> &nbsp&nbsp&nbsp&nbsp- 흑돌의 첫수로만 사용될 수 있다.
 <p> &nbsp&nbsp&nbsp&nbsp- 그 외에 사용할 경우 실격 처리 된다.
 <p> (3) placestone(playercode, s1, s2) : 본인의 playercode와 함께 놓을 돌을 argument로 하여 이 함수를 호출하면 해당 돌을 POST 한다.
 돌은 string, 대문자로 통일한다. (예. ‘A1’)
-<p> (4) getstatus(playercode) : 본인의 playercode를 argument로 이 함수를 호출하면 진행중인 게임 판의 전체 상태를 GET 한다.
+<p> (4) getstatus(roomname, playercode) : 현재 속해있는 room name 과 본인의 playercode를 argument로 이 함수를 호출하면 진행중인 게임 판의 전체 상태를 GET 한다.
 <p> &nbsp&nbsp&nbsp&nbsp- status[‘turn’] : 현재 누가 돌을 둘 차례인지 알려준다. ->Black / White / Notready(게임 시작 전)
 <p> &nbsp&nbsp&nbsp&nbsp- status[‘A1’] : 현재 A1 위치의 상태를 알려준다. ->Empty / Black / White / Red
 <p> &nbsp&nbsp&nbsp&nbsp- status[‘black’] : 흑돌이 지금까지 뒀던 수를 list로 제공한다.
   </div>
+  
+    <div id="margin">
+  <h3>플레이어 코드 예제</h3>
+  <textarea rows="4" cols="50" id="codesnippet_readonly">
+  import requests
+  from string import ascii_uppercase
+
+  def gamestart(roomname, playercode):
+
+      getURL = 'http://aicontest.handong.edu/api/sessions/' + roomname + '/get/'
+      params = {'playerid' : playercode}
+      requests.get(getURL, params=params)
+
+  def placestone(playercode, s1, s2='' ):
+
+      if playercode[-1] is 'b':
+          postURL = 'http://aicontest.handong.edu/api/black-session/' + playercode + '/p1_post/'
+      else:
+          postURL = 'http://aicontest.handong.edu/api/white-session/' + playercode + '/p2_post/'
+
+      data = { 'room' : playercode, 's1' : s1, 's2' : s2 }
+      requests.post(postURL, data=data)
+
+  def getstatus(roomname, playercode):
+
+      getURL = 'http://aicontest.handong.edu/api/sessions/' + roomname + '/get/'
+      params = {'playerid' : playercode}
+      get_data = requests.get(getURL, params=params).json()
+
+      stone = []
+      status = {}
+      black = []
+      white = []
+
+      for i in ascii_uppercase[:-7] :
+          for j in range(1,20):
+              stone.append(i+str(j))
+      for s in stone:
+          status.setdefault(s,'empty')
+
+      for get in get_data:
+          data = get['x'] + str(get['y'])
+          if get['color'] == 'black':
+              black.append(data)
+          if get['color'] == 'white':
+              white.append(data)
+          status.update({data : get['color']})
+
+      turn = get_data[-1]['color']
+      if turn == 'black':
+          turn = 'white'
+      elif turn == 'white':
+          turn = 'black'
+      else:
+          turn = 'Notready'
+
+      status.update({'black' : black , 'white': white, 'turn' : turn})
+
+      return status
+
+ </textarea>
+  </div>
+<script type = "text/javascript"/>
+    var readOnlyCodeMirror = CodeMirror.fromTextArea(document.getElementById('codesnippet_readonly'), {
+    mode: "python",
+    theme: "default",
+    lineNumbers: true,
+    readOnly: true // This make the textarea readonly
+    });
+    readOnlyCodeMirror.setSize(1000, 500);
+</script>
+
 
 </div>
 </body>

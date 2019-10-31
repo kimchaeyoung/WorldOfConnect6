@@ -1,7 +1,7 @@
 {% load i18n static %}
 {% load material_form %}
 
-<link href="https://fonts.googleapis.com/css?family=Sunflower:300&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Gothic+A1&display=swap" rel="stylesheet">
 
 <style>
   html,body, .grid{
@@ -18,7 +18,7 @@
     background-size: 51px 51px;
   }
   #c{
-    font-family: 'Sunflower', sans-serif; color: white;
+    font-family: 'Gothic A1', sans-serif; color: white;
   }
   .center {
     text-align: center;
@@ -114,7 +114,7 @@
     <p><div class="link">
       <input type="button" id="c" class="example_e" onclick="location.href='{% url 'rule' %}'" target="_blank" rel="nofollow" value="게임 규칙"><span>  
       <br/><input type="button" id="c" class="example_e" onclick="location.href='{% url 'api' %}'" target="_blank" rel="nofollow" value="플레이어 API"><span>
-      <br/><input type="button" id="c" class="example_e" onclick="location.href='{% url 'home' %}'" target="_blank" rel="nofollow" value="플레이어 코드 예제"><span>
+      <br/><input type="button" id="c" class="example_e" onclick="location.href='{% url 'api_example' %}'" target="_blank" rel="nofollow" value="플레이어 코드 예제"><span>
     </div></p><!--.link-->
     <br/><div class="game">
       <a id="c" class="example_f" onclick="location.href='{% url 'double' %}'" target="_blank" rel="nofollow"><span>대국 만들기 (2인용)</a>
@@ -124,10 +124,9 @@
   </div>
 
   <div class="copyright">
-  <h4> Copyright 2019. 김채영, 오지혜, 정혜진, 하민지 </h4>
+  <h4> Copyright 2019. 김채영, 오지혜, 정혜진, 하민지 All Rights Reserved.</h4>
     <div class="question">
-      <h4> 문의사항 : 21500178@handong.edu</h4>
-      <h4>            21500413@handong.edu</h4>
+      <h4> Bug Report : worldofconnect6@gmail.com</h4>
     </div>
   </div>
 </div>
