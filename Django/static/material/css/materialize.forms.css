@@ -22,7 +22,8 @@ form .error {
 
 /* INPUT FIELD */
 .input-field {
-  margin-bottom: 0; }
+  margin-bottom: 0; 
+  color: white; }
   .input-field label {
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -39,7 +40,7 @@ form .error {
     position: absolute;
     top: 0;
     right: 0;
-    color: #555;
+    color: white;
     padding: 0 0.75rem;
     line-height: 3rem;
     background: white; }
@@ -51,7 +52,7 @@ form .error {
     position: absolute;
     top: 0;
     right: 0;
-    color: #555;
+    color: white;
     padding: 0 0.75rem;
     line-height: 3rem;
     background: white; }

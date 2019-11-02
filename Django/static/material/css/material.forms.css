@@ -27,7 +27,8 @@
 /*   white-space: nowrap; */
 /*   text-overflow: ellipsis; */
 /*   width: calc(100% - 21px); */
-/*   overflow: hidden; */
+/*   overflow: hidden;
+     color: white; */
 /* } */
 /* .input-field .prefix { */
 /*     line-height: 45px; */

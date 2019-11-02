@@ -24,14 +24,14 @@
     text-align: center;
   }
   .title {
-    font-size: 65px;
+    font-size: 10vmin;
     padding: 5px;
     position: relative;
   }
   .subtitle {
     text-align: center;
     position: relative;
-    font-size: 30px;
+    font-size: 5vmin;
   }
   .space:after, .list:after {
     content: " ";
@@ -43,6 +43,7 @@
   }
   .game {
     margin-top: 5%;
+    
   }
   #right {
     position: relative;
@@ -65,23 +66,21 @@
    background: linear-gradient(to right, #455266, #092D66);
    border: none;
    color: white;
-   text-align: center;
    text-transform: uppercase;
    font-size: 22px;
-   padding: 34px 40px;
+   padding: 3vmin;
    transition: all 0.4s;
    cursor: pointer;
    margin: 10px;
  }
  .example_f span {
    cursor: pointer;
-   display: inline-block;
    position: relative;
    transition: 0.4s;
  }
  .example_f span:after {
    content: '\00bb';
-   position: absolute;
+   position: relative;
    opacity: 0;
    top: 0;
    right: -20px;
@@ -113,13 +112,12 @@
     </div><!--.title-->
     <p><div class="link">
       <input type="button" id="c" class="example_e" onclick="location.href='{% url 'rule' %}'" target="_blank" rel="nofollow" value="게임 규칙"><span>  
-      <br/><input type="button" id="c" class="example_e" onclick="location.href='{% url 'api' %}'" target="_blank" rel="nofollow" value="플레이어 API"><span>
-      <br/><input type="button" id="c" class="example_e" onclick="location.href='{% url 'api_example' %}'" target="_blank" rel="nofollow" value="플레이어 코드 예제"><span>
+      <input type="button" id="c" class="example_e" onclick="location.href='{% url 'api' %}'" target="_blank" rel="nofollow" value="플레이어 API & 코드 예제"><span>
     </div></p><!--.link-->
     <br/><div class="game">
-      <a id="c" class="example_f" onclick="location.href='{% url 'double' %}'" target="_blank" rel="nofollow"><span>대국 만들기 (2인용)</a>
-      <a id="c" class="example_f" onclick="location.href='{% url 'single' %}'" target="_blank" rel="nofollow"><span>서버 AI와 대국 (1인용)</a>
-      <a id="c" class="example_f" onclick="location.href='{% url 'watch' %}'" target="_blank" rel="nofollow"><span>대국 관전</a>
+      <div a id="c" class="example_f" onclick="location.href='{% url 'double' %}'" target="_blank" rel="nofollow"><span>대국 만들기 (2인용)</a></div>
+      <div a id="c" class="example_f" onclick="location.href='{% url 'single' %}'" target="_blank" rel="nofollow"><span>서버 AI와 대국 (1인용)</a></div>
+      <div a id="c" class="example_f" onclick="location.href='{% url 'watch' %}'" target="_blank" rel="nofollow"><span>대국 관전</a></div>
     </div><!--.game-->
   </div>
 

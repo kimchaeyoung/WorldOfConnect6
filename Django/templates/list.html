@@ -11,12 +11,8 @@
   <head>
     <style>
       html,body, .grid{
-        width: 95%;
-        height: 95%;
-        margin-left: 2%;
-        margin-right: 2%;
-        margin-top: 2%;
-        margin-bottom: 2%;
+        width: 100%;
+        height: 100%;
         background-color: #28364B;
       }
       .grid{
@@ -51,15 +47,23 @@
         padding: 5px;
         text-indent: 40px;
       }
+      .f{
+        width: 40%;
+        margin-left: 5px;
+        color: white;
+      }
       #margin{
-          margin-top: 5%;
+          height: 80%;
+          width: 90%;
+          margin-right: 5%;
           margin-left: 5%;
           margin-right: 50%;
+          background-color:  #28364B;
       }
       #sidebar{
         float: right;
         padding: 15px;
-        font-size: 5px;
+        font-size: 15px;
       }
     </style>
     <meta charset="utf-8">
@@ -78,10 +82,12 @@
    </div>
 </div>
 <div id="margin">
-    <h3> Search Room </h3>
+    <div class="f">
+    <h3 style="padding:5px"> Search Room </h3>
     <label> enter room name: </label>
     <input id="room-name-input" type="text" size="50"/><br/>
     <button id="room-name-submit" type="submit" class="example_d">Enter</button>
+    </div>
 </div>
 </div>
 </div>

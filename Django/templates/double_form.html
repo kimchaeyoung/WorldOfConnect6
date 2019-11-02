@@ -11,14 +11,14 @@
   <head>
     <style>
       html,body, .grid{
-        width: 95%;
-        height: 95%;
-        margin-left: 2%;
-        margin-right: 2%;
-        margin-top: 2%;
-        margin-bottom: 2%;
+        width: 100%;
+        height: 100%;
         background-color: #28364B;
+        color:white;
       }
+      .input-field {
+        color:orange;
+      }  
       .grid{
         background-image: repeating-linear-gradient(0deg,transparent,transparent 50px,rgba(255,255,255,0.2) 50px, rgba(255,255,255,0.2) 51px),repeating-linear-gradient(-90deg,transparent,transparent 50px,rgba(255,255,255,0.2) 50px,rgba(255,255,255,0.2) 51px);
         background-size: 51px 51px;
@@ -51,15 +51,21 @@
         padding: 5px;
         text-indent: 40px;
       }
+      .f {
+          width: 40%;
+          margin-left: 5px;
+      } 
       #margin{
-          margin-top: 5%;
+          width: 90%;
+          height: 80%;
           margin-left: 5%;
-          margin-right: 50%;
+          margin-right: 5%;
+          background-color: #28364B;
       }
       #sidebar{
         float: right;
         padding: 15px;
-        font-size: 5px;
+        font-size: 15px;
       }
     </style>
     <meta charset="utf-8">
@@ -78,10 +84,12 @@
    </div>
 </div>
 <form action="/double/" id="margin" method="post">
-    <h3>Player Information</h3>
+    <div class="f white-text">
+    <h3 style="padding:5px">Player Information</h3>
     {% csrf_token %}
     {{form}}
     <button type="submit" class="example_d">Enter</button>
+    </div>
 </form>
 </div>
 </div>
