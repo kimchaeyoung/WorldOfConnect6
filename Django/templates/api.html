@@ -156,6 +156,39 @@
 
       return status
 
+    # put your algorithm instead of randomstone
+    def randomstone():
+       x = random.choice(ascii_uppercase[:-7])
+       y = random.randrange(1,20)
+
+       return x+str(y)
+
+
+  def sample(roomname, playercode):
+
+      gamestart(roomname, playercode)
+
+      while True:
+          status = getstatus(roomname, playercode)
+          turn = status['turn']
+
+          if playercode[-1] is 'b':
+              if turn == "white":
+                  continue
+              if turn == "Notready":
+                  placestone(playercode, randomstone())
+              if turn == "black":
+                  placestone(playercode, randomstone(), randomstone())
+
+          if playercode[-1] is 'w':
+              if turn == "black":
+                  continue
+              if turn == "white":
+                  placestone(playercode, randomstone(), randomstone())
+
+  # call sample function with your roomname and playercode.
+  sample("Player1", "AJFKE34")
+
  </textarea>
   </div>
 <script type = "text/javascript"/>
