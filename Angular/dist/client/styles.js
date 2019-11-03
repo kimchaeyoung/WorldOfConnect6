@@ -557,7 +557,7 @@ if(false) {}
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /home/jihye/WOC/WorldOfConnect6/Angular/src/styles.css */"./src/styles.css");
+module.exports = __webpack_require__(/*! /home/bodago/connect6/WorldOfConnect6/Angular/src/styles.css */"./src/styles.css");
 
 
 /***/ })

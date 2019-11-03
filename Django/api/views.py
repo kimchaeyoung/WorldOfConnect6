@@ -62,7 +62,9 @@ def single(request):
         if form.is_valid():
             player = form.cleaned_data['player_name']
             print("here", player)
-            if not Session.objects.filter(session_name=player).exists():
+            if Session.objects.filter(session_name=player).exists():
+                return HttpResponse("Player name already Exists")
+            else:
                 colorNum = random.randrange(1,3)
                 if colorNum == 1:
                     wid = makeRandomString('w')
@@ -98,8 +100,9 @@ def double(request):
             player1 = form.cleaned_data['player1_name']
             player2 = form.cleaned_data['player2_name']
 
-            if not Session.objects.filter(session_name=room).exists():
-
+            if Session.objects.filter(session_name=room).exists():
+                return HttpResponse("Room name already exists")
+            else:
                 colorNum = random.randrange(1,3)
                 if colorNum == 1:
                     wid = makeRandomString('w')
@@ -422,6 +425,10 @@ class WhiteViewSet(NestedViewSetMixin, ModelViewSet):
 
 
 def ResultData(request, sessionid):
+    ss = Session.objects.get(session_name=sessionid)
+    if ss.mode == "duplication" :
+        mode = "Duplicate!!"
+        return JsonResponse(mode, safe=False)
     tmp = ResultOmok.objects.filter(room=sessionid)
     black = tmp.filter(color="black")
     white = tmp.filter(color="white")
@@ -435,7 +442,7 @@ def ResultData(request, sessionid):
         s = Session.objects.get(session_name=sessionid)
 
     if bCount <= 6 or wCount <= 6 :
-        return HttpResponse()
+        return JsonResponse(result, safe=False)
 
     row = list(ascii_uppercase)[:-7]
     
