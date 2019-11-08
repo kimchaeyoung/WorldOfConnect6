@@ -45,7 +45,7 @@
         font-family: 'Gothic A1', sans-serif; color: white;
       }
       .c1{
-        font-family: 'Gothic A1', sans-serif; font-size: 18px; color: white;
+        font-family: 'Gothic A1', sans-serif; font-size: 14px; color: white;
       }
       #header{
         height: 6%;
@@ -55,12 +55,18 @@
         padding: 5px;
         text-indent: 40px;
       }
-      #margin{
-          height: 50%;
+      .mar{
+          margin-top: 2%;
+          height: 60%;
           width: 90%;
           margin-right: 5%;
           margin-left: 5%;
           background-color: #28364B;
+      }
+      .mar2{
+          margin-top: 3%;
+          margin-left: 5%;
+          margin-right: 50%;
       }
       #sidebar{
         float: right;
@@ -74,32 +80,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" type="image/x-icon" href="favicon.ico">
   </head>
-<body>
-<div class="grid">
-<div id="c">
-<div id="header">
-   World of Connect6
-   <div id="sidebar">
-   <a href="{% url 'home' %}">&nbsp;&nbsp;Home</a>
-   </div>
-</div>
-  <div class="c1" id="margin">
-  <h3>플레이어 API</h3>
-<p> ○ gamestart(roomname, playercode) : 현재 속해있는 room name 과 본인의 playercode를 argument로 이 함수를 호출하면, 게임 입장을 했다는 의미로 게임 판 상태를 GET 한다.
-<p> ○ placestone(playercode, s1) : 본인의 playercode와 함께 놓을 돌을 argument로 하여 이 함수를 호출하면 해당 돌을 POST 한다.
-<blockquote> 흑돌의 첫수로만 사용될 수 있다.</blockquote>
-<blockquote> 그 외에 사용할 경우 실격 처리 된다.</blockquote>
-<p> ○ placestone(playercode, s1, s2) : 본인의 playercode와 함께 놓을 돌을 argument로 하여 이 함수를 호출하면 해당 돌을 POST 한다.
-돌은 string, 대문자로 통일한다. (예. ‘A1’)
-<p> ○ getstatus(roomname, playercode) : 현재 속해있는 room name 과 본인의 playercode를 argument로 이 함수를 호출하면 진행중인 게임 판의 전체 상태를 GET 한다.
-<blockquote> status[‘turn’] : 현재 누가 돌을 둘 차례인지 알려준다. ->Black / White / Notready(게임 시작 전)</blockquote>
-<blockquote> status[‘A1’] : 현재 A1 위치의 상태를 알려준다. ->Empty / Black / White / Red</blockquote>
-<blockquote> status[‘black’] : 흑돌이 지금까지 뒀던 수를 list로 제공한다.</blockquote>
-  </div>
-  
-    <div id="margin">
-  <h3>플레이어 코드 예제</h3>
-  <textarea rows="4" cols="50" id="codesnippet_readonly">
+  <body>
+    <div class="grid">
+    <div id="c">
+    <div id="header">
+        World of Connect6
+      <div id="sidebar">
+        <a href="{% url 'home' %}">&nbsp;&nbsp;Home</a>
+      </div>
+    </div>
+    <div class="c1 mar">
+      <h5>플레이어 API</h5>
+        <p> ○ gamestart(roomname, playercode) : 현재 속해있는 room name 과 본인의 playercode를 argument로 이 함수를 호출하면, 게임 입장을 했다는 의미로 게임 판 상태를 GET 한다.
+        <p> ○ placestone(playercode, s1) : 본인의 playercode와 함께 놓을 돌을 argument로 하여 이 함수를 호출하면 해당 돌을 POST 한다.
+        <blockquote> 흑돌의 첫수로만 사용될 수 있다.</blockquote>
+        <blockquote> 그 외에 사용할 경우 실격 처리 된다.</blockquote>
+        <p> ○ placestone(playercode, s1, s2) : 본인의 playercode와 함께 놓을 돌을 argument로 하여 이 함수를 호출하면 해당 돌을 POST 한다. 돌은 string, 대문자로 통일한다. (예. ‘A1’)
+        <p> ○ getstatus(roomname, playercode) : 현재 속해있는 room name 과 본인의 playercode를 argument로 이 함수를 호출하면 진행중인 게임 판의 전체 상태를 GET 한다.
+        <blockquote> status[‘turn’] : 현재 누가 돌을 둘 차례인지 알려준다. ->Black / White / Notready(게임 시작 전)</blockquote>
+        <blockquote> status[‘A1’] : 현재 A1 위치의 상태를 알려준다. ->Empty / Black / White / Red</blockquote>
+        <blockquote> status[‘black’] : 흑돌이 지금까지 뒀던 수를 list로 제공한다.</blockquote>
+    </div>
+    <br><div class="mar2">
+      <h5>플레이어 코드 예제</h5>
+      <textarea rows="4" cols="50" id="codesnippet_readonly">
   import requests
   from string import ascii_uppercase
 
@@ -188,21 +192,19 @@
 
   # call sample function with your roomname and playercode.
   sample("Player1", "AJFKE34")
-
- </textarea>
+      </textarea>
+    </div>
+    <script type = "text/javascript"/>
+      var readOnlyCodeMirror = CodeMirror.fromTextArea(document.getElementById('codesnippet_readonly'), {
+      mode: "python",
+      theme: "default",
+      lineNumbers: true,
+      readOnly: true // This make the textarea readonly
+      });
+      readOnlyCodeMirror.setSize(900, 500);
+    </script>
   </div>
-<script type = "text/javascript"/>
-    var readOnlyCodeMirror = CodeMirror.fromTextArea(document.getElementById('codesnippet_readonly'), {
-    mode: "python",
-    theme: "default",
-    lineNumbers: true,
-    readOnly: true // This make the textarea readonly
-    });
-    readOnlyCodeMirror.setSize(1000, 500);
-</script>
-
-
-</div>
+  </div>
 </body>
 </html>
 
